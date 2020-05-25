@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taotao.cloud.uc.biz.mapper.SysUserSocialMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.taotao.cloud.uc.api.entity.SysUserSocial">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="provider_id" property="providerId" />
+        <result column="provider_user_id" property="providerUserId" />
+        <result column="display_name" property="displayName" />
+        <result column="image_url" property="imageUrl" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+</mapper>

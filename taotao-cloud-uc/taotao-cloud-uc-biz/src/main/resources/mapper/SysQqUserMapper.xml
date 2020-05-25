@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.taotao.cloud.uc.biz.mapper.SysQqUserMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.taotao.cloud.uc.api.entity.SysQqUser">
+        <id column="id" property="id"/>
+        <result column="open_id" property="openId"/>
+        <result column="ret" property="ret"/>
+        <result column="msg" property="msg"/>
+        <result column="is_lost" property="isLost"/>
+        <result column="province" property="province"/>
+        <result column="city" property="city"/>
+        <result column="year" property="year"/>
+        <result column="nickname" property="nickname"/>
+        <result column="figure_url" property="figureUrl"/>
+        <result column="figure_url1" property="figureUrl1"/>
+        <result column="figure_url2" property="figureUrl2"/>
+        <result column="figure_url_qq1" property="figureUrlQq1"/>
+        <result column="figure_url_qq2" property="figureUrlQq2"/>
+        <result column="gender" property="gender"/>
+        <result column="is_yellow_vip" property="isYellowVip"/>
+        <result column="vip" property="vip"/>
+        <result column="yellow_vip_level" property="yellowVipLevel"/>
+        <result column="level" property="level"/>
+        <result column="is_yellow_year_vip" property="isYellowYearVip"/>
+    </resultMap>
+</mapper>

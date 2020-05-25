@@ -1,0 +1,7 @@
+org.springframework.context.ApplicationContextInitializer=\
+com.taotao.cloud.log.initializer.TtlMDCAdapterInitializer
+
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.taotao.cloud.log.LogAutoConfiguration,\
+com.taotao.cloud.log.service.impl.DbSysLogServiceImpl,\
+com.taotao.cloud.log.feign.fallback.RemoteLogFallbackImpl

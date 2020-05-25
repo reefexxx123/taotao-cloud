@@ -1,0 +1,153 @@
+server:
+  port: 9600
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: taotao-cloud-order-center
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        metadata:
+          version: 5
+  #      config:
+  #        server-addr: 127.0.0.1:8848
+  #        namespace: 2c421c7d-7c62-422e-a4f3-996a2d301c67
+  #        file-extension: yml
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://127.0.0.1:3306/taotao-cloud-order-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: 123456
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.taotao.cloud.uc.api.entity
+  global-config:
+    db-config:
+      id-type: auto
+      field-strategy: NOT_NULL
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+security:
+  oauth2:
+    client:
+      client-id: server
+      client-secret: server
+      access-token-uri: http://taotao-cloud-auth-center/oauth/token
+      user-authorization-uri: http://taotao-cloud-auth-center/oauth/authorize
+    resource:
+      token-info-uri: http://taotao-cloud-auth-center/oauth/check_token
+
+taotao:
+  cloud:
+    swagger:
+      enabled: true
+      title: 订单中心
+      description: 订单中心接口文档
+      version: 1.0
+      base-package: com.taotao.cloud.order.biz.controller
+    cache-manager:
+      configs:
+        - key: menu
+          second: 300
+        - key: user
+          second: 1800
+    security:
+      ignore:
+        # 忽略认证的地址
+        httpUrls: >
+          /api-auth/v2/api-docs,
+          /api-uc/v2/api-docs,
+          /api-uaa/oauth/**,
+          /api-uaa/validata/**,
+          /api-uaa/css/**,
+          /api-uaa/images/**,
+          /api-uaa/js/**,
+          /api-user/users-anon/**,
+          /user/login,
+          /swagger-ui.html,
+          /swagger-resources/**,
+          /*/v2/api-docs,
+          /v2/api-docs,
+          /api/socket/**,
+          /log,
+          /*/api-docs,
+          /actuator/health,
+          /sendCode/**,
+          /mobile/login/**,
+          /socialSignUp,
+          /oauth/**,
+          /user/**,
+          /css/**,
+          /js/**,
+          /images/**,
+          /webjars/**,
+          /**/favicon.ico,
+          /index,
+          /captcha.jpg,
+          /*.html,
+          /**/*.html,
+          /**/*.css,
+          /**/*.js"
+    #多租户配置
+    tenant:
+      enable: true
+      ignoreTables:
+        - sys_user
+        - sys_role_user
+        - sys_role_menu
+      ignoreSqls:
+        - com.central.user.mapper.SysRoleMapper.findAll
+
+feign:
+  sentinel:
+    enabled: false
+  hystrix:
+    enabled: false
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
+    max-connections: 1000
+    max-connections-per-route: 100
+  client:
+    config:
+      feignName:
+        connectTimeout: 30000
+        readTimeout: 30000
+  compression:
+    request:
+      enabled: true
+      mime-types: text/xml,application/xml,application/json
+      min-request-size: 2048
+    response:
+      enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include=*:
+  endpoint:
+    health:
+      show-details: always
