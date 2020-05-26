@@ -13,33 +13,27 @@
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-product-api</artifactId>
-            <version>${parent.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-common-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-auth-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-log-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-swagger-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-data-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
 
 

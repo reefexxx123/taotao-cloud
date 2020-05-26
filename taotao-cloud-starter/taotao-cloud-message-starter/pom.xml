@@ -15,7 +15,6 @@
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-common-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

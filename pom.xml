@@ -148,10 +148,15 @@
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${swagger.version}</version>
             </dependency>
+<!--            <dependency>-->
+<!--                <groupId>com.github.xiaoymin</groupId>-->
+<!--                <artifactId>swagger-bootstrap-ui</artifactId>-->
+<!--                <version>${swagger.ui.version}</version>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>swagger-bootstrap-ui</artifactId>
-                <version>${swagger.ui.version}</version>
+                <version>${swagger.bootstrap.ui.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.zyplayer</groupId>
@@ -255,18 +260,98 @@
                 <version>${okhttp.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>swagger-bootstrap-ui</artifactId>
-                <version>${swagger.bootstrap.ui.version}</version>
-            </dependency>
-
 
 
             <dependency>
                 <groupId>eu.bitwalker</groupId>
                 <artifactId>UserAgentUtils</artifactId>
                 <version>${UserAgentUtils.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.taotao.cloud</groupId>
+                <artifactId>taotao-cloud-uc-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taotao.cloud</groupId>
+                <artifactId>taotao-cloud-file-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taotao.cloud</groupId>
+                <artifactId>taotao-cloud-order-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taotao.cloud</groupId>
+                <artifactId>taotao-cloud-product-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taotao.cloud</groupId>
+                <artifactId>taotao-cloud-auth-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taotao.cloud</groupId>
+                <artifactId>taotao-cloud-common-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taotao.cloud</groupId>
+                <artifactId>taotao-cloud-data-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taotao.cloud</groupId>
+                <artifactId>taotao-cloud-elasticsearch-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taotao.cloud</groupId>
+                <artifactId>taotao-cloud-elk-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taotao.cloud</groupId>
+                <artifactId>taotao-cloud-log-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taotao.cloud</groupId>
+                <artifactId>taotao-cloud-message-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taotao.cloud</groupId>
+                <artifactId>taotao-cloud-redis-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taotao.cloud</groupId>
+                <artifactId>taotao-cloud-ribbon-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taotao.cloud</groupId>
+                <artifactId>taotao-cloud-sentinel-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taotao.cloud</groupId>
+                <artifactId>taotao-cloud-shardingjdbc-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taotao.cloud</groupId>
+                <artifactId>taotao-cloud-social-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taotao.cloud</groupId>
+                <artifactId>taotao-cloud-swagger-starter</artifactId>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

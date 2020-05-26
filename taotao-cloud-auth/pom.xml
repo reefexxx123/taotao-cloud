@@ -18,57 +18,46 @@
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-uc-api</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-common-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-log-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-redis-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-data-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-message-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-elk-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-swagger-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-auth-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-social-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-ribbon-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <!--nacos注册中心-->
         <dependency>

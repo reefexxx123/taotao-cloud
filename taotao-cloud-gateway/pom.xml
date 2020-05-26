@@ -14,13 +14,11 @@
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-common-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-auth-starter</artifactId>
-            <version>${parent.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>spring-webmvc</artifactId>
@@ -32,7 +30,6 @@
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-redis-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
 
         <!--nacos注册中心客户端-->

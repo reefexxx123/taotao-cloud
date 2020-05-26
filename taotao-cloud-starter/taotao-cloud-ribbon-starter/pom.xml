@@ -15,13 +15,11 @@
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-common-starter</artifactId>
-            <version>${project.parent.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-log-starter</artifactId>
-            <version>${project.parent.version}</version>
         </dependency>
 
         <dependency>

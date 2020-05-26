@@ -13,58 +13,47 @@
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-uc-api</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
-            <artifactId>taotao-cloud-file</artifactId>
-            <version>${parent.version}</version>
+            <artifactId>taotao-cloud-file-api</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-common-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-auth-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-log-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-swagger-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-data-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-ribbon-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-sentinel-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-elasticsearch-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-elk-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
 
         <dependency>

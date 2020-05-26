@@ -15,17 +15,14 @@
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-common-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-auth-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-uc-api</artifactId>
-            <version>${parent.version}</version>
         </dependency>
 
         <dependency>

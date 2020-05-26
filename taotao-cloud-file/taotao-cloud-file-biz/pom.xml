@@ -14,33 +14,27 @@
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-file-api</artifactId>
-            <version>${parent.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-common-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-log-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-swagger-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-data-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-ribbon-starter</artifactId>
-            <version>${parent.version}</version>
         </dependency>
 
         <!-- 阿里云oss -->
