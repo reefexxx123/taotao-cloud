@@ -9,6 +9,7 @@
     </parent>
 
     <artifactId>taotao-cloud-auth</artifactId>
+    <version>1.0</version>
 
     <properties>
         <spring-social.version>1.1.6.RELEASE</spring-social.version>
@@ -135,6 +136,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
+                <version>3.1.0</version>
                 <executions>
                     <execution>
                         <id>copy-resources</id>
@@ -143,7 +145,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/${artifactId}</outputDirectory>
+                            <outputDirectory>${project.build.directory}/${project.artifactId}</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>src/main/docker</directory>
@@ -167,7 +169,7 @@
                         </goals>
                         <configuration>
                             <tasks> <!-- 你将要拷贝的位置 -->
-                                <copy todir="${project.build.directory}/${artifactId}">
+                                <copy todir="${project.build.directory}/${project.artifactId}">
                                     <!-- 从哪里拷贝 -->
                                     <fileset dir="${project.build.directory}">
                                         <!-- 拷贝内容 -->
