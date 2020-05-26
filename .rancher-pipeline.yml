@@ -9,9 +9,9 @@ stages:
       - publishImageConfig:
           dockerfilePath: ./Dockerfile
           buildContext: .
-          tag: scc/hyperloop-baseapi:${CICD_EXECUTION_SEQUENCE}
+          tag: taotao-cloud/ui:${CICD_EXECUTION_SEQUENCE}
           pushRemote: true
-          registry: registry.cn-hangzhou.aliyuncs.com
+          registry: http://192.168.214.131:88/
   - name: deploy
     steps:
       - applyYamlConfig:
