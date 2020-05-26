@@ -11,7 +11,7 @@
 
     <artifactId>taotao-cloud-file</artifactId>
     <packaging>pom</packaging>
-
+    <version>1.0</version>
     <modules>
         <module>taotao-cloud-file-api</module>
         <module>taotao-cloud-file-biz</module>
