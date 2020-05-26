@@ -260,8 +260,6 @@
                 <version>${okhttp.version}</version>
             </dependency>
 
-
-
             <dependency>
                 <groupId>eu.bitwalker</groupId>
                 <artifactId>UserAgentUtils</artifactId>
