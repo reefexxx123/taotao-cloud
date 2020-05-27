@@ -7,9 +7,9 @@ stages:
       - runScriptConfig:
           image: 172.16.10.220:88/taotao-cloud/taotao-cloud-maven:latest
           shellScript: mvn clean package deploy -Dmaven.test.skip=true
-        when:
-          branch: [master]
-          event: push
+#        when:
+#          branch: [master]
+#          event: push
         env:
           SUCCESS_KEY: success
 #        cpuRequest: 100m
