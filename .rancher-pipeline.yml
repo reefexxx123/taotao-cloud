@@ -7,9 +7,9 @@ stages:
   - name: PushImage
     steps:
       - publishImageConfig:
-          dockerfilePath: ./Dockerfile
-          buildContext: .
-          tag: taotao-cloud/ui:${CICD_EXECUTION_SEQUENCE}
+          dockerfilePath: ./taotao-cloud-auth/Dockerfile
+          buildContext: ./taotao-cloud-auth
+          tag: taotao-cloud/taotao-cloud-auth:${CICD_EXECUTION_SEQUENCE}
           pushRemote: true
           registry: http://172.16.10.220:88/taotao-cloud
 #  - name: Deploy
