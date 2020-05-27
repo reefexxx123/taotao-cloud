@@ -12,10 +12,10 @@ stages:
           event: push
         env:
           SUCCESS_KEY: success
-        cpuRequest: 100m
-        cpuLimit: 1
-        memoryRequest: 100Mi
-        memoryLimit: 1Gi
+#        cpuRequest: 100m
+#        cpuLimit: 1
+#        memoryRequest: 100Mi
+#        memoryLimit: 1Gi
 #  - name: PushImage
 #    when:
 #      branch: [ master]
