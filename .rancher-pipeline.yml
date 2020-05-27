@@ -1,8 +1,8 @@
 stages:
   - name: Build
-    when:
-      branch: master
-      event: [ push, pull_request, tag ]
+#    when:
+#      branch: master
+#      event: [ push, pull_request, tag ]
     steps:
       - runScriptConfig:
           image: 172.16.10.220:88/taotao-cloud/taotao-cloud-maven:latest
