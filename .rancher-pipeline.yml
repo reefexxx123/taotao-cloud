@@ -1,19 +1,19 @@
 stages:
-  - name: build
+  - name: Build
     steps:
       - runScriptConfig:
           image: maven:3.6.0-jdk-8-alpine
           shellScript: mvn clean package
-  - name: push-image
+  - name: PushImage
     steps:
       - publishImageConfig:
           dockerfilePath: ./Dockerfile
           buildContext: .
           tag: taotao-cloud/ui:${CICD_EXECUTION_SEQUENCE}
           pushRemote: true
-          registry: http://192.168.214.131:88/
-  - name: deploy
-    steps:
-      - applyYamlConfig:
-          path: ./Deployment.yaml
+          registry: http://172.16.10.220:88/taotao-cloud
+#  - name: Deploy
+#    steps:
+#      - applyYamlConfig:
+#          path: ./Deployment.yaml
 timeout: 60
