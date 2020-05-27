@@ -1,21 +1,54 @@
 stages:
   - name: Build
+    when:
+      branch: master
+      event: [ push, pull_request, tag ]
     steps:
       - runScriptConfig:
-          image: maven:3.6.0-jdk-8-alpine
-          shellScript: mvn clean package
-  - name: PushImage
-    steps:
-      - publishImageConfig:
-          dockerfilePath: ./taotao-cloud-auth/Dockerfile
-          buildContext: ./taotao-cloud-auth
-          tag: taotao-cloud/taotao-cloud-auth:${CICD_EXECUTION_SEQUENCE}
-          pushRemote: true
-          registry: http://172.16.10.220:88/taotao-cloud
+          image: 172.16.10.220:88/taotao-cloud/taotao-cloud-maven:latest
+          shellScript: mvn clean package deploy -Dmaven.test.skip=true
+        when:
+          branch: [master]
+          event: push
+        env:
+          SUCCESS_KEY: success
+        cpuRequest: 100m
+        cpuLimit: 1
+        memoryRequest: 100Mi
+        memoryLimit: 1Gi
+#  - name: PushImage
+#    when:
+#      branch: [ master]
+#      event: push
+#    steps:
+#      - publishImageConfig:
+#          dockerfilePath: ./taotao-cloud-auth/Dockerfile
+#          buildContext: ./taotao-cloud-auth
+#          tag: taotao-cloud/taotao-cloud-auth:${CICD_EXECUTION_SEQUENCE}
+#          pushRemote: true
+#          registry: http://172.16.10.220:88/taotao-cloud
+#        env:
+#          PLUGIN_DEBUG: "true"
+#          PLUGIN_INSECURE: "true"
 #  - name: Deploy
 #    steps:
 #      - applyYamlConfig:
 #          path: ./Deployment.yaml
-
+#
+#notification:
+#  recipients:
+#    - recipient: '#mychannel'
+#      # 通知的ID
+#      notifier: 'c-wdcsr:n-c9pg7'
+#    - recipient: 'test@example.com'
+#      notifier: 'c-wdcsr:n-lkrhd'
+#  # 选择您想要发送通知的条件
+#  condtions: ['Failed'，'Success'，'Changed']
+#  # 用来覆盖默认通知内容 (可选)
+#  message: 'my-message'
 
 timeout: 60
+
+#branch:
+#  include:
+#    - master

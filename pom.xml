@@ -365,6 +365,19 @@
         </dependency>
     </dependencies>
 
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>Releases</name>
+            <url>http://172.16.10.220:8081/repository/maven-public/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Snapshot</name>
+            <url>http://172.16.10.220:8081/repository/maven-public/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <build>
         <pluginManagement>
             <plugins>
@@ -383,6 +396,13 @@
     </build>
 
     <repositories>
+        <repository>
+            <id>nexus</id>
+            <url>http://172.16.10.220:8081/repository/maven-public</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
         <repository>
             <id>aliyun-repos</id>
             <url>https://maven.aliyun.com/repository/public</url>
@@ -433,3 +453,4 @@
         <url>https://github.com/alibaba/nacos/issues</url>
     </issueManagement>
 </project>
+
