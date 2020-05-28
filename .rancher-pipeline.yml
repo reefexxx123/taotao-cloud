@@ -26,7 +26,7 @@ stages:
           buildContext: ./taotao-cloud-gateway
           tag: taotao-cloud/taotao-cloud-gateway:${CICD_EXECUTION_SEQUENCE}
           pushRemote: true
-          registry: http://172.16.10.220:88/
+          registry: 172.16.10.220:88
         env:
           PLUGIN_DEBUG: "true"
           PLUGIN_INSECURE: "true"
