@@ -6,7 +6,7 @@ stages:
     steps:
       - runScriptConfig:
           image: 172.16.10.220:88/taotao-cloud/taotao-cloud-maven:latest
-          shellScript: mvn clean package deploy -Dmaven.test.skip=true
+          shellScript: echo `mvn -version` && mvn clean package deploy -Dmaven.test.skip=true
 #        when:
 #          branch: [master]
 #          event: push
