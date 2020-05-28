@@ -22,6 +22,13 @@
 
     <repositories>
         <repository>
+            <id>nexus</id>
+            <url>http://172.16.10.220:8081/repository/maven-public</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
             <id>aliyun-repos</id>
             <url>https://maven.aliyun.com/repository/public</url>
             <snapshots>
