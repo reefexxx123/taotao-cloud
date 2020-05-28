@@ -367,14 +367,14 @@
 
     <distributionManagement>
         <repository>
-            <id>releases</id>
+            <id>release</id>
             <name>Releases</name>
-            <url>http://172.16.10.220:8081/repository/maven-public/</url>
+            <url>http://172.16.10.220:8081/repository/maven-releases/</url>
         </repository>
         <snapshotRepository>
             <id>snapshots</id>
             <name>Snapshot</name>
-            <url>http://172.16.10.220:8081/repository/maven-public/</url>
+            <url>http://172.16.10.220:8081/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 
