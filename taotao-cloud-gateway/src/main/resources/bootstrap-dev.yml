@@ -1,15 +1,15 @@
 #server:
 #  port: 9900
-
-spring:
-  profiles:
-    active: pre
-#  cache:
-#    type: none
-#  main:
-#    allow-bean-definition-overriding: true
-#  application:
-#    name: taotao-cloud-gateway-center
+#
+#spring:
+##  profiles:
+##    active: dev
+##  cache:
+##    type: none
+##  main:
+##    allow-bean-definition-overriding: true
+##  application:
+##    name: taotao-cloud-gateway-center
 #  redis:
 #    host: 127.0.0.1
 #    port: 6379
@@ -24,11 +24,11 @@ spring:
 #    loadbalancer:
 #      ribbon:
 #        enabled: false
-#    nacos:
-#      discovery:
-#        server-addr: 172.16.10.220:8848
-#        metadata:
-#          version: 4
+##    nacos:
+##      discovery:
+##        server-addr: 127.0.0.1:8848
+##        metadata:
+##          version: 4
 #    #      config:
 #    #        server-addr: 127.0.0.1:8848
 #    #        namespace: f402a0ea-5ce7-43cc-b19b-3fb7ded6e46e
@@ -137,42 +137,42 @@ spring:
 #          args:
 #            name: default
 #            fallbackUri: 'forward:/fallback'
-
-#    sentinel:
-#      datasource.ds1.nacos:
-#        server-addr: ${spring.cloud.nacos.server-addr}
-#        data-id: ${spring.application.name}-sentinel-gw-flow
-#        group-id: DEFAULT_GROUP
-#        ruleType: gw-flow
-#      filter:
-#        enabled: true
-
-# hystrix 信号量隔离，5秒后自动超时
-#hystrix:
-#  command:
-#    # default全局有效，feign id指定应用有效
-#    default:
-#      execution:
-#        timeout:
-#          enabled: true
-#        isolation:
-#          strategy: SEMAPHORE
-#          thread:
-#            # 断路器超时时间，默认1000ms
-#            timeoutInMilliseconds: 8000
 #
-#hystrix:
-#  command:
-#    default:
-#      execution:
-#        isolation:
-#          strategy: THREAD
-#          semaphore:
-#            maxConcurrentRequests: 100
-#        thread:
-#          # 断路器超时时间，默认1000ms
-#          timeoutInMilliseconds: 8000
-
+##    sentinel:
+##      datasource.ds1.nacos:
+##        server-addr: ${spring.cloud.nacos.server-addr}
+##        data-id: ${spring.application.name}-sentinel-gw-flow
+##        group-id: DEFAULT_GROUP
+##        ruleType: gw-flow
+##      filter:
+##        enabled: true
+#
+## hystrix 信号量隔离，5秒后自动超时
+##hystrix:
+##  command:
+##    # default全局有效，feign id指定应用有效
+##    default:
+##      execution:
+##        timeout:
+##          enabled: true
+##        isolation:
+##          strategy: SEMAPHORE
+##          thread:
+##            # 断路器超时时间，默认1000ms
+##            timeoutInMilliseconds: 8000
+##
+##hystrix:
+##  command:
+##    default:
+##      execution:
+##        isolation:
+##          strategy: THREAD
+##          semaphore:
+##            maxConcurrentRequests: 100
+##        thread:
+##          # 断路器超时时间，默认1000ms
+##          timeoutInMilliseconds: 8000
+#
 #hystrix:
 #  command:
 #    default:
@@ -197,17 +197,18 @@ spring:
 #ribbon:
 #  okhttp:
 #    enabled: true
+#
 #feign:
 #  hystrix:
 #    enabled: true
-#hystrix:
-#  command:
-#    default:
-#      execution:
-#        isolation:
-#          thread:
-#            timeoutInMilliseconds: 1000
-
+##hystrix:
+##  command:
+##    default:
+##      execution:
+##        isolation:
+##          thread:
+##            timeoutInMilliseconds: 1000
+#
 #taotao:
 #  cloud:
 #    gateway:
@@ -261,7 +262,7 @@ spring:
 #  endpoint:
 #    health:
 #      show-details: always
-
-
-
-
+#
+#
+#
+#

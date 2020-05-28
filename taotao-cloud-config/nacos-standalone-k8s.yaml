@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nacos-standalone-deployment
+  labels:
+    app: nacos-standalone
+spec:
+  replicas: 1
+  selector:
+  matchLabels:
+    app: nacos
+  template:
+    metadata:
+      labels:
+        app: nacos-standalone
+    spec:
+      containers:
+        - name: nacos-standalone
+      image: ""
+      imagePullPolicy: IfNotPresent
+      ports:
+        - containerPort: 8848
+      env:
+        - name: NACOS_REPLICAS
+          value: "1"
+        - name: MODE
+          value: "standalone"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nacos-standalone-service
+spec:
+  type: NodePort
+  ports:
+    port: 8848
+    protocol: TCP
+    targetPort: 8848
+    selector:
+      app: nacos-standalone
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nacos-standalone-ingress
+spec:
+  rules:
+    host: ""
+    http:
+    paths:
+      path: /
+      backend:
+      serviceName: nacos-standalone-service
+      servicePort: 8848

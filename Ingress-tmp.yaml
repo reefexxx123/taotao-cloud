@@ -14,3 +14,26 @@ spec:                                # Ingress spec 中包含配置一个loadbal
           backend:
             serviceName: test          # backend是一个service:port的组合。Ingress的流量被转发到
             servicePort: 80            #  它所匹配的backend
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: cafe-ingress
+spec:
+  tls:
+    - hosts:
+        - cafe.example.com
+          secretName: cafe-secret
+  rules:
+    - host: cafe.example.com
+      http:
+        paths:
+          - path: /tea
+            backend:
+              serviceName: tea-svc
+              servicePort: 80
+          - path: /coffee
+            backend:
+              serviceName: coffee-svc
+              servicePort: 80

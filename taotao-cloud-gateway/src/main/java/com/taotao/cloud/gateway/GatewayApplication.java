@@ -15,4 +15,5 @@ public class GatewayApplication {
 //        SpringApplication.run(GatewayApplication.class, args);
         new SpringApplicationBuilder(GatewayApplication.class).web(WebApplicationType.REACTIVE).run(args);
     }
+
 }

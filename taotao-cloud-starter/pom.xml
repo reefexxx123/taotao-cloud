@@ -27,6 +27,7 @@
         <module>taotao-cloud-sentinel-starter</module>
         <module>taotao-cloud-elk-starter</module>
         <module>taotao-cloud-shardingjdbc-starter</module>
+        <module>taotao-cloud-rabbitmq-starter</module>
     </modules>
 
     <dependencies>

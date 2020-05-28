@@ -6,15 +6,15 @@ ENV TZ=Asia/Shanghai
 
 RUN ln -sf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN mkdir -p /taotao-cloud-auth
+RUN mkdir -p /taotao-cloud-gateway
 
-WORKDIR /taotao-cloud-auth
+WORKDIR /taotao-cloud-gateway
 
 EXPOSE 9800
 
-ADD ./target/taotao-cloud-auth-1.0.jar ./
+ADD ./target/taotao-cloud-gateway-1.0.jar ./
 
-CMD sleep 60; java -Djava.security.egd=file:/dev/./urandom -jar taotao-cloud-auth-1.0.jar
+CMD sleep 30; java -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=pre -jar taotao-cloud-gateway-1.0.jar
 
 ##  基础镜像
 #FROM java:openjdk-8-jre-alpine
