@@ -1,34 +1,13 @@
 server:
   port: 9900
 
-#spring:
-#  application:
-#    name: taotao-cloud-gateway-center
-#  cloud:
-#    loadbalancer:
-#      ribbon:
-#        enabled: false
-#    nacos:
-#      discovery:
-#        server-addr: 127.0.0.1:8848
-#        metadata:
-#          version: 4
-#      config:
-#        server-addr: 127.0.0.1:8848
-#        namespace: f402a0ea-5ce7-43cc-b19b-3fb7ded6e46e
-#        file-extension: yml
-#  main:
-#    allow-bean-definition-overriding: true
-#
 spring:
-  profiles:
-    active: dev
-  cache:
-    type: none
-  main:
-    allow-bean-definition-overriding: true
   application:
     name: taotao-cloud-gateway-center
+  main:
+    allow-bean-definition-overriding: true
+  cache:
+    type: none
   redis:
     host: ${TAOTAO-CLOUD-REDIS-HOST:172.16.10.220}
     port: ${TAOTAO-CLOUD-REDIS-PORT:6379}
