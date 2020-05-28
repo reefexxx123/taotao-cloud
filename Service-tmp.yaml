@@ -5,6 +5,7 @@ matadata:                                #元数据
   namespace: string                      #命名空间
   labels:                                #自定义标签属性列表
     - name: string
+      value: 234
   annotations:                           #自定义注解属性列表
     - name: string
 spec:                                    #详细描述
