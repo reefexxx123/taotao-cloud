@@ -24,9 +24,9 @@ stages:
       - publishImageConfig:
           dockerfilePath: ./taotao-cloud-gateway/Dockerfile
           buildContext: ./taotao-cloud-gateway
-          tag: taotao-cloud/taotao-cloud-gateway:${CICD_EXECUTION_SEQUENCE}
+          tag: 172.16.10.220:88/taotao-cloud/taotao-cloud-gateway:${CICD_EXECUTION_SEQUENCE}
           pushRemote: true
-          registry: http://172.16.10.220:88
+#          registry: http://172.16.10.220:88
         env:
           PLUGIN_DEBUG: "true"
           PLUGIN_INSECURE: "true"
