@@ -4,8 +4,12 @@ package com.taotao.cloud.rabbitmq.comsumer;
 import com.taotao.cloud.rabbitmq.common.DetailResponse;
 
 /**
- * Created by littlersmall on 16/5/12.
+ * MessageConsumer
+ *
+ * @author dengtao
+ * @date 2020/5/28 17:27
  */
 public interface MessageConsumer {
+
     DetailResponse consume();
 }

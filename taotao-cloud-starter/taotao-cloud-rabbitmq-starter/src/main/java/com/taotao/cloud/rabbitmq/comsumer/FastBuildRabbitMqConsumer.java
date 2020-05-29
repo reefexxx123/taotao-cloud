@@ -20,24 +20,20 @@ import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 /**
- * @author Merlin
- * @Title: FastBuildRabbitMqConsumer
- * @ProjectName open-capacity-platform
- * @Description: TODO
- * @date 2019/8/2715:14
+ * FastBuildRabbitMqConsumer
+ *
+ * @author dengtao
+ * @date 2020/5/28 17:26
  */
 @Slf4j
 @SuppressWarnings("all")
 public class FastBuildRabbitMqConsumer {
 
     private ConnectionFactory connectionFactory;
-    
-    public FastBuildRabbitMqConsumer(ConnectionFactory connectionFactory){
+
+    public FastBuildRabbitMqConsumer(ConnectionFactory connectionFactory) {
         this.connectionFactory = connectionFactory;
     }
-
-
-
 
     public <T> MessageConsumer buildMessageConsumer(String exchange, String routingKey, final String queue,
                                                     final MessageProcess<T> messageProcess, String type) throws IOException {
@@ -53,10 +49,13 @@ public class FastBuildRabbitMqConsumer {
         //3 consume
         return new MessageConsumer() {
             Channel channel;
-            {channel = connection.createChannel(false);}
 
-           
-			@Override
+            {
+                channel = connection.createChannel(false);
+            }
+
+
+            @Override
             public DetailResponse consume() {
                 try {
                     //1 通过basicGet获取原始数据
@@ -79,7 +78,7 @@ public class FastBuildRabbitMqConsumer {
                         detailRes = messageProcess.process(messageBean);
                     } catch (Exception e) {
                         log.error("exception", e);
-                        detailRes = new DetailResponse(false, "process exception: " + e,"");
+                        detailRes = new DetailResponse(false, "process exception: " + e, "");
                     }
 
                     //4 手动发送ack确认
@@ -95,7 +94,7 @@ public class FastBuildRabbitMqConsumer {
                     return detailRes;
                 } catch (InterruptedException e) {
                     log.error("exception", e);
-                    return new DetailResponse(false, "interrupted exception " + e.toString(),"");
+                    return new DetailResponse(false, "interrupted exception " + e.toString(), "");
                 } catch (ShutdownSignalException | ConsumerCancelledException | IOException e) {
                     log.error("exception", e);
 
@@ -105,7 +104,7 @@ public class FastBuildRabbitMqConsumer {
                         log.error("exception", ex);
                     }
                     channel = connection.createChannel(false);
-                    return new DetailResponse(false, "shutdown or cancelled exception " + e.toString(),"");
+                    return new DetailResponse(false, "shutdown or cancelled exception " + e.toString(), "");
                 } catch (Exception e) {
                     log.info("exception : ", e);
                     try {
@@ -114,7 +113,7 @@ public class FastBuildRabbitMqConsumer {
                         ex.printStackTrace();
                     }
                     channel = connection.createChannel(false);
-                    return new DetailResponse(false, "exception " + e.toString(),"");
+                    return new DetailResponse(false, "exception " + e.toString(), "");
                 }
             }
         };

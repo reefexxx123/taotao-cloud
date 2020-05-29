@@ -15,10 +15,15 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
+/**
+ * RabbitMQBuildMessageProducer
+ *
+ * @author dengtao
+ * @date 2020/5/28 17:34
+ */
 @Slf4j
 @Component
 public class RabbitMQBuildMessageProducer {
-
 
     @Autowired
     private ConnectionFactory connectionFactory;
@@ -33,7 +38,7 @@ public class RabbitMQBuildMessageProducer {
     }
 
     public MessageProducer buildMessageSender(final String exchange, final String routingKey,
-                                            final String queue, final String type) throws IOException {
+                                              final String queue, final String type) throws IOException {
 
         final Connection connection = connectionFactory.createConnection();
         if (type.equals(Constants.DIRECT_TYPE)) {
@@ -65,7 +70,6 @@ public class RabbitMQBuildMessageProducer {
             log.info("send message failed: " + replyCode + " " + replyText);
             rabbitTemplate.send(message);
         });
-
 
 
         return new MessageProducer() {

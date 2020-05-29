@@ -1,5 +1,11 @@
 package com.taotao.cloud.rabbitmq.common;
 
+/**
+ * FastOcpRabbitMqConstants
+ *
+ * @author dengtao
+ * @date 2020/5/28 17:28
+ */
 public class FastOcpRabbitMqConstants {
     /**
      * 线程数
@@ -24,6 +30,7 @@ public class FastOcpRabbitMqConstants {
      * MQ消息retry时间
      */
     public static final int RETRY_TIME_INTERVAL = ONE_MINUTE;
+
     /**
      * MQ消息有效时间
      */

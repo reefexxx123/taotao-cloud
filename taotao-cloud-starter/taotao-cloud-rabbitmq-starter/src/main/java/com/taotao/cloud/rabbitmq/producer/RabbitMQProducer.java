@@ -1,14 +1,11 @@
 package com.taotao.cloud.rabbitmq.producer;
 
 /**
- * @author Coder编程
- * @version V1.0
- * @Title: RabbitMQProducer
- * @Package: com.open.capacity.rabbitmq.producer
- * @Description: 消息生产者
- * @date 2019/8/25  21:01
- **/
-
+ * 消息生产者
+ *
+ * @author dengtao
+ * @date 2020/5/28 17:34
+ */
 public class RabbitMQProducer {
 
 }

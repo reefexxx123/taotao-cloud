@@ -5,13 +5,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author Merlin
- * @Title: DetailResponse
- * @ProjectName open-capacity-platform
- * @Description: TODO
- * @date 2019/8/2617:27
+ * DetailResponse
+ *
+ * @author dengtao
+ * @date 2020/5/28 17:28
  */
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

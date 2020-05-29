@@ -24,9 +24,9 @@ stages:
       - publishImageConfig:
           dockerfilePath: ./taotao-cloud-gateway/Dockerfile
           buildContext: ./taotao-cloud-gateway
-          tag: 172.16.10.220:88/taotao-cloud/taotao-cloud-gateway:${CICD_EXECUTION_SEQUENCE}
+          tag: taotao-cloud/taotao-cloud-gateway:${CICD_EXECUTION_SEQUENCE}
           pushRemote: true
-#          registry: 172.16.10.220:88
+          registry: http://172.16.10.220:88
         env:
           PLUGIN_DEBUG: "true"
           PLUGIN_INSECURE: "true"
@@ -35,16 +35,13 @@ stages:
 #      - applyYamlConfig:
 #          path: ./Deployment.yaml
 #
-#notification:
-#  recipients:
-#    - recipient: '#mychannel'
-#      # 通知的ID
-#      notifier: 'c-wdcsr:n-c9pg7'
-#    - recipient: 'test@example.com'
-#      notifier: 'c-wdcsr:n-lkrhd'
-#  # 选择您想要发送通知的条件
-#  condtions: ['Failed'，'Success'，'Changed']
-#  # 用来覆盖默认通知内容 (可选)
+notification:
+  recipients:
+    - recipient: '981376577@qq.com'
+      notifier: 'c-tqch6:n-4c28z'
+  # 选择您想要发送通知的条件
+  condtions: ['Failed','Success','Changed']
+  # 用来覆盖默认通知内容 (可选)
 #  message: 'my-message'
 
 timeout: 60

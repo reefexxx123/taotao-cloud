@@ -13,7 +13,10 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * retryCache的容器
- */
+ *
+ * @author dengtao
+ * @date 2020/5/28 17:32
+*/
 @Slf4j
 public class RetryCache {
     private MessageSender sender;
@@ -39,31 +42,28 @@ public class RetryCache {
     }
 
     private void startRetry() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (!stop) {
-                    try {
-                        Thread.sleep(FastOcpRabbitMqConstants.RETRY_TIME_INTERVAL);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+        new Thread(() -> {
+            while (!stop) {
+                try {
+                    Thread.sleep(FastOcpRabbitMqConstants.RETRY_TIME_INTERVAL);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
-                    long now = System.currentTimeMillis();
+                long now = System.currentTimeMillis();
 
-                    for (Map.Entry<Long, MessageWithTime> entry : map.entrySet()) {
-                        MessageWithTime messageWithTime = entry.getValue();
+                for (Map.Entry<Long, MessageWithTime> entry : map.entrySet()) {
+                    MessageWithTime messageWithTime = entry.getValue();
 
-                        if (null != messageWithTime) {
-                            if (messageWithTime.getTime() + 3 * FastOcpRabbitMqConstants.VALID_TIME < now) {
-                                log.info("send message {} failed after 3 min ", messageWithTime);
-                                RetryCache.this.del(entry.getKey());
-                            } else if (messageWithTime.getTime() + FastOcpRabbitMqConstants.VALID_TIME < now) {
-                                DetailResponse res = sender.send(messageWithTime);
+                    if (null != messageWithTime) {
+                        if (messageWithTime.getTime() + 3 * FastOcpRabbitMqConstants.VALID_TIME < now) {
+                            log.info("send message {} failed after 3 min ", messageWithTime);
+                            RetryCache.this.del(entry.getKey());
+                        } else if (messageWithTime.getTime() + FastOcpRabbitMqConstants.VALID_TIME < now) {
+                            DetailResponse res = sender.send(messageWithTime);
 
-                                if (!res.isIfSuccess()) {
-                                    log.info("retry send message failed {} errMsg {}", messageWithTime, res.getErrMsg());
-                                }
+                            if (!res.isIfSuccess()) {
+                                log.info("retry send message failed {} errMsg {}", messageWithTime, res.getErrMsg());
                             }
                         }
                     }

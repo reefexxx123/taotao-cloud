@@ -4,18 +4,16 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * @author Coder编程
- * @version V1.0
- * @Title: RabbitMQProperties
- * @Package: com.open.capacity.rabbitmq.config
- * @Description: 是否开启
- * @date 2019/8/25  21:02
- **/
+ * RabbitMQProperties
+ *
+ * @author dengtao
+ * @date 2020/5/28 17:35
+ */
 @Data
-@ConfigurationProperties(prefix = "ocp.fast.rabbitmq")
+@ConfigurationProperties(prefix = "taotao.cloud.rabbitmq")
 public class RabbitMQProperties {
 
-    private boolean enable;
+    private boolean enabled;
 
     private String addresses;
 

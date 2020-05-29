@@ -1,9 +1,11 @@
 package com.taotao.cloud.rabbitmq.producer;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.concurrent.TimeoutException;
 
 import com.taotao.cloud.rabbitmq.cache.RetryCache;
+import com.taotao.cloud.rabbitmq.common.Constants;
 import com.taotao.cloud.rabbitmq.common.DetailResponse;
 import com.taotao.cloud.rabbitmq.common.FastOcpRabbitMqConstants;
 import org.springframework.amqp.rabbit.connection.Connection;
@@ -17,23 +19,19 @@ import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author Coder编程
- * @version V1.0
- * @Title: RabbitMQProducer
- * @Package: com.open.capacity.rabbitmq.producer
- * @Description: 消息生产者
- * @date 2019/8/25  21:01
- **/
-
+ * 消息生产者
+ *
+ * @author dengtao
+ * @date 2020/5/28 17:18
+ */
 @Slf4j
 public class FastBuildRabbitMqProducer {
 
-    private ConnectionFactory connectionFactory;
+    private final ConnectionFactory connectionFactory;
 
-    public FastBuildRabbitMqProducer(ConnectionFactory connectionFactory){
+    public FastBuildRabbitMqProducer(ConnectionFactory connectionFactory) {
         this.connectionFactory = connectionFactory;
     }
-
 
     public MessageSender buildDirectMessageSender(final String exchange, final String routingKey, final String queue) throws IOException {
         return buildMessageSender(exchange, routingKey, queue, "direct");
@@ -45,18 +43,19 @@ public class FastBuildRabbitMqProducer {
 
     /**
      * 发送消息
-     * @param exchange    消息交换机
-     * @param routingKey  消息路由key
-     * @param queue       消息队列
-     * @param type        消息类型
-     * return
+     *
+     * @param exchange   消息交换机
+     * @param routingKey 消息路由key
+     * @param queue      消息队列
+     * @param type       消息类型
+     *                   return
      */
-    private MessageSender buildMessageSender(final String exchange, final String routingKey, final String queue, final String type)throws IOException {
+    private MessageSender buildMessageSender(final String exchange, final String routingKey, final String queue, final String type) throws IOException {
         Connection connection = connectionFactory.createConnection();
-        //1
-        if (type.equals("direct")) {
-            buildQueue(exchange, routingKey, queue, connection, "direct");
-        } else if (type.equals("topic")) {
+
+        if (type.equals(Constants.DIRECT_TYPE)) {
+            buildQueue(exchange, routingKey, queue, connection, Constants.DIRECT_TYPE);
+        } else if (type.equals(Constants.TOPIC_TYPE)) {
             buildTopic(exchange, connection);
         }
 
@@ -69,10 +68,11 @@ public class FastBuildRabbitMqProducer {
         RetryCache retryCache = new RetryCache();
 
         rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
+            assert correlationData != null;
             if (!ack) {
                 log.info("send message failed: " + cause + correlationData.toString());
             } else {
-                retryCache.del(Long.valueOf(correlationData.getId()));
+                retryCache.del(Long.parseLong(Objects.requireNonNull(correlationData.getId())));
             }
         });
 
@@ -88,7 +88,9 @@ public class FastBuildRabbitMqProducer {
         });
 
         return new MessageSender() {
-            {retryCache.setSender(this);}
+            {
+                retryCache.setSender(this);
+            }
 
             @Override
             public DetailResponse send(Object message) {
@@ -105,14 +107,12 @@ public class FastBuildRabbitMqProducer {
                     rabbitTemplate.correlationConvertAndSend(messageWithTime.getMessage(),
                             new CorrelationData(String.valueOf(messageWithTime.getId())));
                 } catch (Exception e) {
-                    return new DetailResponse(false, "","");
+                    return new DetailResponse(false, "", "");
                 }
-                return new DetailResponse(true, "","");
+                return new DetailResponse(true, "", "");
             }
         };
     }
-
-
 
 
     private void buildQueue(String exchange, String routingKey,
@@ -138,7 +138,5 @@ public class FastBuildRabbitMqProducer {
         Channel channel = connection.createChannel(false);
         channel.exchangeDeclare(exchange, "topic", true, false, null);
     }
-
-
 
 }

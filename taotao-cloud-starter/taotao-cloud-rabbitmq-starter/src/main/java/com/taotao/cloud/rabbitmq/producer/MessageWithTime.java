@@ -5,11 +5,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+/**
+ * MessageWithTime
+ *
+ * @author dengtao
+ * @date 2020/5/28 17:29
+ */
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 public class MessageWithTime {
-
     private long id;
     private long time;
     private Object message;

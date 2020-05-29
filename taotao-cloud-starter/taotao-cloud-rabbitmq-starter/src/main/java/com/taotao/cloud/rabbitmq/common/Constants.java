@@ -1,5 +1,11 @@
 package com.taotao.cloud.rabbitmq.common;
 
+/**
+ * 静态常量
+ *
+ * @author dengtao
+ * @date 2020/5/28 17:19
+*/
 public class Constants {
     /**
      * 线程数

@@ -39,20 +39,6 @@ spring:
           lower-case-service-id: true
           enabled: true
       routes:
-        #        - id: auth-login-token
-        #          uri: lb://taotao-cloud-auth-center
-        #          predicates:
-        #            - Path=/oauth/token
-        #          filters:
-        #            - RequestTime=true
-        #            #            - ImageCode
-        #            - SwaggerHeader
-        #            - RemoveRequestHeader=Origin
-        #            - PreserveHostHeader
-        #            - name: Hystrix
-        #              args:
-        #                name: fallbackcmd
-        #                fallbackUri: forward:/fallback
         - id: auth-login-token
           uri: lb://taotao-cloud-auth-center
           predicates:
@@ -103,7 +89,6 @@ spring:
           filters:
             - StripPrefix=3
             - PreserveHostHeader
-            # 限流配置
             - name: RequestRateLimiter
               args:
                 key-resolver: '#{@remoteAddrKeyResolver}'
@@ -145,33 +130,13 @@ spring:
 #      filter:
 #        enabled: true
 
-# hystrix 信号量隔离，5秒后自动超时
-#hystrix:
-#  command:
-#    # default全局有效，feign id指定应用有效
-#    default:
-#      execution:
-#        timeout:
-#          enabled: true
-#        isolation:
-#          strategy: SEMAPHORE
-#          thread:
-#            # 断路器超时时间，默认1000ms
-#            timeoutInMilliseconds: 8000
-#
-#hystrix:
-#  command:
-#    default:
-#      execution:
-#        isolation:
-#          strategy: THREAD
-#          semaphore:
-#            maxConcurrentRequests: 100
-#        thread:
-#          # 断路器超时时间，默认1000ms
-#          timeoutInMilliseconds: 8000
-
 hystrix:
+  threadpool:
+    default:
+      coreSize: 100
+      maximumSize: 5000
+      allowMaximumSizeToDivergeFromCoreSize: true
+      maxQueueSize: -1
   command:
     default:
       circuitBreaker:
@@ -191,21 +156,25 @@ hystrix:
           enabled: true
         isolation:
           thread:
-            timeoutInMilliseconds: 8000
+            timeoutInMilliseconds: 90000
+
 ribbon:
+  eager-load:
+    enabled: true
+  ServerListRefreshInterval: 10  #刷新服务列表源的间隔时间
+  httpclient:
+    enabled: false
   okhttp:
     enabled: true
+  ReadTimeout: 90000
+  ConnectTimeout: 90000
+  OkToRetryOnAllOperations: true
+  MaxAutoRetries: 1
+  MaxAutoRetriesNextServer: 1
 
 feign:
   hystrix:
     enabled: true
-#hystrix:
-#  command:
-#    default:
-#      execution:
-#        isolation:
-#          thread:
-#            timeoutInMilliseconds: 1000
 
 taotao:
   cloud:
