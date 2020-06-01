@@ -1,6 +1,7 @@
 package com.taotao.cloud.gateway.filter.gateway;
 
 import com.taotao.cloud.gateway.swagger.SwaggerAggProperties;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -11,18 +12,18 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 
 /**
- * SwaggerHeaderFilter
+ * SwaggerHeader过滤
  *
  * @author dengtao
  * @date 2020/4/29 22:13
  */
 @Slf4j
 @Component
+@AllArgsConstructor
 public class SwaggerHeaderGatewayFilterFactory extends AbstractGatewayFilterFactory<Object> {
     private static final String HEADER_NAME = "X-Forwarded-Prefix";
 
-    @Autowired
-    private SwaggerAggProperties swaggerAggProperties;
+    private final SwaggerAggProperties swaggerAggProperties;
 
     @Override
     public GatewayFilter apply(Object config) {

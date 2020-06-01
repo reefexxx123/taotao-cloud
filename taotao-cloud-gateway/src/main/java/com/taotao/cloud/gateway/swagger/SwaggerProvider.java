@@ -1,9 +1,7 @@
 package com.taotao.cloud.gateway.swagger;
 
 
-import cn.hutool.core.util.StrUtil;
-import com.taotao.cloud.gateway.properties.CustomGatewayProperties;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.gateway.config.GatewayProperties;
 import org.springframework.cloud.gateway.route.RouteLocator;
@@ -26,17 +24,18 @@ import java.util.Set;
  * @date 2020/4/29 22:14
  */
 @Primary
-@Component
-@EnableConfigurationProperties(SwaggerAggProperties.class)
+@ConditionalOnProperty(prefix = "taotao.cloud.swagger-agg", name = "enabled", havingValue = "false")
 public class SwaggerProvider implements SwaggerResourcesProvider {
     private final RouteLocator routeLocator;
     private final GatewayProperties gatewayProperties;
-    @Resource
-    private SwaggerAggProperties swaggerAggProperties;
+    private final SwaggerAggProperties swaggerAggProperties;
 
-    public SwaggerProvider(RouteLocator routeLocator, GatewayProperties gatewayProperties) {
+    public SwaggerProvider(RouteLocator routeLocator,
+                           GatewayProperties gatewayProperties,
+                           SwaggerAggProperties swaggerAggProperties) {
         this.routeLocator = routeLocator;
         this.gatewayProperties = gatewayProperties;
+        this.swaggerAggProperties = swaggerAggProperties;
     }
 
     @Override

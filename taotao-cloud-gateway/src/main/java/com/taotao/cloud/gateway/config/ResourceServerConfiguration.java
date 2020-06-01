@@ -2,12 +2,14 @@ package com.taotao.cloud.gateway.config;
 
 import com.taotao.cloud.auth.properties.PermitProperties;
 import com.taotao.cloud.auth.properties.SecurityProperties;
-import com.taotao.cloud.gateway.auth.*;
+import com.taotao.cloud.gateway.auth.CustomAuthenticationManager;
+import com.taotao.cloud.gateway.auth.JsonAuthenticationEntryPoint;
+import com.taotao.cloud.gateway.auth.PermissionAuthManager;
 import com.taotao.cloud.gateway.handler.JsonAccessDeniedHandler;
 import com.taotao.cloud.gateway.handler.Oauth2AuthSuccessHandler;
 import com.taotao.cloud.gateway.properties.CustomGatewayProperties;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

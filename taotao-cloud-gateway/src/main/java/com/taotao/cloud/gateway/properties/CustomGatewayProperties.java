@@ -1,6 +1,5 @@
 package com.taotao.cloud.gateway.properties;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -15,9 +14,7 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @RefreshScope
-@Component
 @ConfigurationProperties(prefix = "taotao.cloud.gateway")
-@NoArgsConstructor
 public class CustomGatewayProperties {
 
     /**
@@ -30,5 +27,8 @@ public class CustomGatewayProperties {
      */
     private String version = "";
 
+    /**
+     * 网关基础路由uri
+     */
     private String baseUri = "";
 }

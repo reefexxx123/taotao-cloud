@@ -35,7 +35,7 @@ public class DefaultSecurityHandlerConfig {
      */
     @Bean
     public AuthenticationEntryPoint authenticationEntryPoint() {
-        return (request, response, authException) -> ResponseUtil.responseFailed(objectMapper, response, "请求权限不足");
+        return (request, response, authException) -> ResponseUtil.failed(objectMapper, response, "请求权限不足");
 
     }
 
@@ -58,7 +58,7 @@ public class DefaultSecurityHandlerConfig {
         return new OAuth2AccessDeniedHandler() {
             @Override
             public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException authException) throws IOException, ServletException {
-                ResponseUtil.responseFailed(objectMapper, response, "无效的token拒绝访问");
+                ResponseUtil.failed(objectMapper, response, "无效的token拒绝访问");
             }
         };
     }

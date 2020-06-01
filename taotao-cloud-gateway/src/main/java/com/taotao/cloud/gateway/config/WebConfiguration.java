@@ -1,8 +1,16 @@
 package com.taotao.cloud.gateway.config;
 
+import com.taotao.cloud.gateway.properties.CustomGatewayProperties;
+import com.taotao.cloud.gateway.properties.TraceProperties;
+import com.taotao.cloud.gateway.swagger.SwaggerAggProperties;
+import com.taotao.cloud.gateway.swagger.SwaggerProvider;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.reactive.HiddenHttpMethodFilter;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilterChain;
@@ -17,7 +25,11 @@ import java.util.Objects;
  * @date 2020/4/29 22:13
  */
 @Configuration
+@EnableConfigurationProperties({TraceProperties.class, CustomGatewayProperties.class, SwaggerAggProperties.class})
+@Import(SwaggerProvider.class)
+@Order
 public class WebConfiguration {
+
     @Bean(name = "remoteAddrKeyResolver")
     public KeyResolver keyResolver() {
         return exchange -> Mono.just(Objects.requireNonNull(exchange.getRequest().getRemoteAddress()).getAddress().getHostAddress());

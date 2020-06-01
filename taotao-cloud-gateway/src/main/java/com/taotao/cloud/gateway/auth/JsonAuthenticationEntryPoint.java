@@ -9,7 +9,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
- * 401未授权异常处理，转换为JSON
+ * 401未授权异常处理
  *
  * @author dengtao
  * @date 2020/4/29 22:10
@@ -17,8 +17,10 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class JsonAuthenticationEntryPoint implements ServerAuthenticationEntryPoint {
 
+    private static final String UN_AUTHORIZED = "用户未授权";
+
     @Override
     public Mono<Void> commence(ServerWebExchange exchange, AuthenticationException e) {
-        return ResponseUtil.responseFailed(exchange, HttpStatus.UNAUTHORIZED.value(), e.getMessage());
+        return ResponseUtil.failed(exchange, HttpStatus.UNAUTHORIZED.value(), UN_AUTHORIZED);
     }
 }

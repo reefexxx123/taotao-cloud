@@ -42,7 +42,7 @@ spring:
           lower-case-service-id: true
           enabled: true
       routes:
-        - id: auth-login-token
+        - id: auth-user-password-token
           uri: lb://taotao-cloud-auth-center
           predicates:
             - Path=${taotao.cloud.gateway.base-uri}/auth/oauth/token/user
@@ -60,7 +60,7 @@ spring:
             - RequestTime=true
             - PreserveHostHeader
         # 发送短信接口要做接口限制
-        - id: auth-login-token
+        - id: auth-sms-code
           uri: lb://taotao-cloud-auth-center
           predicates:
             - Path=${taotao.cloud.gateway.base-uri}/auth/sms/code
@@ -69,7 +69,7 @@ spring:
             - RequestTime=true
             - PreserveHostHeader
         # 数据重复校验要做接口限制
-        - id: taotao-cloud-uc-center
+        - id: uc-repeact-check
           uri: lb://taotao-cloud-uc-center
           predicates:
             - Path=${taotao.cloud.gateway.base-uri}/uc/repeat/check
@@ -183,13 +183,14 @@ taotao:
   cloud:
     gateway:
       prefix: /api/
-      version: @project.version@
+      version: 1.0
       base-uri: ${taotao.cloud.gateway.prefix}${taotao.cloud.gateway.version}
       #网关动态路由
       dynamicRoute:
         enabled: false
         data-type: nacos
     swagger-agg:
+      enabled: true
       api-docs-path: /api-docs
       swagger-version: 2.0
       generate-routes: taotao-cloud-uc-center,taotao-cloud-auth-center,taotao-cloud-order-center,taotao-cloud-product-center
@@ -232,7 +233,3 @@ management:
   endpoint:
     health:
       show-details: always
-
-
-
-

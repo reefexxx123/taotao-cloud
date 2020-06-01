@@ -1,11 +1,8 @@
 package com.taotao.cloud.gateway.swagger;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,12 +13,13 @@ import java.util.Set;
  * @author dengtao
  * @date 2020/4/29 22:14
  */
-@Setter
-@Getter
-@ConfigurationProperties("taotao.cloud.swagger-agg")
+@Data
 @RefreshScope
-@Component
+@ConfigurationProperties("taotao.cloud.swagger-agg")
 public class SwaggerAggProperties {
+
+    private boolean enabled = false;
+
     /**
      * Swagger返回JSON文档的接口路径（全局配置）
      */

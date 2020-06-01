@@ -14,7 +14,6 @@ import java.util.Random;
  *
  * @author dengtao
  * @version v1.0.0
- * @create 2020/4/27 14:11
  */
 public class WeightMeta<T> {
     private final Random ran = new Random();

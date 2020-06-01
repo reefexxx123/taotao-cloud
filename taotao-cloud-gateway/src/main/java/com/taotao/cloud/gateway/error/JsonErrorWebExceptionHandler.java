@@ -19,59 +19,27 @@ import java.util.Map;
  * @date 2020/4/29 22:12
  */
 public class JsonErrorWebExceptionHandler extends DefaultErrorWebExceptionHandler {
-    public JsonErrorWebExceptionHandler(ErrorAttributes errorAttributes, ResourceProperties resourceProperties,
-                                        ErrorProperties errorProperties, ApplicationContext applicationContext) {
+    public JsonErrorWebExceptionHandler(ErrorAttributes errorAttributes,
+                                        ResourceProperties resourceProperties,
+                                        ErrorProperties errorProperties,
+                                        ApplicationContext applicationContext) {
         super(errorAttributes, resourceProperties, errorProperties, applicationContext);
     }
 
-    /**
-     * 获取异常属性
-     */
     @Override
     protected Map<String, Object> getErrorAttributes(ServerRequest request, boolean includeStackTrace) {
         Throwable error = super.getError(request);
         return responseError(error.getMessage());
     }
 
-    /**
-     * 指定响应处理方法为JSON处理的方法
-     *
-     * @param errorAttributes
-     */
     @Override
     protected RouterFunction<ServerResponse> getRoutingFunction(ErrorAttributes errorAttributes) {
         return RouterFunctions.route(RequestPredicates.all(), this::renderErrorResponse);
     }
 
-    /**
-     * 根据code获取对应的HttpStatus
-     *
-     * @param errorAttributes
-     * @return
-     */
     @Override
     protected int getHttpStatus(Map<String, Object> errorAttributes) {
         return HttpStatus.OK.value();
-    }
-
-    /**
-     * 构建异常信息
-     *
-     * @param request
-     * @param ex
-     * @return
-     */
-    private String buildMessage(ServerRequest request, Throwable ex) {
-        StringBuilder message = new StringBuilder("[");
-        message.append(request.methodName());
-        message.append(" ");
-        message.append(request.uri());
-        message.append("]");
-        if (ex != null) {
-            message.append(": ");
-            message.append(ex.getMessage());
-        }
-        return message.toString();
     }
 
     /**

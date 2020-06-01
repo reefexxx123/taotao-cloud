@@ -49,7 +49,7 @@ public class TokenController {
         if (Objects.nonNull(oAuth2AccessToken)) {
             return Result.succeed(oAuth2AccessToken);
         }
-        return Result.authenticationFailed("用户名或密码错误");
+        return Result.failed("用户名或密码错误");
     }
 
 //    @ApiOperation(value = "openId获取token")

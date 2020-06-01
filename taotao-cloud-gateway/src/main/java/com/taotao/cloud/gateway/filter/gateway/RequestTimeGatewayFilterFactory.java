@@ -15,22 +15,23 @@ import reactor.core.publisher.Mono;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
- * <br>
+ * 请求时间过滤<br>
  *
  * @author dengtao
  * @version v1.0.0
- * @create 2020/5/2 18:37
  */
 @Component
 public class RequestTimeGatewayFilterFactory extends AbstractGatewayFilterFactory<RequestTimeGatewayFilterFactory.Config> {
     private static final Logger log = LoggerFactory.getLogger(RequestTimeGatewayFilterFactory.class);
     private static final String COUNT_START_TIME = "countStartTime";
+    private static final String ENABLED = "enabled";
 
     @Override
     public List<String> shortcutFieldOrder() {
-        return Collections.singletonList("enabled");
+        return Collections.singletonList(ENABLED);
     }
 
     public RequestTimeGatewayFilterFactory() {
@@ -47,12 +48,12 @@ public class RequestTimeGatewayFilterFactory extends AbstractGatewayFilterFactor
             return chain.filter(exchange).then(
                     Mono.fromRunnable(() -> {
                         Long startTime = exchange.getAttribute(COUNT_START_TIME);
-                        if (startTime != null) {
+                        if (Objects.nonNull(startTime)) {
                             StringBuilder sb = new StringBuilder(exchange.getRequest().getURI().getRawPath())
-                                    .append(": ")
+                                    .append(" 请求时间: ")
                                     .append(System.currentTimeMillis() - startTime)
                                     .append("ms");
-                            sb.append(" params:").append(exchange.getRequest().getQueryParams());
+                            sb.append(" 请求参数: ").append(exchange.getRequest().getQueryParams());
                             log.info(sb.toString());
                         }
                     })

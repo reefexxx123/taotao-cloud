@@ -1,4 +1,4 @@
-package com.taotao.cloud.gateway.utils;
+package com.taotao.cloud.common.utils;
 
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;

@@ -32,11 +32,10 @@ import reactor.core.publisher.Mono;
 import java.net.URI;
 
 /**
- * <br>
+ * 蓝绿发布<br>
  *
  * @author dengtao
  * @version v1.0.0
- * @create 2020/4/27 14:13
  */
 @Component
 public class GrayReactiveLoadBalancerClientFilter implements GlobalFilter, Ordered {

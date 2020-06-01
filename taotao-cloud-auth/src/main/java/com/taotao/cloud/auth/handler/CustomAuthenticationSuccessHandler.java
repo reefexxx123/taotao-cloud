@@ -72,7 +72,7 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
             tokenDTO.setToken(oAuth2AccessToken);
             user.setPassword("");
             tokenDTO.setUser(user);
-            ResponseUtil.responseSucceed(objectMapper, response, tokenDTO);
+            ResponseUtil.success(objectMapper, response, tokenDTO);
         }
     }
 

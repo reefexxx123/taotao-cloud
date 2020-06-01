@@ -1,6 +1,13 @@
 package com.taotao.cloud.common.utils;
 
 import lombok.val;
+import org.omg.CORBA.ServerRequest;
+import org.springframework.core.ResolvableType;
+import org.springframework.core.codec.ByteArrayDecoder;
+import org.springframework.http.codec.DecoderHttpMessageReader;
+import org.springframework.http.codec.HttpMessageReader;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import reactor.core.publisher.Mono;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -81,6 +89,18 @@ public class WebUtils {
         return res;
     }
 
+    /**
+     * 从Flux<DataBuffer>中获取字符串的方法
+     *
+     * @return 请求体
+     */
+    private String getBodyString(ServerHttpRequest serverHttpRequest) {
+        HttpMessageReader<byte[]> httpMessageReader = new DecoderHttpMessageReader(new ByteArrayDecoder());
+        ResolvableType resolvableType = ResolvableType.forClass(byte[].class);
+        Mono<byte[]> mono = httpMessageReader.readMono(resolvableType, serverHttpRequest, Collections.emptyMap());
+        return mono.map(String::new).block();
+    }
+
     public static String getBodyString(HttpServletRequest request) throws IOException {
         StringBuilder sb = new StringBuilder();
         InputStream inputStream = null;
@@ -112,4 +132,6 @@ public class WebUtils {
         }
         return sb.toString().trim();
     }
+
+
 }

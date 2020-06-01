@@ -10,7 +10,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
- * 403拒绝访问异常处理，转换为JSON
+ * 403拒绝访问异常处理
  *
  * @author dengtao
  * @date 2020/4/29 22:10
@@ -18,9 +18,11 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class JsonAccessDeniedHandler implements ServerAccessDeniedHandler {
 
+    private static final String INVALID = "无效的token拒绝访问";
+
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, AccessDeniedException e) {
-        return ResponseUtil.responseFailed(exchange, ResultEnum.ERROR.getCode(), "无效的token拒绝访问");
+        return ResponseUtil.failed(exchange, ResultEnum.ERROR.getCode(), INVALID);
     }
 
 }

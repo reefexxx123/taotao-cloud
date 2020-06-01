@@ -13,10 +13,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients
 @EnableFeignInterceptor
 @EnableSearchClient
 @EnableTransactionManagement
+@EnableFeignClients(basePackages = "com.taotao.cloud.*.api.feign")
 @MapperScan(value = "com.taotao.cloud.uc.biz.mapper")
 @ComponentScan(value = "com.taotao.cloud")
 public class UcBizApplication {

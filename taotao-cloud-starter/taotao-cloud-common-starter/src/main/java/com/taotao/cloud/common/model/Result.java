@@ -25,16 +25,12 @@ public class Result<T> implements Serializable {
     private Integer code;
     private String message;
 
-    public Result(){};
+    public Result() {}
 
     public Result(T data, Integer code, String message) {
         this.data = data;
         this.code = code;
         this.message = message;
-    }
-
-    public static <T> Result<T> succeed(String msg) {
-        return (Result<T>) of(msg, ResultEnum.SUCCESS.getCode(), SUCCESS);
     }
 
     public static <T> Result<T> succeed(T data, String msg) {
@@ -49,8 +45,12 @@ public class Result<T> implements Serializable {
         return new Result<>(data, code, msg);
     }
 
+    public static <T> Result<T> failed(Integer code, String msg) {
+        return of(null, code, msg);
+    }
+
     public static <T> Result<T> failed(String msg) {
-        return (Result<T>) of(null, ResultEnum.ERROR.getCode(), msg);
+        return of(null, ResultEnum.ERROR.getCode(), msg);
     }
 
     public static <T> Result<T> failed(T model, String msg) {
@@ -59,9 +59,5 @@ public class Result<T> implements Serializable {
 
     public static <T> Result<T> failed(T model) {
         return of(model, ResultEnum.ERROR.getCode(), ERROR);
-    }
-
-    public static <T> Result<T> authenticationFailed(String msg) {
-        return (Result<T>) of(msg, ResultEnum.UNAUTHORIZED.getCode(), ResultEnum.UNAUTHORIZED.getMessage());
     }
 }

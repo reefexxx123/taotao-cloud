@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 */
 @Data
 @RefreshScope
-@Component
 @ConfigurationProperties(prefix = "taotao.cloud.log.trace")
 public class TraceProperties {
 

@@ -83,7 +83,8 @@ taotao:
             /api/socket/**,
             /sendCode/**,
             /mobile/login/**,
-            /oauth/**
+            /oauth/**,
+            /api-docs
     # 第三方认证模块
     social:
       security:
@@ -120,6 +121,13 @@ taotao:
         name: dengtao
         url: http://dtbox.top/
         email: 981376577@qq.com
+      host: ${spring.cloud.client.ip-address}:${server.port}
+      global-operation-parameters:
+        - name: BaseAuthorization
+          description: 基础认证信息
+          model-ref: string
+          parameter-type: header
+          required: true
     # ribbon模块
     ribbon:
       isolation:

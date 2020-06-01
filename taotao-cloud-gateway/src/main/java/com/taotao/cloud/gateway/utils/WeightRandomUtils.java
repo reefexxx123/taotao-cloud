@@ -13,7 +13,6 @@ import java.util.Map;
  *
  * @author dengtao
  * @version v1.0.0
- * @create 2020/4/27 14:11
  */
 public class WeightRandomUtils {
     public static <T> WeightMeta<T> buildWeightMeta(final Map<T, Integer> weightMap) {

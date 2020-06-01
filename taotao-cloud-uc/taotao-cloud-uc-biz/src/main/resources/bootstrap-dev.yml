@@ -115,6 +115,7 @@ taotao:
         url: http://dtbox.top/
         email: 981376577@qq.com
       base-package: com.taotao.cloud.uc.biz.controller
+      host: ${spring.cloud.client.ip-address}:${server.port}
     # ribbon模块
     ribbon:
       isolation:

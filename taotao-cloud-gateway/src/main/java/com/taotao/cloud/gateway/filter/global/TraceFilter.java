@@ -3,6 +3,7 @@ package com.taotao.cloud.gateway.filter.global;
 import cn.hutool.core.util.IdUtil;
 import com.taotao.cloud.common.constant.CommonConstant;
 import com.taotao.cloud.gateway.properties.TraceProperties;
+import lombok.AllArgsConstructor;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -20,10 +21,10 @@ import reactor.core.publisher.Mono;
  * @date 2020/4/29 22:13
  */
 @Component
+@AllArgsConstructor
 public class TraceFilter implements GlobalFilter, Ordered {
 
-    @Autowired
-    private TraceProperties traceProperties;
+    private final TraceProperties traceProperties;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {

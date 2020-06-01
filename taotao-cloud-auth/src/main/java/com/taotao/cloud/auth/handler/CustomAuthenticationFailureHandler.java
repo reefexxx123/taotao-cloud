@@ -1,10 +1,8 @@
 package com.taotao.cloud.auth.handler;
 
 
-import com.baomidou.mybatisplus.extension.api.R;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.taotao.cloud.auth.exception.ValidateCodeException;
-import com.taotao.cloud.common.utils.LogUtils;
 import com.taotao.cloud.common.utils.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -31,7 +29,9 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
     private ObjectMapper objectMapper;
 
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
+    public void onAuthenticationFailure(HttpServletRequest request,
+                                        HttpServletResponse response,
+                                        AuthenticationException exception) throws IOException {
         String message;
         if (exception instanceof ValidateCodeException) {
             message = exception.getMessage();
@@ -40,7 +40,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
         } else {
             message = "用户认证失败";
         }
-        ResponseUtil.responseWriter(objectMapper, response, message, HttpStatus.UNAUTHORIZED.value());
+        ResponseUtil.writeResponse(objectMapper, response, message, HttpStatus.UNAUTHORIZED.value());
     }
 }
 

@@ -11,9 +11,10 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.server.RequestPredicates;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
+import org.springframework.web.reactive.function.server.ServerResponse;
 
 /**
- * 路由配置信息 特殊请求直接在此处理，不进行路由转发
+ * 特殊路由配置信息
  *
  * @author dengtao
  * @date 2020/4/29 22:11
@@ -23,16 +24,19 @@ import org.springframework.web.reactive.function.server.RouterFunctions;
 @AllArgsConstructor
 public class RouterFunctionConfiguration {
 
+    private static final String FALLBACK = "/fallback";
+    private static final String CODE = "/code";
+
     private final HystrixFallbackHandler hystrixFallbackHandler;
     private final ImageCodeHandler imageCodeWebHandler;
     private final CustomGatewayProperties customGatewayProperties;
 
     @Bean
-    public RouterFunction routerFunction() {
+    public RouterFunction<ServerResponse> routerFunction() {
         return RouterFunctions.route(
-                RequestPredicates.path("/fallback")
+                RequestPredicates.path(FALLBACK)
                         .and(RequestPredicates.accept(MediaType.TEXT_PLAIN)), hystrixFallbackHandler)
-                .andRoute(RequestPredicates.GET(customGatewayProperties.getBaseUri() + "/code")
+                .andRoute(RequestPredicates.GET(customGatewayProperties.getBaseUri() + CODE)
                         .and(RequestPredicates.accept(MediaType.TEXT_PLAIN)), imageCodeWebHandler);
 
     }
