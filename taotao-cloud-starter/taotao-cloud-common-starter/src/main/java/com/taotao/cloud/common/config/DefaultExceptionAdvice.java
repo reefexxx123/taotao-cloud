@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.web.context.request.NativeWebRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  * 异常通用处理
@@ -32,7 +35,8 @@ public class DefaultExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({IllegalArgumentException.class})
-    public Result<String> badRequestException(IllegalArgumentException e) {
+    public Result<String> badRequestException(NativeWebRequest request, IllegalArgumentException e) {
+        printException(request, e);
         return Result.of(e.getMessage(), HttpStatus.BAD_REQUEST.value(), "参数解析失败");
     }
 
@@ -41,7 +45,8 @@ public class DefaultExceptionAdvice {
      * 返回状态码:403
      */
     @ExceptionHandler({AccessDeniedException.class})
-    public Result<String> badMethodExpressException(AccessDeniedException e) {
+    public Result<String> badMethodExpressException(NativeWebRequest request, AccessDeniedException e) {
+        printException(request, e);
         return Result.of(e.getMessage(), HttpStatus.FORBIDDEN.value(), "没有权限请求当前方法");
     }
 
@@ -50,7 +55,8 @@ public class DefaultExceptionAdvice {
      * 返回状态码:403
      */
     @ExceptionHandler({BaseException.class})
-    public Result<String> badBaseException(BaseException e) {
+    public Result<String> badBaseException(NativeWebRequest request, BaseException e) {
+        printException(request, e);
         return Result.of(e.getMessage(), HttpStatus.FORBIDDEN.value(), "没有权限请求当前方法");
     }
 
@@ -59,7 +65,8 @@ public class DefaultExceptionAdvice {
      * 返回状态码:403
      */
     @ExceptionHandler({MessageException.class})
-    public Result<String> badMessageException(MessageException e) {
+    public Result<String> badMessageException(NativeWebRequest request, MessageException e) {
+        printException(request, e);
         return Result.of(e.getMessage(), HttpStatus.FORBIDDEN.value(), "发送消息异常");
     }
 
@@ -69,7 +76,8 @@ public class DefaultExceptionAdvice {
      * 返回状态码:403
      */
     @ExceptionHandler({UsernameNotFoundException.class})
-    public Result<String> badUsernameNotFoundException(UsernameNotFoundException e) {
+    public Result<String> badUsernameNotFoundException(NativeWebRequest request, UsernameNotFoundException e) {
+        printException(request, e);
         return Result.of(e.getMessage(), HttpStatus.FORBIDDEN.value(), "错误");
     }
 
@@ -77,7 +85,8 @@ public class DefaultExceptionAdvice {
      * 返回状态码:405
      */
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
-    public Result<String> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+    public Result<String> handleHttpRequestMethodNotSupportedException(NativeWebRequest request, HttpRequestMethodNotSupportedException e) {
+        printException(request, e);
         return Result.of(e.getMessage(), HttpStatus.METHOD_NOT_ALLOWED.value(), "不支持当前请求方法");
     }
 
@@ -85,7 +94,8 @@ public class DefaultExceptionAdvice {
      * 返回状态码:415
      */
     @ExceptionHandler({HttpMediaTypeNotSupportedException.class})
-    public Result<String> handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
+    public Result<String> handleHttpMediaTypeNotSupportedException(NativeWebRequest request, HttpMediaTypeNotSupportedException e) {
+        printException(request, e);
         return Result.of(e.getMessage(), HttpStatus.UNSUPPORTED_MEDIA_TYPE.value(), "不支持当前媒体类型");
     }
 
@@ -94,7 +104,8 @@ public class DefaultExceptionAdvice {
      * 返回状态码:500
      */
     @ExceptionHandler({SQLException.class})
-    public Result<String> handleSQLException(SQLException e) {
+    public Result<String> handleSQLException(NativeWebRequest request, SQLException e) {
+        printException(request, e);
         return Result.of(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value(), "SQLException异常");
     }
 
@@ -103,7 +114,8 @@ public class DefaultExceptionAdvice {
      * 返回状态码:500
      */
     @ExceptionHandler(BusinessException.class)
-    public Result<String> handleException(BusinessException e) {
+    public Result<String> handleException(NativeWebRequest request, BusinessException e) {
+        printException(request, e);
         return Result.of(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value(), "业务异常");
     }
 
@@ -112,7 +124,8 @@ public class DefaultExceptionAdvice {
      * 返回状态码:200
      */
     @ExceptionHandler(IdempotencyException.class)
-    public Result<String> handleException(IdempotencyException e) {
+    public Result<String> handleException(NativeWebRequest request, IdempotencyException e) {
+        printException(request, e);
         return Result.of(e.getMessage(), HttpStatus.OK.value(), "幂等性异常");
     }
 
@@ -121,7 +134,19 @@ public class DefaultExceptionAdvice {
      * 返回状态码:500
      */
     @ExceptionHandler(Exception.class)
-    public Result<String> handleException(Exception e) {
+    public Result<String> handleException(NativeWebRequest request, Exception e) {
+        printException(request, e);
         return Result.of(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value(), "未知异常");
+    }
+
+    private void printException(NativeWebRequest request, Exception e) {
+        HttpServletRequest nativeRequest = request.getNativeRequest(HttpServletRequest.class);
+        if (Objects.nonNull(nativeRequest)) {
+            String uri = nativeRequest.getRequestURI();
+            String queryString = nativeRequest.getQueryString();
+            log.error("请求路径: " + uri + "   请求参数: " + queryString, e);
+        } else {
+            log.error("", e);
+        }
     }
 }

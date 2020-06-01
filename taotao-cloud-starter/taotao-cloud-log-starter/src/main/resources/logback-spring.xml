@@ -76,10 +76,6 @@
         <appender-ref ref="audit_log"/>
     </appender>
 
-    <logger name="com.central.log.service.impl.LoggerAuditServiceImpl" level="debug" addtivity="false">
-        <appender-ref ref="audit_log_async" />
-    </logger>
-
     <root level="INFO">
         <appender-ref ref="StdoutAppender"/>
         <appender-ref ref="file_async"/>

@@ -1,51 +1,84 @@
 stages:
   - name: Build
-#    when:
-#      branch: master
-#      event: [ push, pull_request, tag ]
+    when:
+      branch: master
+      event: [ push, pull_request, tag ]
     steps:
       - runScriptConfig:
           image: 172.16.10.220:88/taotao-cloud/taotao-cloud-maven:latest
           shellScript: echo `mvn -version` && mvn package deploy -Dmaven.test.skip=true
-#        when:
-#          branch: [master]
-#          event: push
+        when:
+          branch: [master]
+          event: push
         env:
           SUCCESS_KEY: success
-#        cpuRequest: 100m
-#        cpuLimit: 1
-#        memoryRequest: 100Mi
-#        memoryLimit: 1Gi
+        envFrom:
+          - sourceName: my-secret
+            sourceKey: secret-key
+            targetKey: ALIAS_ENV
+        cpuRequest: 100m
+        cpuLimit: 1
+        memoryRequest: 100Mi
+        memoryLimit: 1Gi
+      - runScriptConfig:
+          image: busybox
+          shellScript: date -R
+
   - name: PushImage
-#    when:
-#      branch: [ master]
-#      event: push
+    when:
+      branch: master
+      event: [ push, pull_request, tag ]
     steps:
       - publishImageConfig:
           dockerfilePath: ./taotao-cloud-gateway/Dockerfile
           buildContext: ./taotao-cloud-gateway
-          tag: 172.16.10.220:88/taotao-cloud/taotao-cloud-gateway:${CICD_EXECUTION_SEQUENCE}
+          tag: taotao-cloud/taotao-cloud-gateway:${CICD_EXECUTION_SEQUENCE}
           pushRemote: true
           registry: 172.16.10.220:88
         env:
           PLUGIN_DEBUG: "true"
           PLUGIN_INSECURE: "true"
-#  - name: Deploy
-#    steps:
-#      - applyYamlConfig:
-#          path: ./Deployment.yaml
-#
+          PLUGIN_MIRROR: "http://172.16.10.220:88/taotao-cloud"
+      - publishImageConfig:
+          dockerfilePath: ./taotao-cloud-auth/Dockerfile
+          buildContext: ./taotao-cloud-auth
+          tag: 172.16.10.220:88/taotao-cloud/taotao-cloud-auth:${CICD_EXECUTION_SEQUENCE}
+          pushRemote: true
+          registry: 172.16.10.220:88
+          env:
+            PLUGIN_DEBUG: "true"
+            PLUGIN_INSECURE: "true"
+      - publishImageConfig:
+          dockerfilePath: ./taotao-cloud-uc/Dockerfile
+          buildContext: ./taotao-cloud-uc
+          tag: 172.16.10.220:88/taotao-cloud/taotao-cloud-uc:${CICD_EXECUTION_SEQUENCE}
+          pushRemote: true
+          registry: 172.16.10.220:88
+          env:
+            PLUGIN_DEBUG: "true"
+            PLUGIN_INSECURE: "true"
+
+  - name: Deploy
+    when:
+      branch: master
+      event: [ push, pull_request, tag ]
+    steps:
+      - applyYamlConfig:
+          path: ./taotao-cloud-auth/deployment.yaml
+      - applyYamlConfig:
+          path: ./taotao-cloud-gateway/deployment.yaml
+      - applyYamlConfig:
+          path: ./taotao-cloud-uc/deployment.yaml
+
 notification:
   recipients:
     - recipient: '981376577@qq.com'
       notifier: 'c-tqch6:n-4c28z'
-  # 选择您想要发送通知的条件
   condtions: ['Failed','Success','Changed']
-  # 用来覆盖默认通知内容 (可选)
-#  message: 'my-message'
+  message: 'my-message'
 
 timeout: 60
 
-#branch:
-#  include:
-#    - master
+branch:
+  include: [master, feature/*]
+  exclude: [dev]

@@ -27,6 +27,9 @@ spring:
         server-addr: 127.0.0.1:8848
         metadata:
           version: 4
+      # 开发时候关闭nacos配置中心
+      config:
+        enabled: false
     #      config:
     #        server-addr: 127.0.0.1:8848
     #        namespace: f402a0ea-5ce7-43cc-b19b-3fb7ded6e46e
