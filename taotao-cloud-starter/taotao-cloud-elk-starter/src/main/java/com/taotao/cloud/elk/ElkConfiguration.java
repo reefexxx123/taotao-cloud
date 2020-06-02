@@ -3,8 +3,8 @@ package com.taotao.cloud.elk;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.encoder.Encoder;
-import com.taotao.cloud.common.constant.ProjectNameConstant;
-import com.taotao.cloud.common.utils.LogUtils;
+import com.taotao.cloud.common.constant.StarterNameConstant;
+import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.elk.properties.ElkControllerAspectProperties;
 import com.taotao.cloud.elk.properties.ElkHealthLogStatisticProperties;
 import com.taotao.cloud.elk.properties.ElkProperties;
@@ -28,7 +28,7 @@ import org.springframework.context.annotation.Bean;
 public class ElkConfiguration implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
-        LogUtils.info(ElkConfiguration.class, ProjectNameConstant.TAOTAO_CLOUD_ELK_STARTER, "elk模块已启动");
+        LogUtil.info(ElkConfiguration.class, StarterNameConstant.TAOTAO_CLOUD_ELK_STARTER, "elk模块已启动");
     }
 
     @Autowired

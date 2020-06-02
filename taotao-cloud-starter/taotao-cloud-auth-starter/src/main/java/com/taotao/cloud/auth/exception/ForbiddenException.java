@@ -6,11 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 
 /**
- * @Classname ForbiddenException
- * @Description
- * @Author Created by Lihaodong (alias:小东啊) im.lihaodong@gmail.com
- * @Date 2019-09-17 20:50
- * @Version 1.0
+ * ForbiddenException
+ *
+ * @author dengtao
+ * @date 2020/6/2 15:35
  */
 @JsonSerialize(using = CustomOauthExceptionSerializer.class)
 public class ForbiddenException extends OAuth2Exception {

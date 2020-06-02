@@ -1,7 +1,5 @@
 package com.taotao.cloud.common.exception;
 
-import lombok.Data;
-
 /**
  * 业务异常
  *

@@ -1,8 +1,7 @@
 package com.taotao.cloud.auth.authentication.social.gitee.connect;
 
-import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.taotao.cloud.common.utils.ContextUtils;
+import com.taotao.cloud.common.utils.ContextUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -56,7 +55,7 @@ public class GiteeOAuth2Template extends OAuth2Template {
 
     @Override
     protected RestTemplate createRestTemplate() {
-        RestTemplate restTemplate = ContextUtils.getBean(RestTemplate.class, true);
+        RestTemplate restTemplate = ContextUtil.getBean(RestTemplate.class, true);
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter(StandardCharsets.UTF_8));
         return restTemplate;
     }

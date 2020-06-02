@@ -1,6 +1,5 @@
 package com.taotao.cloud.common.enums;
 
-
 /**
  * 用户性别类型
  *

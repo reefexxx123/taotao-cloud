@@ -1,6 +1,6 @@
 package com.taotao.cloud.auth.authentication.third;
 
-import com.taotao.cloud.auth.enums.LoginType;
+import com.taotao.cloud.common.enums.LoginTypeEnum;
 import com.taotao.cloud.auth.exception.InvalidException;
 import com.taotao.cloud.auth.model.SecurityUser;
 import com.taotao.cloud.auth.service.IUserDetailsService;
@@ -26,13 +26,13 @@ public class ThirdAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String code = (String) authentication.getPrincipal();
-        LoginType loginType = (LoginType) authentication.getCredentials();
+        LoginTypeEnum loginTypeEnum = (LoginTypeEnum) authentication.getCredentials();
 
-        SecurityUser user = userDetailService.loadThirdUser(code, loginType);
+        SecurityUser user = userDetailService.loadThirdUser(code, loginTypeEnum);
         if (Objects.isNull(user)) {
             throw new InvalidException("用户在系统中不存在");
         }
-        ThirdAuthenticationToken result = new ThirdAuthenticationToken(user, loginType, user.getAuthorities());
+        ThirdAuthenticationToken result = new ThirdAuthenticationToken(user, loginTypeEnum, user.getAuthorities());
         result.setDetails(authentication.getDetails());
         return result;
     }

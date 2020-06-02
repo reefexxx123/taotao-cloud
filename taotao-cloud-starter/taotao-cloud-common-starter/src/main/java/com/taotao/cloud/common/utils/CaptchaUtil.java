@@ -84,6 +84,5 @@ public class CaptchaUtil {
     private Color getRandomColor() {
         Random ran = new Random();
         return new Color(ran.nextInt(256), ran.nextInt(256), ran.nextInt(256));
-
     }
 }

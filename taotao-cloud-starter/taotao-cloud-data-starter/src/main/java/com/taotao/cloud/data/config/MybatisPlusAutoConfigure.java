@@ -6,8 +6,8 @@ import com.baomidou.mybatisplus.core.parser.ISqlParserFilter;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
-import com.taotao.cloud.common.constant.ProjectNameConstant;
-import com.taotao.cloud.common.utils.LogUtils;
+import com.taotao.cloud.common.constant.StarterNameConstant;
+import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.data.properties.MybatisPlusAutoFillProperties;
 import com.taotao.cloud.data.properties.TenantProperties;
 import org.springframework.beans.factory.InitializingBean;
@@ -40,7 +40,7 @@ public class MybatisPlusAutoConfigure implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        LogUtils.info(MybatisPlusAutoConfigure.class, ProjectNameConstant.TAOTAO_CLOUD_MYBATIS_PLUS_STARTER, "mybatis plus模式已开启");
+        LogUtil.info(MybatisPlusAutoConfigure.class, StarterNameConstant.TAOTAO_CLOUD_MYBATIS_PLUS_STARTER, "mybatis plus模式已开启");
     }
 
     /**

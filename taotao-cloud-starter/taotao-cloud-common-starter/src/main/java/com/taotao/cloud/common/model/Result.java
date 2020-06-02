@@ -18,14 +18,12 @@ public class Result<T> implements Serializable {
 
     private static final long serialVersionUID = -3685249101751401211L;
 
-    private static final String SUCCESS = "请求成功";
-    private static final String ERROR = "请求失败";
-
     private T data;
     private Integer code;
     private String message;
 
-    public Result() {}
+    public Result() {
+    }
 
     public Result(T data, Integer code, String message) {
         this.data = data;
@@ -38,7 +36,11 @@ public class Result<T> implements Serializable {
     }
 
     public static <T> Result<T> succeed(T data) {
-        return of(data, ResultEnum.SUCCESS.getCode(), SUCCESS);
+        return of(data, ResultEnum.SUCCESS.getCode(), ResultEnum.SUCCESS.getMessage());
+    }
+
+    public static <T> Result<T> succeed(T data, ResultEnum resultEnum) {
+        return of(data, resultEnum.getCode(), resultEnum.getMessage());
     }
 
     public static <T> Result<T> of(T data, Integer code, String msg) {
@@ -58,6 +60,14 @@ public class Result<T> implements Serializable {
     }
 
     public static <T> Result<T> failed(T model) {
-        return of(model, ResultEnum.ERROR.getCode(), ERROR);
+        return of(model, ResultEnum.ERROR.getCode(), ResultEnum.ERROR.getMessage());
+    }
+
+    public static <T> Result<T> failed(T model, ResultEnum resultEnum) {
+        return of(model, resultEnum.getCode(), resultEnum.getMessage());
+    }
+
+    public static <T> Result<T> failed() {
+        return of(null, ResultEnum.ERROR.getCode(), ResultEnum.ERROR.getMessage());
     }
 }

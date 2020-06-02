@@ -1,9 +1,7 @@
 package com.taotao.cloud.social.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * 官方文档中get_user_info接口的用户信息返回实体
@@ -12,11 +10,8 @@ import lombok.NoArgsConstructor;
  * @date 2020/4/30 10:12
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class QQUserInfo {
-
     /**
      * 返回码
      */

@@ -3,9 +3,8 @@ package com.taotao.cloud.auth.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.taotao.cloud.auth.service.IUserDetailsService;
-import com.taotao.cloud.auth.enums.LoginType;
+import com.taotao.cloud.common.enums.LoginTypeEnum;
 import com.taotao.cloud.auth.model.SecurityUser;
-import com.taotao.cloud.common.exception.BaseException;
 import com.taotao.cloud.common.model.Result;
 import com.taotao.cloud.social.entity.GiteeUserInfo;
 import com.taotao.cloud.social.service.GiteeService;
@@ -17,10 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.social.security.SocialUserDetails;
-import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
 
 /**
  * UserServiceDetail
@@ -86,8 +82,8 @@ public class UserDetailsServiceImpl implements IUserDetailsService {
     }
 
     @Override
-    public SecurityUser loadThirdUser(String code, LoginType loginType) {
-        String type = loginType.getType();
+    public SecurityUser loadThirdUser(String code, LoginTypeEnum loginTypeEnum) {
+        String type = loginTypeEnum.getType();
         GiteeUserInfo userInfo = giteeService.getUserInfo(code);
         SysGiteeUser giteeUser = new SysGiteeUser();
         BeanUtil.copyProperties(userInfo, giteeUser);

@@ -3,9 +3,9 @@ package com.taotao.cloud.data.config;
 import com.baomidou.mybatisplus.core.parser.ISqlParserFilter;
 import com.baomidou.mybatisplus.core.parser.SqlParserHelper;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
-import com.taotao.cloud.common.constant.ProjectNameConstant;
+import com.taotao.cloud.common.constant.StarterNameConstant;
 import com.taotao.cloud.common.context.TenantContextHolder;
-import com.taotao.cloud.common.utils.LogUtils;
+import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.data.properties.TenantProperties;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.NullValue;
@@ -26,7 +26,7 @@ import org.springframework.context.annotation.Bean;
 public class TenantAutoConfigure implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
-        LogUtils.info(TenantAutoConfigure.class, ProjectNameConstant.TAOTAO_CLOUD_TENANT_STARTER, "tenant模式已开启");
+        LogUtil.info(TenantAutoConfigure.class, StarterNameConstant.TAOTAO_CLOUD_TENANT_STARTER, "tenant模式已开启");
     }
 
     @Autowired

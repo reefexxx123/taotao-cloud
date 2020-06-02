@@ -211,9 +211,13 @@ hystrix:
         thread:
           # 断路器超时时间，默认1000ms
           timeoutInMilliseconds: 8000
+
 ribbon:
+  ConnectTimeout: 5000 # 请求连接的超时时间 默认的时间为 1 秒
+  ReadTimeout: 5000    # 请求处理的超时时间
   okhttp:
     enabled: true
+
 feign:
   sentinel:
     enabled: false

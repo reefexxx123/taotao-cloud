@@ -1,6 +1,5 @@
 package com.taotao.cloud.auth.service.impl;
 
-import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.PageUtil;
 import cn.hutool.core.util.StrUtil;
 import com.taotao.cloud.auth.dto.OAuth2AccessTokenDTO;
@@ -9,11 +8,10 @@ import com.taotao.cloud.auth.model.TokenVo;
 import com.taotao.cloud.auth.service.ITokensService;
 import com.taotao.cloud.auth.util.AuthUtils;
 import com.taotao.cloud.common.constant.SecurityConstant;
-import com.taotao.cloud.common.context.TenantContextHolder;
 import com.taotao.cloud.common.enums.ResultEnum;
 import com.taotao.cloud.common.model.PageResult;
 import com.taotao.cloud.common.model.Result;
-import com.taotao.cloud.common.utils.WebUtils;
+import com.taotao.cloud.common.utils.WebUtil;
 import com.taotao.cloud.redis.template.RedisRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
@@ -110,7 +108,7 @@ public class RedisTokensServiceImpl implements ITokensService {
 
             ClientDetails clientDetails = getClient(clientId, clientSecret);
 
-            TokenRequest tokenRequest = new TokenRequest(WebUtils.getAllRequestParam(request), clientId,
+            TokenRequest tokenRequest = new TokenRequest(WebUtil.getAllRequestParam(request), clientId,
                     clientDetails.getScope(), "password");
 
             OAuth2Request oAuth2Request = tokenRequest.createOAuth2Request(clientDetails);

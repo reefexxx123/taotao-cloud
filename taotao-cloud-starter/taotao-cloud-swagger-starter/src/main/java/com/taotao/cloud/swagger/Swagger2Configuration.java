@@ -11,11 +11,8 @@ import springfox.documentation.swagger2.configuration.Swagger2DocumentationConfi
  * @author dengtao
  * @date 2020/4/30 10:09
  */
-@ConditionalOnProperty(name = "taotao.cloud.swagger.enabled", matchIfMissing = true)
-@Import({
-        Swagger2DocumentationConfiguration.class
-})
+@ConditionalOnProperty(name = "taotao.cloud.swagger.enabled")
+@Import({Swagger2DocumentationConfiguration.class})
 public class Swagger2Configuration {
-
 
 }

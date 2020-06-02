@@ -1,6 +1,7 @@
 package com.taotao.cloud.gateway.config;
 
 import com.taotao.cloud.gateway.properties.CustomGatewayProperties;
+import com.taotao.cloud.gateway.properties.DynamicRouteProperties;
 import com.taotao.cloud.gateway.properties.TraceProperties;
 import com.taotao.cloud.gateway.swagger.SwaggerAggProperties;
 import com.taotao.cloud.gateway.swagger.SwaggerProvider;
@@ -25,7 +26,8 @@ import java.util.Objects;
  * @date 2020/4/29 22:13
  */
 @Configuration
-@EnableConfigurationProperties({TraceProperties.class, CustomGatewayProperties.class, SwaggerAggProperties.class})
+@EnableConfigurationProperties({TraceProperties.class, DynamicRouteProperties.class,
+        CustomGatewayProperties.class, SwaggerAggProperties.class})
 @Import(SwaggerProvider.class)
 @Order
 public class WebConfiguration {

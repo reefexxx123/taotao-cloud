@@ -31,13 +31,6 @@ public class CustomOauthExceptionSerializer extends StdSerializer<CustomOauthExc
         }
         gen.writeStringField("message", errorMessage);
         gen.writeStringField("data", null);
-//        if (value.getAdditionalInformation() != null) {
-//            for (Map.Entry<String, String> entry : value.getAdditionalInformation().entrySet()) {
-//                String key = entry.getKey();
-//                String add = entry.getValue();
-//                gen.writeStringField(key, add);
-//            }
-//        }
         gen.writeEndObject();
     }
 }

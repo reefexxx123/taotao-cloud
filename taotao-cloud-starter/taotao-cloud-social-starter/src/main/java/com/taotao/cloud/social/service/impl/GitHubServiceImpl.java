@@ -1,10 +1,10 @@
 package com.taotao.cloud.social.service.impl;
 
-import com.taotao.cloud.auth.enums.LoginType;
+import com.taotao.cloud.common.enums.LoginTypeEnum;
 import com.taotao.cloud.auth.exception.SocialServiceException;
 import com.taotao.cloud.common.exception.BaseException;
-import com.taotao.cloud.social.config.GitHubConfig;
-import com.taotao.cloud.social.config.SocialRestTemplate;
+import com.taotao.cloud.social.properties.GitHubProperties;
+import com.taotao.cloud.social.rest.SocialRestTemplate;
 import com.taotao.cloud.social.entity.GitHubUserInfo;
 import com.taotao.cloud.social.event.GithubEvent;
 import com.taotao.cloud.social.service.GitHubService;
@@ -35,21 +35,20 @@ import java.util.Map;
 @Service
 public class GitHubServiceImpl implements GitHubService {
 
+    private static final String USER_INFO_URL = "https://api.github.com/user";
+    private final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss Z", Locale.ENGLISH);
+
     @Autowired
-    private GitHubConfig gitHubConfig;
+    private GitHubProperties gitHubProperties;
     @Autowired
     private ApplicationEventPublisher publisher;
-
-    private static final String URL_GET_USRE_INFO = "https://api.github.com/user";
-
-    private final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss Z", Locale.ENGLISH);
 
     @Override
     public GitHubUserInfo getUserInfo(String code) {
         try {
             // 自己拼接url
-            String clientId = gitHubConfig.getAppId();
-            String clientSecret = gitHubConfig.getAppSecret();
+            String clientId = gitHubProperties.getAppId();
+            String clientSecret = gitHubProperties.getAppSecret();
 
             String url = String.format("https://github.com/login/oauth/access_token?client_id=%s&client_secret=%s&code=%s", clientId, clientSecret, code);
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url);
@@ -59,7 +58,7 @@ public class GitHubServiceImpl implements GitHubService {
             String accessToken = StringUtils.substringAfterLast(items[0], "=");
             log.info("获取Toke的响应：" + accessToken);
 
-            Map<String, ?> user = SocialRestTemplate.getRestTemplate().getForObject(URL_GET_USRE_INFO, Map.class);
+            Map<String, ?> user = SocialRestTemplate.getRestTemplate().getForObject(USER_INFO_URL, Map.class);
             Long gitHubId = Long.valueOf(String.valueOf(user.get("id")));
             String username = String.valueOf(user.get("login"));
             String name = String.valueOf(user.get("name"));
@@ -98,9 +97,9 @@ public class GitHubServiceImpl implements GitHubService {
     public String getGithubAuthUrl() {
         try {
             return "https://github.com/login/oauth/authorize" +
-                    "&client_id=" + gitHubConfig.getAppId() +
-                    "&redirect_uri=" + URLEncoder.encode(gitHubConfig.getRedirectUri(), "UTF-8") +
-                    "&state=" + LoginType.github.getType() +
+                    "&client_id=" + gitHubProperties.getAppId() +
+                    "&redirect_uri=" + URLEncoder.encode(gitHubProperties.getRedirectUri(), "UTF-8") +
+                    "&state=" + LoginTypeEnum.github.getType() +
                     "&scope=user";
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

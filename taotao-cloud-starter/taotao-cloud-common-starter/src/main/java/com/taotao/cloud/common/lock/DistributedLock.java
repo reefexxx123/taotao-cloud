@@ -86,7 +86,10 @@ public interface DistributedLock {
     /**
      * 释放锁
      *
-     * @param key key值
+     * @param key key
+     * @return boolean
+     * @author dengtao
+     * @date 2020/6/2 16:02
      */
     boolean releaseLock(String key);
 }

@@ -25,6 +25,7 @@ import java.util.*;
 
 /**
  * 优化自Spring Security的RedisTokenStore
+ * <p>
  * 1. 支持redis所有集群模式包括cluster模式
  * 2. 使用pipeline减少连接次数，提升性能
  * 3. 自动续签token（可配置是否开启）

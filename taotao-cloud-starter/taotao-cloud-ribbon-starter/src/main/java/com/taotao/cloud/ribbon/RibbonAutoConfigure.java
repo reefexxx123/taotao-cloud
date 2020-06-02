@@ -1,8 +1,7 @@
 package com.taotao.cloud.ribbon;
 
-import com.taotao.cloud.common.constant.ProjectNameConstant;
-import com.taotao.cloud.common.utils.LogUtils;
-import com.taotao.cloud.log.util.LogUtil;
+import com.taotao.cloud.common.constant.StarterNameConstant;
+import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.ribbon.properties.RibbonProperties;
 import org.apache.http.client.HttpClient;
 import org.springframework.beans.factory.InitializingBean;
@@ -26,7 +25,7 @@ import org.springframework.web.client.RestTemplate;
 public class RibbonAutoConfigure implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
-        LogUtils.info(RibbonAutoConfigure.class, ProjectNameConstant.TAOTAO_CLOUD_RIBBON_STARTER, "ribbon模块已启动");
+        LogUtil.info(RibbonAutoConfigure.class, StarterNameConstant.TAOTAO_CLOUD_RIBBON_STARTER, "ribbon模块已启动");
     }
 
     @Autowired

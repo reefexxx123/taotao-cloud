@@ -3,8 +3,8 @@ package com.taotao.cloud.swagger;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
-import com.taotao.cloud.common.constant.ProjectNameConstant;
-import com.taotao.cloud.common.utils.LogUtils;
+import com.taotao.cloud.common.constant.StarterNameConstant;
+import com.taotao.cloud.common.utils.LogUtil;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.InitializingBean;
@@ -40,7 +40,7 @@ public class SwaggerAutoConfiguration implements BeanFactoryAware, InitializingB
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        LogUtils.info(SwaggerAutoConfiguration.class, ProjectNameConstant.TAOTAO_CLOUD_SWAGGER_STARTER, "swagger模块已启动!");
+        LogUtil.info(SwaggerAutoConfiguration.class, StarterNameConstant.TAOTAO_CLOUD_SWAGGER_STARTER, "swagger模块已启动!");
     }
 
     @Bean

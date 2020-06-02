@@ -1,12 +1,11 @@
 package com.taotao.cloud.log;
 
-import com.taotao.cloud.common.constant.ProjectNameConstant;
-import com.taotao.cloud.common.utils.LogUtils;
+import com.taotao.cloud.common.constant.StarterNameConstant;
+import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.log.aspect.SysLogAspect;
 import com.taotao.cloud.log.listener.SysLogListener;
 import com.taotao.cloud.log.properties.SysLogProperties;
 import com.taotao.cloud.log.properties.TraceProperties;
-import com.taotao.cloud.log.util.LogUtil;
 import feign.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -31,7 +30,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 public class LogAutoConfiguration implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
-        LogUtils.info(LogAutoConfiguration.class, ProjectNameConstant.TAOTAO_CLOUD_LOG_STARTER, "日志模块已启动");
+        LogUtil.info(LogAutoConfiguration.class, StarterNameConstant.TAOTAO_CLOUD_LOG_STARTER, "日志模块已启动");
     }
 
     @Bean

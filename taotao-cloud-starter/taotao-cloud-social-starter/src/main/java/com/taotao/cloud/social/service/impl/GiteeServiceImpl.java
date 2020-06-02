@@ -4,24 +4,21 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.taotao.cloud.auth.enums.LoginType;
+import com.taotao.cloud.common.enums.LoginTypeEnum;
 import com.taotao.cloud.auth.exception.SocialServiceException;
 import com.taotao.cloud.common.exception.BaseException;
-import com.taotao.cloud.common.utils.ContextUtils;
-import com.taotao.cloud.social.config.GiteeConfig;
+import com.taotao.cloud.common.utils.ContextUtil;
+import com.taotao.cloud.social.properties.GiteeProperties;
 import com.taotao.cloud.social.entity.GiteeUserInfo;
-import com.taotao.cloud.social.event.GiteeEvent;
 import com.taotao.cloud.social.service.GiteeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.social.oauth2.AccessGrant;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Map;
 
 /**
  * GiteeServiceImpl
@@ -36,17 +33,17 @@ public class GiteeServiceImpl implements GiteeService {
     private static final String URL_GET_USRE_INFO = "https://gitee.com/api/v5/user";
 
     @Autowired
-    private GiteeConfig giteeConfig;
+    private GiteeProperties giteeProperties;
     @Autowired
     private ApplicationEventPublisher publisher;
-    private final RestTemplate restTemplate = ContextUtils.getBean(RestTemplate.class, false);
+    private final RestTemplate restTemplate = ContextUtil.getBean(RestTemplate.class, false);
 
     @Override
     public GiteeUserInfo getUserInfo(String code) {
         try {
-            String clientId = giteeConfig.getAppId();
-            String clientSecret = giteeConfig.getAppSecret();
-            String redirectUri = giteeConfig.getRedirectUri();
+            String clientId = giteeProperties.getAppId();
+            String clientSecret = giteeProperties.getAppSecret();
+            String redirectUri = giteeProperties.getRedirectUri();
 
             String url = String.format("https://gitee.com/oauth/token?grant_type=authorization_code&code=%s&client_id=%s&redirect_uri=%s&client_secret=%s", code, clientId, redirectUri, clientSecret);
             String post = HttpUtil.post(url, "", 5000);
@@ -115,9 +112,9 @@ public class GiteeServiceImpl implements GiteeService {
     public String getAuthUrl() {
         try {
             return "https://gitee.com/oauth/authorize?response_type=code" +
-                    "&client_id=" + giteeConfig.getAppId() +
-                    "&redirect_uri=" + URLEncoder.encode(giteeConfig.getRedirectUri(), "UTF-8") +
-                    "&state=" + LoginType.gitee.getType() +
+                    "&client_id=" + giteeProperties.getAppId() +
+                    "&redirect_uri=" + URLEncoder.encode(giteeProperties.getRedirectUri(), "UTF-8") +
+                    "&state=" + LoginTypeEnum.gitee.getType() +
                     "&scope=user_info";
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

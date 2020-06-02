@@ -1,11 +1,11 @@
 package com.taotao.cloud.social.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.taotao.cloud.auth.enums.LoginType;
+import com.taotao.cloud.common.enums.LoginTypeEnum;
 import com.taotao.cloud.auth.exception.SocialServiceException;
 import com.taotao.cloud.common.exception.BaseException;
-import com.taotao.cloud.social.config.QqConfig;
-import com.taotao.cloud.social.config.SocialRestTemplate;
+import com.taotao.cloud.social.properties.QqProperties;
+import com.taotao.cloud.social.rest.SocialRestTemplate;
 import com.taotao.cloud.social.entity.QQUserInfo;
 import com.taotao.cloud.social.event.QQEvent;
 import com.taotao.cloud.social.service.QQService;
@@ -42,14 +42,14 @@ public class QQServiceImpl implements QQService {
     private static final String URL_GET_USERINFO = "https://graph.qq.com/user/get_user_info?oauth_consumer_key=%s&openid=%s";
 
     @Autowired
-    private QqConfig qqConfig;
+    private QqProperties qqProperties;
     @Autowired
     private ApplicationEventPublisher publisher;
 
     @Override
     public QQUserInfo getUserInfo(String code) {
         try {
-            String responseStr = SocialRestTemplate.getRestTemplate().getForObject(String.format(TOKEN_URL, code, qqConfig.getAppId(), qqConfig.getRedirectUri(), qqConfig.getAppSecret(), code), String.class);
+            String responseStr = SocialRestTemplate.getRestTemplate().getForObject(String.format(TOKEN_URL, code, qqProperties.getAppId(), qqProperties.getRedirectUri(), qqProperties.getAppSecret(), code), String.class);
             log.info(responseStr);
 
             if (responseStr != null && responseStr.contains("access_token=")) {
@@ -65,6 +65,7 @@ public class QQServiceImpl implements QQService {
                 //拼接成最终的获取用户信息的请求地址
                 String object = SocialRestTemplate.getRestTemplate().getForObject(String.format(URL_GET_USERINFO, "", openId), String.class);
                 QQUserInfo userInfo = JSON.parseObject(object, QQUserInfo.class);
+                assert userInfo != null;
                 userInfo.setOpenId(openId);
 
                 publisher.publishEvent(new QQEvent(userInfo));
@@ -81,9 +82,9 @@ public class QQServiceImpl implements QQService {
     public String getQqAuthUrl() {
         try {
             return "https://graph.qq.com/oauth2.0/authorize?response_type=code" +
-                    "&client_id=" + qqConfig.getAppId() +
-                    "&redirect_uri=" + URLEncoder.encode(qqConfig.getRedirectUri(), "UTF-8") +
-                    "&state=" + LoginType.qq.getType() +
+                    "&client_id=" + qqProperties.getAppId() +
+                    "&redirect_uri=" + URLEncoder.encode(qqProperties.getRedirectUri(), "UTF-8") +
+                    "&state=" + LoginTypeEnum.qq.getType() +
                     "&scope=get_user_info";
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

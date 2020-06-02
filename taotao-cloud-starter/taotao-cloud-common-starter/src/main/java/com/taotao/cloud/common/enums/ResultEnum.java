@@ -9,19 +9,24 @@ package com.taotao.cloud.common.enums;
 public enum ResultEnum {
 
     /**
-     * 操作成功
+     * 请求成功
      */
-    SUCCESS(200, "操作成功", "操作成功"),
+    SUCCESS(200, "请求成功", "请求成功"),
 
     /**
-     * 操作失败
+     * 请求失败
      */
-    ERROR(500, "操作失败", "操作失败"),
+    ERROR(500, "请求失败", "请求失败"),
 
     /**
      * 认证失败
      */
     UNAUTHORIZED(401, "认证失败", "认证失败"),
+
+
+
+
+
 
     /**
      * 参数错误

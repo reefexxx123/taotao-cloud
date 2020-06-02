@@ -23,10 +23,8 @@ import java.util.Set;
  * @date 2020/4/29 17:52
  */
 @Data
-@Accessors(chain = true)
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
+@Accessors(chain = true)
 public class SecurityUser implements UserDetails, Serializable {
 
     private static final long serialVersionUID = -3685249101751401211L;

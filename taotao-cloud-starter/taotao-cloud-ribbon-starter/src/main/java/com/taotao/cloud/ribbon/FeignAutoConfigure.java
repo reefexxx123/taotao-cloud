@@ -1,9 +1,9 @@
 package com.taotao.cloud.ribbon;
 
 import com.google.gson.Gson;
-import com.taotao.cloud.common.constant.ProjectNameConstant;
+import com.taotao.cloud.common.constant.StarterNameConstant;
 import com.taotao.cloud.common.exception.BaseException;
-import com.taotao.cloud.common.utils.LogUtils;
+import com.taotao.cloud.common.utils.LogUtil;
 import feign.Logger;
 import feign.Response;
 import feign.Retryer;
@@ -11,7 +11,6 @@ import feign.Util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
@@ -25,7 +24,7 @@ import java.io.IOException;
 public class FeignAutoConfigure implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
-        LogUtils.info(RibbonAutoConfigure.class, ProjectNameConstant.TAOTAO_CLOUD_FEIGN_STARTER, "feign模块已启动");
+        LogUtil.info(RibbonAutoConfigure.class, StarterNameConstant.TAOTAO_CLOUD_FEIGN_STARTER, "feign模块已启动");
     }
 
     /**

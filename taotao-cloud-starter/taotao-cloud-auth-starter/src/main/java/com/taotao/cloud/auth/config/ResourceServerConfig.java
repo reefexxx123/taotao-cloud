@@ -1,8 +1,8 @@
 package com.taotao.cloud.auth.config;
 
 import com.taotao.cloud.auth.properties.SecurityProperties;
-import com.taotao.cloud.common.constant.ProjectNameConstant;
-import com.taotao.cloud.common.utils.LogUtils;
+import com.taotao.cloud.common.constant.StarterNameConstant;
+import com.taotao.cloud.common.utils.LogUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +30,10 @@ import javax.annotation.Resource;
  * @date 2020/4/30 09:04
  */
 @Slf4j
-@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @Configuration
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter implements InitializingBean {
 
     @Autowired
@@ -53,7 +53,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter implem
 
     @Override
     public void afterPropertiesSet() {
-        LogUtils.info(ResourceServerConfig.class, ProjectNameConstant.TAOTAO_CLOUD_AUTH_STARTER, "资源服务器已启动");
+        LogUtil.info(ResourceServerConfig.class, StarterNameConstant.TAOTAO_CLOUD_AUTH_STARTER, "资源服务器已启动");
     }
 
     @Override

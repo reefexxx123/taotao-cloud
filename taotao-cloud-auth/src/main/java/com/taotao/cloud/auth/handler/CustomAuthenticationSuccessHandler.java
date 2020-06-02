@@ -5,7 +5,7 @@ import com.taotao.cloud.auth.dto.OAuth2AccessTokenDTO;
 import com.taotao.cloud.auth.model.SecurityUser;
 import com.taotao.cloud.auth.util.AuthUtils;
 import com.taotao.cloud.common.utils.ResponseUtil;
-import com.taotao.cloud.common.utils.WebUtils;
+import com.taotao.cloud.common.utils.WebUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -63,7 +63,7 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
             SecurityContextHolder.getContext().setAuthentication(authentication);
             //生成token
             ClientDetails clientDetails = this.getClient(clientId, clientSecret);
-            TokenRequest tokenRequest = new TokenRequest(WebUtils.getAllRequestParam(request), clientId, clientDetails.getScope(), "password");
+            TokenRequest tokenRequest = new TokenRequest(WebUtil.getAllRequestParam(request), clientId, clientDetails.getScope(), "password");
             OAuth2Request oAuth2Request = tokenRequest.createOAuth2Request(clientDetails);
             OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, authentication);
             OAuth2AccessToken oAuth2AccessToken = authorizationServerTokenServices.createAccessToken(oAuth2Authentication);

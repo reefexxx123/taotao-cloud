@@ -1,6 +1,6 @@
 package com.taotao.cloud.auth.service;
 
-import com.taotao.cloud.auth.enums.LoginType;
+import com.taotao.cloud.common.enums.LoginTypeEnum;
 import com.taotao.cloud.auth.model.SecurityUser;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.social.security.SocialUserDetailsService;
@@ -37,10 +37,10 @@ public interface IUserDetailsService extends UserDetailsService, SocialUserDetai
      * 获取用户
      *
      * @param para      para
-     * @param loginType loginType
+     * @param loginTypeEnum loginType
      * @return com.taotao.cloud.auth.model.SecurityUser
      * @author dengtao
      * @date 2020/4/29 21:25
      */
-    SecurityUser loadThirdUser(String para, LoginType loginType);
+    SecurityUser loadThirdUser(String para, LoginTypeEnum loginTypeEnum);
 }

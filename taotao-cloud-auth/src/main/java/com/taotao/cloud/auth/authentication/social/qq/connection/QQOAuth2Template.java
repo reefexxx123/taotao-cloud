@@ -1,6 +1,6 @@
 package com.taotao.cloud.auth.authentication.social.qq.connection;
 
-import com.taotao.cloud.common.utils.ContextUtils;
+import com.taotao.cloud.common.utils.ContextUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -9,7 +9,6 @@ import org.springframework.social.oauth2.OAuth2Template;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -44,7 +43,7 @@ public class QQOAuth2Template extends OAuth2Template {
 
     @Override
     protected RestTemplate createRestTemplate() {
-        RestTemplate restTemplate = ContextUtils.getBean(RestTemplate.class, true);
+        RestTemplate restTemplate = ContextUtil.getBean(RestTemplate.class, true);
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter(StandardCharsets.UTF_8));
         return restTemplate;
     }

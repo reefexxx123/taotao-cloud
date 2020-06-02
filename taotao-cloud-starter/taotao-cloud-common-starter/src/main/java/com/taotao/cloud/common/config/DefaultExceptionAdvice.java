@@ -70,7 +70,6 @@ public class DefaultExceptionAdvice {
         return Result.of(e.getMessage(), HttpStatus.FORBIDDEN.value(), "发送消息异常");
     }
 
-
     /**
      * AccessDeniedException异常处理返回json
      * 返回状态码:403

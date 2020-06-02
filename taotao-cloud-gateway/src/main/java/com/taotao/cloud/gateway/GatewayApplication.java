@@ -5,6 +5,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
+/**
+ * 网关
+ *
+ * @author dengtao
+ * @date 2020/6/1 16:05
+ */
 @SpringBootApplication
 @EnableDiscoveryClient
 public class GatewayApplication {

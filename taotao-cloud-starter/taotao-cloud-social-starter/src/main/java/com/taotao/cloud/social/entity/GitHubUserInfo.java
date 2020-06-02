@@ -1,9 +1,7 @@
 package com.taotao.cloud.social.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -12,10 +10,8 @@ import java.util.Date;
  *
  * @author dengtao
  * @date 2020/4/29 21:12
-*/
+ */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class GitHubUserInfo {
     private long id;

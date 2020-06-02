@@ -1,8 +1,8 @@
 package com.taotao.cloud.auth.config;
 
 import com.taotao.cloud.auth.properties.SecurityProperties;
-import com.taotao.cloud.common.constant.ProjectNameConstant;
-import com.taotao.cloud.common.utils.LogUtils;
+import com.taotao.cloud.common.constant.StarterNameConstant;
+import com.taotao.cloud.common.utils.LogUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -19,6 +19,6 @@ public class SecurityPropertiesConfig implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        LogUtils.info(SecurityPropertiesConfig.class, ProjectNameConstant.TAOTAO_CLOUD_AUTH_STARTER, "Security配置已启动");
+        LogUtil.info(SecurityPropertiesConfig.class, StarterNameConstant.TAOTAO_CLOUD_AUTH_STARTER, "Security配置已启动");
     }
 }

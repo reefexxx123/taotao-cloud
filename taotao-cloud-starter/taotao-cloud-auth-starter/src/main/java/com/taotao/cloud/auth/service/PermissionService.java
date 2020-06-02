@@ -12,13 +12,10 @@ import com.taotao.cloud.auth.model.SecurityMenu;
 import java.util.List;
 
 /**
- * 〈〉<br>
+ * 权限服务
  *
  * @author dengtao
- * @version v1.0.0
- * @create 2020/5/2 20:13
- * @see
- * @since v1.0.0
+ * @date 2020/6/2 15:47
  */
 public interface PermissionService {
     /**

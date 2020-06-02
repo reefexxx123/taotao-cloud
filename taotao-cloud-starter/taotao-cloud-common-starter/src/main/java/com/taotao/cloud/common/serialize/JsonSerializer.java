@@ -20,7 +20,7 @@ import java.util.TimeZone;
  */
 public class JsonSerializer implements Serializer {
 
-    private static ObjectMapper objectMapper = new ObjectMapper()
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
             .setSerializationInclusion(JsonInclude.Include.NON_NULL)
             .enable(MapperFeature.USE_ANNOTATIONS)
             .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
@@ -30,13 +30,13 @@ public class JsonSerializer implements Serializer {
             .setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 
     public static ObjectMapper getObjectMapper() {
-        return objectMapper;
+        return OBJECT_MAPPER;
     }
 
     @Override
     public String serialize(Object object) {
         try {
-            return objectMapper.writeValueAsString(object);
+            return OBJECT_MAPPER.writeValueAsString(object);
         } catch (Exception e) {
             throw new BaseException("序列化失败，对象：" + object, e);
         }
@@ -45,7 +45,7 @@ public class JsonSerializer implements Serializer {
     @Override
     public <T> T deserialize(String str, Type type) {
         try {
-            return (T) objectMapper.readValue(str, new TypeReference<Object>() {
+            return (T) OBJECT_MAPPER.readValue(str, new TypeReference<Object>() {
                 @Override
                 public Type getType() {
                     return type;

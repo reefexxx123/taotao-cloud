@@ -1,9 +1,7 @@
 package com.taotao.cloud.social.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * GiteeUserInfo
@@ -12,8 +10,6 @@ import lombok.NoArgsConstructor;
  * @date 2020/4/29 21:12
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class GiteeUserInfo {
     private Integer providerUserId;

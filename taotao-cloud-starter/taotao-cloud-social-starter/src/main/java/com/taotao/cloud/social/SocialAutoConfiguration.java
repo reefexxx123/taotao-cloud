@@ -6,11 +6,11 @@
  */
 package com.taotao.cloud.social;
 
-import com.taotao.cloud.common.constant.ProjectNameConstant;
-import com.taotao.cloud.common.utils.LogUtils;
-import com.taotao.cloud.social.config.GitHubConfig;
-import com.taotao.cloud.social.config.GiteeConfig;
-import com.taotao.cloud.social.config.QqConfig;
+import com.taotao.cloud.common.constant.StarterNameConstant;
+import com.taotao.cloud.common.utils.LogUtil;
+import com.taotao.cloud.social.properties.GitHubProperties;
+import com.taotao.cloud.social.properties.GiteeProperties;
+import com.taotao.cloud.social.properties.QqProperties;
 import com.taotao.cloud.social.listener.SocialListener;
 import com.taotao.cloud.social.service.GitHubService;
 import com.taotao.cloud.social.service.GiteeService;
@@ -32,11 +32,12 @@ import org.springframework.context.annotation.Bean;
  * @version v1.0.0
  * @create 2020/5/7 09:08
  */
-@EnableConfigurationProperties({GiteeConfig.class, GitHubConfig.class, QqConfig.class})
+@EnableConfigurationProperties({GiteeProperties.class, GitHubProperties.class, QqProperties.class})
 public class SocialAutoConfiguration implements InitializingBean {
+
     @Override
     public void afterPropertiesSet() throws Exception {
-        LogUtils.info(SocialAutoConfiguration.class, ProjectNameConstant.TAOTAO_CLOUD_SOCIAL_STARTER, "第三方认证模块已启动");
+        LogUtil.info(SocialAutoConfiguration.class, StarterNameConstant.TAOTAO_CLOUD_SOCIAL_STARTER, "第三方认证模块已启动");
     }
 
     @Bean

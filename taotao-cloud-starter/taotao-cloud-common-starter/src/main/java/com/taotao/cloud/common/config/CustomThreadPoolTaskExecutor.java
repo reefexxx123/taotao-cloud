@@ -9,10 +9,11 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
 /**
- * 这是{@link ThreadPoolTaskExecutor}的一个简单替换，可搭配TransmittableThreadLocal实现父子线程之间的数据传递
+ * 这是{@link ThreadPoolTaskExecutor}的一个简单替换，
+ * 可搭配TransmittableThreadLocal实现父子线程之间的数据传递
  *
- * @author zlt
- * @date 2019/8/14
+ * @author dengtao
+ * @date 2020/6/2 15:53
  */
 public class CustomThreadPoolTaskExecutor extends ThreadPoolTaskExecutor {
     private static final long serialVersionUID = -5887035957049288777L;

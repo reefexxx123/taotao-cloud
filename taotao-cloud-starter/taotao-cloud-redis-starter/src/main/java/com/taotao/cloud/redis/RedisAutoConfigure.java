@@ -1,7 +1,7 @@
 package com.taotao.cloud.redis;
 
-import com.taotao.cloud.common.constant.ProjectNameConstant;
-import com.taotao.cloud.common.utils.LogUtils;
+import com.taotao.cloud.common.constant.StarterNameConstant;
+import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.redis.properties.CacheManagerProperties;
 import com.taotao.cloud.redis.util.RedisObjectSerializer;
 import org.springframework.beans.factory.InitializingBean;
@@ -36,7 +36,7 @@ import java.util.Map;
 public class RedisAutoConfigure implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
-        LogUtils.info(RedisAutoConfigure.class, ProjectNameConstant.TAOTAO_CLOUD_REDIS_STARTER, "redis模块已启动");
+        LogUtil.info(RedisAutoConfigure.class, StarterNameConstant.TAOTAO_CLOUD_REDIS_STARTER, "redis模块已启动");
     }
 
     @Autowired

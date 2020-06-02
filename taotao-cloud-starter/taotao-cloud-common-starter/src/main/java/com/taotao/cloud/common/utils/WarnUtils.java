@@ -9,9 +9,12 @@ import lombok.var;
  * @date 2020/4/17 15:43
  */
 public class WarnUtils {
-    public static final String ALARM_ERROR = "ERROR";    //错误报警
-    public static final String ALARM_WARN = "WARN";    //警告
-    public static final String ALARM_INFO = "INFO";    //通知
+    //错误报警
+    public static final String ALARM_ERROR = "ERROR";
+    //警告
+    public static final String ALARM_WARN = "WARN";
+    //通知
+    public static final String ALARM_INFO = "INFO";
 
     /**
      * 即时发送报警通知
@@ -44,14 +47,14 @@ public class WarnUtils {
      * @param isNow     是否即时发送
      */
     public static void notify(String alarmType, String title, String content, boolean isNow) {
-        Class clazz = ReflectionUtils.classForName("com.yh.csx.bsf.health.warn.WarnProvider");
+        Class clazz = ReflectionUtil.classForName("com.yh.csx.bsf.health.warn.WarnProvider");
         if (clazz != null) {
-            var bean = ContextUtils.getBean(clazz, false);
+            var bean = ContextUtil.getBean(clazz, false);
             if (bean != null) {
                 if (isNow) {
-                    ReflectionUtils.callMethodWithParams(bean, "notifynow", new String[]{alarmType, title, content}, String.class, String.class, String.class);
+                    ReflectionUtil.callMethodWithParams(bean, "notifynow", new String[]{alarmType, title, content}, String.class, String.class, String.class);
                 } else {
-                    ReflectionUtils.callMethodWithParams(bean, "notify", new String[]{alarmType, title, content}, String.class, String.class, String.class);
+                    ReflectionUtil.callMethodWithParams(bean, "notify", new String[]{alarmType, title, content}, String.class, String.class, String.class);
                 }
             }
         }

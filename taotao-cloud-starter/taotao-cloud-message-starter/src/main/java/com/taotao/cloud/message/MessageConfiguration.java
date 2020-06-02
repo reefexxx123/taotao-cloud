@@ -1,7 +1,7 @@
 package com.taotao.cloud.message;
 
-import com.taotao.cloud.common.constant.ProjectNameConstant;
-import com.taotao.cloud.common.utils.LogUtils;
+import com.taotao.cloud.common.constant.StarterNameConstant;
+import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.message.config.AliyunSmsConfiguration;
 import com.taotao.cloud.message.properties.AliYunSmsProperties;
 import com.taotao.cloud.message.properties.SmsProperties;
@@ -25,6 +25,6 @@ import org.springframework.context.annotation.Import;
 public class MessageConfiguration implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
-        LogUtils.info(MessageConfiguration.class, ProjectNameConstant.TAOTAO_CLOUD_MESSAGE_STARTER, "消息模块已启动");
+        LogUtil.info(MessageConfiguration.class, StarterNameConstant.TAOTAO_CLOUD_MESSAGE_STARTER, "消息模块已启动");
     }
 }

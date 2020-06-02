@@ -1,7 +1,7 @@
 package com.taotao.cloud.elk;
 
 import cn.hutool.core.util.StrUtil;
-import com.taotao.cloud.common.utils.JsonUtils;
+import com.taotao.cloud.common.utils.JsonUtil;
 import com.taotao.cloud.elk.properties.ElkHealthLogStatisticProperties;
 import lombok.extern.slf4j.Slf4j;
 import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
@@ -86,7 +86,7 @@ public class WebControllerAspect {
             if (!annotation.annotationType().toString().contains("org.springframework.web.bind.annotation")) {
                 continue;
             }
-            sb.append(JsonUtils.serialize(request.getParameterMap()));
+            sb.append(JsonUtil.serialize(request.getParameterMap()));
         }
         return sb.toString();
     }
@@ -101,7 +101,7 @@ public class WebControllerAspect {
         if (null == retVal) {
             return "";
         }
-        return JsonUtils.serialize(retVal);
+        return JsonUtil.serialize(retVal);
     }
 
     private String getRemoteHost(HttpServletRequest request) {

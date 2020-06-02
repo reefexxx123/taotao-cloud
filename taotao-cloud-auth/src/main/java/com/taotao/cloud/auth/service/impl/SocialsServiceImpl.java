@@ -6,7 +6,6 @@
  */
 package com.taotao.cloud.auth.service.impl;
 
-import com.taotao.cloud.auth.enums.LoginType;
 import com.taotao.cloud.auth.service.ISocialsService;
 import com.taotao.cloud.common.constant.SecurityConstant;
 import com.taotao.cloud.social.service.GitHubService;
@@ -16,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.UnsupportedEncodingException;
 
 /**
  * <br>

@@ -1,8 +1,7 @@
 package com.taotao.cloud.gateway.handler;
 
-import cn.hutool.core.map.MapUtil;
 import com.taotao.cloud.common.model.Result;
-import com.taotao.cloud.common.utils.JsonUtils;
+import com.taotao.cloud.common.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -57,7 +56,7 @@ public class HystrixFallbackHandler implements HandlerFunction<ServerResponse> {
         Map<String, String> map = params.toSingleValueMap();
         if (map.size() > 0) {
             message.append(" 请求参数: ");
-            String serialize = JsonUtils.serialize(message);
+            String serialize = JsonUtil.serialize(message);
             message.append(serialize);
         }
         Object requestBody = request.exchange().getAttribute(CACHED_REQUEST_BODY_ATTR);

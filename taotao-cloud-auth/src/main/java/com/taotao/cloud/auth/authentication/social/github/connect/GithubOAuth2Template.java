@@ -1,6 +1,6 @@
 package com.taotao.cloud.auth.authentication.social.github.connect;
 
-import com.taotao.cloud.common.utils.ContextUtils;
+import com.taotao.cloud.common.utils.ContextUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,7 +50,7 @@ public class GithubOAuth2Template extends OAuth2Template {
 
     @Override
     protected RestTemplate createRestTemplate() {
-        RestTemplate restTemplate = ContextUtils.getBean(RestTemplate.class, true);
+        RestTemplate restTemplate = ContextUtil.getBean(RestTemplate.class, true);
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter(Charset.forName("UTF-8")));
         return restTemplate;
     }

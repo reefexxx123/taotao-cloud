@@ -1,6 +1,6 @@
 package com.taotao.cloud.common.initializer;
 
-import com.taotao.cloud.common.utils.ContextUtils;
+import com.taotao.cloud.common.utils.ContextUtil;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -13,10 +13,10 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class CoreApplicationContextInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
     @Override
     public void initialize(ConfigurableApplicationContext context) {
-        if (ContextUtils.MainClass == null) {
-            ContextUtils.MainClass = deduceMainApplicationClass();
+        if (ContextUtil.MainClass == null) {
+            ContextUtil.MainClass = deduceMainApplicationClass();
         }
-        ContextUtils.setApplicationContext(context);
+        ContextUtil.setApplicationContext(context);
     }
 
     private Class<?> deduceMainApplicationClass() {

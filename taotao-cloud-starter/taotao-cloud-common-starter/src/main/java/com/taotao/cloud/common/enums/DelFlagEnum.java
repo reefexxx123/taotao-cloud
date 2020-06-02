@@ -1,6 +1,5 @@
 package com.taotao.cloud.common.enums;
 
-
 /**
  * 用户逻辑删除类型  1-正常，2-锁定
  *

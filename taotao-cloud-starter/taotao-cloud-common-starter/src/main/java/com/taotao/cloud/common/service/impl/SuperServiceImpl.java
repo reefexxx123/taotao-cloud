@@ -27,10 +27,15 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M,
     /**
      * 幂等性新增记录
      * 例子如下：
+     * <p>
      * String username = sysUser.getUsername();
-     * boolean result = super.saveIdempotency(sysUser, lock
+     * <p>
+     * boolean result = super.saveIdempotency(
+     * sysUser
+     * , lock
      * , LOCK_KEY_USERNAME+username
-     * , new QueryWrapper<SysUser>().eq("username", username));
+     * , new QueryWrapper<SysUser>().eq("username", username)
+     * );
      *
      * @param entity       实体对象
      * @param lock         锁实例
@@ -76,7 +81,6 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M,
      * @param lock         锁实例
      * @param lockKey      锁的key
      * @param countWrapper 判断是否存在的条件
-     * @return
      */
     @Override
     public boolean saveIdempotency(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper) {
@@ -96,7 +100,6 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M,
      * @param lockKey      锁的key
      * @param countWrapper 判断是否存在的条件
      * @param msg          对象已存在提示信息
-     * @return
      */
     @Override
     public boolean saveOrUpdateIdempotency(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper, String msg) {
@@ -132,7 +135,6 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M,
      * @param lock         锁实例
      * @param lockKey      锁的key
      * @param countWrapper 判断是否存在的条件
-     * @return
      */
     @Override
     public boolean saveOrUpdateIdempotency(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper) {

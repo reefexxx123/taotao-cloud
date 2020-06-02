@@ -50,7 +50,6 @@ public class WebSecurityHandlerConfig {
                 } else {
                     oAuth2Exception = new UnsupportedResponseTypeException("服务内部错误", e);
                 }
-                log.error(oAuth2Exception.getMessage());
                 ResponseEntity<OAuth2Exception> response = super.translate(oAuth2Exception);
                 ResponseEntity.status(ResultEnum.UNAUTHORIZED.getCode());
                 Objects.requireNonNull(response.getBody()).addAdditionalInformation("code", oAuth2Exception.getHttpErrorCode() + "");

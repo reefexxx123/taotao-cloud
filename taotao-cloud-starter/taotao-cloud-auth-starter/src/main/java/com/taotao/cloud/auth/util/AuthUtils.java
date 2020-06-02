@@ -41,21 +41,21 @@ public class AuthUtils {
         if (token == null) {
             token = request.getParameter(OAuth2AccessToken.ACCESS_TOKEN);
             if (token == null) {
-                log.debug("Token not found in request parameters.  Not an OAuth2 request.");
+                log.error("Token not found in request parameters.  Not an OAuth2 request.");
             }
         }
         return token;
     }
 
     /**
-     * 功能描述
+     * 验证密码
      *
-     * @param newPass
-     * @param passwordEncoderOldPass
+     * @param newPass                密码
+     * @param passwordEncoderOldPass 加密后的密码
      * @return boolean
      * @author dengtao
      * @date 2020/5/13 16:19
-    */
+     */
     public static boolean validatePass(String newPass, String passwordEncoderOldPass) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.matches(newPass, passwordEncoderOldPass);

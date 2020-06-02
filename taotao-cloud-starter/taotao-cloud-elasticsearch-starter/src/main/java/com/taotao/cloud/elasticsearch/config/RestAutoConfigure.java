@@ -1,7 +1,7 @@
 package com.taotao.cloud.elasticsearch.config;
 
-import com.taotao.cloud.common.constant.ProjectNameConstant;
-import com.taotao.cloud.common.utils.LogUtils;
+import com.taotao.cloud.common.constant.StarterNameConstant;
+import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.elasticsearch.properties.IndexProperties;
 import com.taotao.cloud.elasticsearch.properties.RestClientPoolProperties;
 import org.apache.http.auth.AuthScope;
@@ -29,7 +29,7 @@ import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 public class RestAutoConfigure implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
-        LogUtils.info(RestAutoConfigure.class, ProjectNameConstant.TAOTAO_CLOUD_ELASTICSEARCH_STARTER, "elasticsearch模块已启动");
+        LogUtil.info(RestAutoConfigure.class, StarterNameConstant.TAOTAO_CLOUD_ELASTICSEARCH_STARTER, "elasticsearch模块已启动");
     }
 
     @Bean

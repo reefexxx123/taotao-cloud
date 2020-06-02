@@ -1,10 +1,10 @@
 package com.taotao.cloud.auth.authentication.third;
 
 import cn.hutool.core.util.StrUtil;
-import com.taotao.cloud.auth.enums.LoginType;
+import com.taotao.cloud.common.enums.LoginTypeEnum;
 import com.taotao.cloud.auth.exception.InvalidException;
 import com.taotao.cloud.auth.token.ThirdAuthenticationToken;
-import com.taotao.cloud.auth.util.LoginTypeUtil;
+import com.taotao.cloud.common.utils.LoginTypeUtil;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -33,8 +33,8 @@ public class ThirdAuthenticationFilter extends AbstractAuthenticationProcessingF
         if (StrUtil.isBlank(code) && StrUtil.isBlank(state)) {
             throw new InvalidException("第三方认证参数错误");
         }
-        LoginType loginType = LoginTypeUtil.getLoginType(state);
-        ThirdAuthenticationToken authRequest = new ThirdAuthenticationToken(code, loginType);
+        LoginTypeEnum loginTypeEnum = LoginTypeUtil.getLoginType(state);
+        ThirdAuthenticationToken authRequest = new ThirdAuthenticationToken(code, loginTypeEnum);
         authRequest.setDetails(this.authenticationDetailsSource.buildDetails(request));
         return this.getAuthenticationManager().authenticate(authRequest);
     }
