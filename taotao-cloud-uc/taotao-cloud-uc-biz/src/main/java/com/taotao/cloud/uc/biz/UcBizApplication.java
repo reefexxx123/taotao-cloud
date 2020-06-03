@@ -4,7 +4,7 @@ import com.taotao.cloud.auth.annotation.EnableTaoTaoOauth2Client;
 import com.taotao.cloud.data.annotation.EnableTaoTaoTenantAutoConfigure;
 import com.taotao.cloud.elasticsearch.annotation.EnableTaoTaoSearchClient;
 import com.taotao.cloud.elk.annotation.EnableTaoTaoELKAutoConfigure;
-import com.taotao.cloud.ribbon.annotation.EnableFeignInterceptor;
+import com.taotao.cloud.ribbon.annotation.EnableTaoTaoFeignInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignInterceptor
+@EnableTaoTaoFeignInterceptor
 @EnableTaoTaoSearchClient
 @EnableTaoTaoOauth2Client
 @EnableTaoTaoTenantAutoConfigure

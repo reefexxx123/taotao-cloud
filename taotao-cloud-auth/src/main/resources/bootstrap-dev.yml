@@ -175,16 +175,15 @@ taotao:
       spring-app-name: taotao-cloud-uc-center
       destinations: >
         127.0.0.1:4560
-      health:
-        log:
-          statistic:
-            enabled: true
+      log:
+        statistic:
+          enabled: true
     data:
       mybatis-plus:
         auto-fill:
-          enabled: true
+          enabled: false
       tenant:
-        enabled: false
+        enabled: true
 
 hystrix:
   command:

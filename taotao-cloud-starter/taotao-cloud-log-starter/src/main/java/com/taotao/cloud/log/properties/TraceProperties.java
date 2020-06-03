@@ -13,8 +13,8 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
  * @date 2020/5/2 11:15
 */
 @Data
-@ConfigurationProperties(prefix = "taotao.cloud.log.trace")
 @RefreshScope
+@ConfigurationProperties(prefix = "taotao.cloud.log.trace")
 public class TraceProperties {
 
     /**

@@ -18,7 +18,7 @@ public class RemoteLogFallbackImpl implements FallbackFactory<RemoteLogService> 
     @Override
     public RemoteLogService create(Throwable throwable) {
         return sysLog -> {
-            log.error("feign 保存日志失败:{}", sysLog, throwable);
+            log.error("保存日志失败:{}", sysLog, throwable);
             return null;
         };
     }

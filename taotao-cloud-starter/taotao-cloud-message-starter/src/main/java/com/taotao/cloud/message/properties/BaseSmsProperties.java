@@ -10,8 +10,6 @@ import lombok.Data;
 */
 @Data
 public abstract class BaseSmsProperties {
-
     private String accessKeyId;
     private String accessKeySecret;
-
 }

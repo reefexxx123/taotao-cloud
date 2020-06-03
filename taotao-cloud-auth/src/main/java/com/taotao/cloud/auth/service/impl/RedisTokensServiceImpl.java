@@ -12,7 +12,7 @@ import com.taotao.cloud.common.enums.ResultEnum;
 import com.taotao.cloud.common.model.PageResult;
 import com.taotao.cloud.common.model.Result;
 import com.taotao.cloud.common.utils.WebUtil;
-import com.taotao.cloud.redis.template.RedisRepository;
+import com.taotao.cloud.redis.repository.RedisRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;

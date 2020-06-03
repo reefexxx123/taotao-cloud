@@ -121,17 +121,14 @@ public interface CommonConstant {
     String SIMPLE_MONTH_FORMAT = "yyyyMM";
     String SIMPLE_DATE_FORMAT = "yyyyMMdd";
     String SIMPLE_DATETIME_FORMAT = "yyyyMMddHHmmss";
-
-
     String DEF_USER_PASSWORD = "123456";
-
     String LOCK_KEY_PREFIX = "LOCK_KEY:";
+
 
     /**
      * 租户id参数
      */
     String TENANT_ID_PARAM = "tenantId";
-
     /**
      * 日志链路追踪id信息头
      */

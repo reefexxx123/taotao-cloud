@@ -18,6 +18,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Import({FeignInterceptorConfig.class, FeignHttpInterceptorConfig.class})
-public @interface EnableFeignInterceptor {
+public @interface EnableTaoTaoFeignInterceptor {
 
 }

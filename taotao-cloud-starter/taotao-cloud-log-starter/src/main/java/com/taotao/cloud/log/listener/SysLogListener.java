@@ -9,11 +9,10 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 
 /**
- * @Classname SysLogListener
- * @Description 注解形式的监听 异步监听日志事件
- * @Author 李号东 im.lihaodong@gmail.com
- * @Date 2019-04-28 11:34
- * @Version 1.0
+ * 注解形式的监听 异步监听日志事件
+ *
+ * @author dengtao
+ * @date 2020/6/3 13:33
  */
 @Slf4j
 public class SysLogListener {
@@ -26,6 +25,5 @@ public class SysLogListener {
     public void saveSysLog(SysLogEvent event) {
         SysLog sysLog = (SysLog) event.getSource();
         sysLogService.save(sysLog);
-        log.info("远程日志记录成功：{}", sysLog);
     }
 }

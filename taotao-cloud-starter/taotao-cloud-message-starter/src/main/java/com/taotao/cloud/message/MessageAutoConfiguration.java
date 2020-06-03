@@ -11,7 +11,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
-
 /**
  * MessageConfiguration
  *
@@ -19,12 +18,13 @@ import org.springframework.context.annotation.Import;
  * @date 2020/5/3 10:46
  */
 @Configuration
-@ConditionalOnProperty(prefix = "taotao.cloud.message.sms", name = "enabled", matchIfMissing = true)
-@EnableConfigurationProperties({SmsProperties.class, AliYunSmsProperties.class})
+@ConditionalOnProperty(prefix = "taotao.cloud.message.sms", name = "enabled", havingValue = "true")
+@EnableConfigurationProperties({SmsProperties.class})
 @Import({AliyunSmsConfiguration.class})
-public class MessageConfiguration implements InitializingBean {
+public class MessageAutoConfiguration implements InitializingBean {
+
     @Override
     public void afterPropertiesSet() throws Exception {
-        LogUtil.info(MessageConfiguration.class, StarterNameConstant.TAOTAO_CLOUD_MESSAGE_STARTER, "消息模块已启动");
+        LogUtil.info(MessageAutoConfiguration.class, StarterNameConstant.TAOTAO_CLOUD_MESSAGE_STARTER, "消息模块已启动");
     }
 }

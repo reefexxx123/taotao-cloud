@@ -1,4 +1,4 @@
-package com.taotao.cloud.redis.util;
+package com.taotao.cloud.redis.serializer;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.serializer.support.DeserializingConverter;

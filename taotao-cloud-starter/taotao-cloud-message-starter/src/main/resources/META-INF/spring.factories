@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.taotao.cloud.message.MessageConfiguration
+com.taotao.cloud.message.MessageAutoConfiguration

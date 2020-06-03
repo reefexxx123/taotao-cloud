@@ -38,8 +38,8 @@ import java.util.stream.Collectors;
  * @version v1.0.0
  * @create 2020/5/3 11:06
  */
-@AllArgsConstructor
 @Slf4j
+@AllArgsConstructor
 public class AliyunSmsMessageServiceImpl implements IAliyunSmsMessageService {
 
     private final SmsProperties smsProperties;

@@ -3,11 +3,15 @@ package com.taotao.cloud.log;
 import com.taotao.cloud.common.constant.StarterNameConstant;
 import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.log.aspect.SysLogAspect;
+import com.taotao.cloud.log.feign.RemoteLogService;
+import com.taotao.cloud.log.feign.fallback.RemoteLogFallbackImpl;
 import com.taotao.cloud.log.listener.SysLogListener;
 import com.taotao.cloud.log.properties.SysLogProperties;
 import com.taotao.cloud.log.properties.TraceProperties;
+import com.taotao.cloud.log.service.impl.DbSysLogServiceImpl;
 import feign.Logger;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -48,6 +52,16 @@ public class LogAutoConfiguration implements InitializingBean {
         return Logger.Level.FULL;
     }
 
+    @Bean
+    public RemoteLogFallbackImpl remoteLogFallback() {
+        return new RemoteLogFallbackImpl();
+    }
+
+    @Bean
+    @ConditionalOnProperty(name = "taotao.cloud.log.type", havingValue = "db", matchIfMissing = true)
+    public DbSysLogServiceImpl dbSysLogService() {
+        return new DbSysLogServiceImpl();
+    }
 
 }
 

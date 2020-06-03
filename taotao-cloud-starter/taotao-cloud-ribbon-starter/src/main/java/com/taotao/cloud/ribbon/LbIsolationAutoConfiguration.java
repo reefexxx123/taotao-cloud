@@ -12,6 +12,6 @@ import org.springframework.cloud.netflix.ribbon.RibbonClients;
  */
 @ConditionalOnProperty(value = "taotao.cloud.ribbon.isolation.enabled", havingValue = "true")
 @RibbonClients(defaultConfiguration = {RuleConfigure.class})
-public class LbIsolationAutoConfigure {
+public class LbIsolationAutoConfiguration {
 
 }

@@ -2,8 +2,10 @@ package com.taotao.cloud.redis;
 
 import com.taotao.cloud.common.constant.StarterNameConstant;
 import com.taotao.cloud.common.utils.LogUtil;
+import com.taotao.cloud.redis.lock.RedisDistributedLock;
 import com.taotao.cloud.redis.properties.CacheManagerProperties;
-import com.taotao.cloud.redis.util.RedisObjectSerializer;
+import com.taotao.cloud.redis.repository.RedisRepository;
+import com.taotao.cloud.redis.serializer.RedisObjectSerializer;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
@@ -31,9 +33,10 @@ import java.util.Map;
  * @author dengtao
  * @date 2020/4/30 10:13
  */
-@EnableConfigurationProperties({RedisProperties.class, CacheManagerProperties.class})
 @EnableCaching
+@EnableConfigurationProperties({RedisProperties.class, CacheManagerProperties.class})
 public class RedisAutoConfigure implements InitializingBean {
+
     @Override
     public void afterPropertiesSet() throws Exception {
         LogUtil.info(RedisAutoConfigure.class, StarterNameConstant.TAOTAO_CLOUD_REDIS_STARTER, "redis模块已启动");
@@ -49,15 +52,27 @@ public class RedisAutoConfigure implements InitializingBean {
 
         RedisSerializer<String> stringSerializer = new StringRedisSerializer();
         RedisSerializer<Object> redisObjectSerializer = new RedisObjectSerializer();
+
         redisTemplate.setKeySerializer(stringSerializer);
         redisTemplate.setHashKeySerializer(stringSerializer);
         redisTemplate.setValueSerializer(redisObjectSerializer);
         redisTemplate.afterPropertiesSet();
+
         return redisTemplate;
     }
 
-    @Bean(name = "cacheManager")
+    @Bean
+    public RedisRepository redisRepository(@Autowired RedisTemplate<String, Object> redisTemplate) {
+        return new RedisRepository(redisTemplate);
+    }
+
+    @Bean
+    public RedisDistributedLock redisDistributedLock(@Autowired RedisTemplate<String, Object> redisTemplate) {
+        return new RedisDistributedLock(redisTemplate);
+    }
+
     @Primary
+    @Bean(name = "cacheManager")
     public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
         RedisCacheConfiguration difConf = getDefConf().entryTtl(Duration.ofHours(1));
 
@@ -82,7 +97,7 @@ public class RedisAutoConfigure implements InitializingBean {
         return (target, method, objects) -> {
             StringBuilder sb = new StringBuilder();
             sb.append(target.getClass().getName());
-            sb.append(":" + method.getName() + ":");
+            sb.append(":").append(method.getName()).append(":");
             for (Object obj : objects) {
                 sb.append(obj.toString());
             }

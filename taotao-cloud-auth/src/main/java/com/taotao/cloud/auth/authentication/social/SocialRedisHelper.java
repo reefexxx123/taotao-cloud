@@ -1,7 +1,7 @@
 package com.taotao.cloud.auth.authentication.social;
 
 
-import com.taotao.cloud.redis.template.RedisRepository;
+import com.taotao.cloud.redis.repository.RedisRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.Connection;

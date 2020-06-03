@@ -1,8 +1,10 @@
 package com.taotao.cloud.redis.properties;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 import java.util.List;
 
@@ -12,15 +14,14 @@ import java.util.List;
  * @author dengtao
  * @date 2020/4/30 10:16
  */
-@Setter
-@Getter
+@Data
+@RefreshScope
 @ConfigurationProperties(prefix = "taotao.cloud.redis.cache-manager")
 public class CacheManagerProperties {
 
     private List<CacheConfig> configs;
 
-    @Setter
-    @Getter
+    @Data
     public static class CacheConfig {
         /**
          * cache key

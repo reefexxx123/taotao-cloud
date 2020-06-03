@@ -23,10 +23,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConditionalOnClass(FastBuildRabbitMqProducer.class)
 @EnableConfigurationProperties(RabbitMQProperties.class)
+@ConditionalOnProperty(prefix = "taotao.cloud.rabbitmq", name = "enabled", havingValue = "true")
 public class RabbitMQAutoConfigure {
 
     @Autowired
-    private RabbitMQProperties rabbitMQProperties;
+    private RabbitMQProperties rabbitMqProperties;
 
     @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
@@ -37,10 +38,10 @@ public class RabbitMQAutoConfigure {
     @ConditionalOnMissingBean
     public ConnectionFactory connectionFactory() {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
-        connectionFactory.setAddresses(rabbitMQProperties.getAddresses());
-        connectionFactory.setUsername(rabbitMQProperties.getUsername());
-        connectionFactory.setPassword(rabbitMQProperties.getPassword());
-        connectionFactory.setVirtualHost(rabbitMQProperties.getVirtualHost());
+        connectionFactory.setAddresses(rabbitMqProperties.getAddresses());
+        connectionFactory.setUsername(rabbitMqProperties.getUsername());
+        connectionFactory.setPassword(rabbitMqProperties.getPassword());
+        connectionFactory.setVirtualHost(rabbitMqProperties.getVirtualHost());
         connectionFactory.setPublisherConfirmType(CachingConnectionFactory.ConfirmType.CORRELATED);
         return connectionFactory;
     }
@@ -48,7 +49,7 @@ public class RabbitMQAutoConfigure {
     @Bean
     @ConditionalOnMissingBean
     @ConditionalOnProperty(prefix = "taotao.cloud.rabbitmq", value = "enabled", havingValue = "true")
-    public FastBuildRabbitMqProducer fastRabbitMQProducer(ConnectionFactory connectionFactory) {
+    public FastBuildRabbitMqProducer fastRabbitMqProducer(ConnectionFactory connectionFactory) {
         return new FastBuildRabbitMqProducer(connectionFactory);
     }
 }

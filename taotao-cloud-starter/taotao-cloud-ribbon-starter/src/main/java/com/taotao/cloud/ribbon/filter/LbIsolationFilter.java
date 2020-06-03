@@ -4,6 +4,8 @@ import cn.hutool.core.util.StrUtil;
 import com.taotao.cloud.common.constant.SecurityConstant;
 import com.taotao.cloud.common.constant.CommonConstant;
 import com.taotao.cloud.common.context.LbIsolationContextHolder;
+import com.taotao.cloud.ribbon.properties.RibbonIsolationProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -24,12 +26,12 @@ import java.io.IOException;
 @ConditionalOnClass(Filter.class)
 public class LbIsolationFilter extends OncePerRequestFilter {
 
-    @Value("${" + "taotao.cloud.ribbon.isolation.enabled" + ":false}")
-    private boolean enableIsolation;
+    @Autowired
+    private RibbonIsolationProperties ribbonIsolationProperties;
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        return !enableIsolation;
+        return !ribbonIsolationProperties.isEnabled();
     }
 
     @Override

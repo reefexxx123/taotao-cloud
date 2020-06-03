@@ -4,22 +4,15 @@ import cn.hutool.core.util.StrUtil;
 import com.taotao.cloud.auth.exception.ValidateCodeException;
 import com.taotao.cloud.common.constant.CommonConstant;
 import com.taotao.cloud.common.constant.SecurityConstant;
-import com.taotao.cloud.redis.template.RedisRepository;
+import com.taotao.cloud.redis.repository.RedisRepository;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
-import org.springframework.core.ResolvableType;
-import org.springframework.core.codec.ByteArrayDecoder;
-import org.springframework.http.codec.DecoderHttpMessageReader;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
-import reactor.core.publisher.Mono;
-
-import java.util.Collections;
 
 /**
  * 图形验证码

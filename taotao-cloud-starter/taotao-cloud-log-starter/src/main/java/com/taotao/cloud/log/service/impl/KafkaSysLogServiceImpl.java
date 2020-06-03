@@ -14,7 +14,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
  * @date 2020/5/2 11:18
 */
 @Slf4j
-@ConditionalOnProperty(name = "taotao.cloud.sys-log.log-type", havingValue = "kafka")
+@ConditionalOnProperty(name = "taotao.cloud.log.type", havingValue = "kafka")
 public class KafkaSysLogServiceImpl implements ISysLogService {
 
     @Autowired

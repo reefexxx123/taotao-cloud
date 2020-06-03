@@ -3,6 +3,7 @@ package com.taotao.cloud.message.properties;
 import lombok.Data;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -12,11 +13,11 @@ import org.springframework.context.annotation.Configuration;
  * @date 2020/4/30 10:19
  */
 @Data
-@Configuration
+@RefreshScope
 @ConfigurationProperties(prefix = "taotao.cloud.message.sms")
 public class SmsProperties {
 
-    private boolean enabled = true;
+    private boolean enabled = false;
 
     /**
      * 阿里云短信
@@ -27,6 +28,5 @@ public class SmsProperties {
      * 秒滴云短信
      */
     MiaoDiYunSmsProperties miaodiyun = new MiaoDiYunSmsProperties();
-
 
 }

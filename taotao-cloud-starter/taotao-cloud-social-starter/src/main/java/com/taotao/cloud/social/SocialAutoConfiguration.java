@@ -30,7 +30,6 @@ import org.springframework.context.annotation.Bean;
  *
  * @author dengtao
  * @version v1.0.0
- * @create 2020/5/7 09:08
  */
 @EnableConfigurationProperties({GiteeProperties.class, GitHubProperties.class, QqProperties.class})
 public class SocialAutoConfiguration implements InitializingBean {

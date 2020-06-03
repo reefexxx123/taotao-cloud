@@ -6,18 +6,15 @@ package com.taotao.cloud.redis.constant;
  * @author dengtao
  * @date 2020/4/30 10:17
  */
-public class RedisToolsConstant {
-    private RedisToolsConstant() {
-        throw new IllegalStateException("Utility class");
-    }
+public interface RedisToolsConstant {
 
     /**
      * single Redis
      */
-    public final static int SINGLE = 1;
+    int SINGLE = 1;
 
     /**
      * Redis cluster
      */
-    public final static int CLUSTER = 2;
+    int CLUSTER = 2;
 }

@@ -23,6 +23,7 @@ import java.io.IOException;
  */
 @ConditionalOnClass(Filter.class)
 public class TraceFilter extends OncePerRequestFilter {
+
     @Resource
     private TraceProperties traceProperties;
 

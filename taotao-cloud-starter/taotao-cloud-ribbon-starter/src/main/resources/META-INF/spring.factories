@@ -1,8 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.taotao.cloud.ribbon.RibbonAutoConfigure,\
-com.taotao.cloud.ribbon.FeignAutoConfigure,\
-com.taotao.cloud.ribbon.RestTemplateAutoConfigure,\
-com.taotao.cloud.ribbon.filter.LbIsolationFilter,\
-com.taotao.cloud.ribbon.LbIsolationAutoConfigure,\
-com.taotao.cloud.ribbon.filter.TenantFilter,\
-com.taotao.cloud.ribbon.filter.TraceFilter
+com.taotao.cloud.ribbon.RibbonAutoConfiguration,\
+com.taotao.cloud.ribbon.FeignAutoConfiguration,\
+com.taotao.cloud.ribbon.RestTemplateAutoConfiguration,\
+com.taotao.cloud.ribbon.LbIsolationAutoConfiguration

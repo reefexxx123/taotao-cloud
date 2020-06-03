@@ -1,5 +1,7 @@
 package com.taotao.cloud.redis.lock;
 
+import cn.hutool.core.math.MathUtil;
+import cn.hutool.core.util.RandomUtil;
 import com.taotao.cloud.common.lock.AbstractDistributedLock;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 public class RedisDistributedLock extends AbstractDistributedLock {
+
     @Autowired
     private final RedisTemplate<String, Object> redisTemplate;
 
@@ -63,15 +66,13 @@ public class RedisDistributedLock extends AbstractDistributedLock {
 
     private boolean setRedis(final String key, final long expire) {
         try {
-            boolean status = redisTemplate.execute((RedisCallback<Boolean>) connection -> {
+            return redisTemplate.execute((RedisCallback<Boolean>) connection -> {
                 String uuid = UUID.randomUUID().toString();
                 lockFlag.set(uuid);
                 byte[] keyByte = redisTemplate.getStringSerializer().serialize(key);
                 byte[] uuidByte = redisTemplate.getStringSerializer().serialize(uuid);
-                boolean result = connection.set(keyByte, uuidByte, Expiration.from(expire, TimeUnit.MILLISECONDS), RedisStringCommands.SetOption.ifAbsent());
-                return result;
+                return connection.set(keyByte, uuidByte, Expiration.from(expire, TimeUnit.MILLISECONDS), RedisStringCommands.SetOption.ifAbsent());
             });
-            return status;
         } catch (Exception e) {
             log.error("set redisDistributeLock occured an exception", e);
         }

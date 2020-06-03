@@ -22,6 +22,7 @@ import java.io.IOException;
  */
 @ConditionalOnClass(Filter.class)
 public class TenantFilter extends OncePerRequestFilter {
+
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -32,6 +33,7 @@ public class TenantFilter extends OncePerRequestFilter {
             if (StrUtil.isEmpty(tenantId)) {
                 tenantId = request.getHeader(SecurityConstant.TENANT_HEADER);
             }
+
             //保存租户id
             if (StrUtil.isNotEmpty(tenantId)) {
                 TenantContextHolder.setTenant(tenantId);

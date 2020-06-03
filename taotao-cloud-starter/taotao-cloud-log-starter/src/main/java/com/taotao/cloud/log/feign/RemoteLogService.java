@@ -1,5 +1,6 @@
 package com.taotao.cloud.log.feign;
 
+import com.taotao.cloud.common.constant.ServiceNameConstant;
 import com.taotao.cloud.common.model.Result;
 import com.taotao.cloud.log.feign.fallback.RemoteLogFallbackImpl;
 import com.taotao.cloud.uc.api.entity.SysLog;
@@ -13,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @author dengtao
  * @date 2020/5/2 16:41
 */
-@FeignClient(contextId = "remoteLogService", value = "taotao-cloud-uc-center", fallbackFactory = RemoteLogFallbackImpl.class)
+@FeignClient(contextId = "remoteLogService", value = ServiceNameConstant.TAOTAO_CLOUD_UC_CENTER,
+        fallbackFactory = RemoteLogFallbackImpl.class)
 public interface RemoteLogService {
 
     @PostMapping(value = "/log")

@@ -1,7 +1,7 @@
 package com.taotao.cloud.file.biz;
 
 import com.taotao.cloud.file.biz.properties.FileServerProperties;
-import com.taotao.cloud.ribbon.annotation.EnableFeignInterceptor;
+import com.taotao.cloud.ribbon.annotation.EnableTaoTaoFeignInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableDiscoveryClient
 @EnableConfigurationProperties(FileServerProperties.class)
 @EnableFeignClients
-@EnableFeignInterceptor
+@EnableTaoTaoFeignInterceptor
 @SpringBootApplication
 @EnableTransactionManagement
 @MapperScan(value = "com.taotao.cloud.file.biz.mapper")

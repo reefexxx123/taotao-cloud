@@ -23,7 +23,7 @@ public class DefaultPropertiesFactory extends PropertiesFactory {
     @Autowired
     private Environment environment;
 
-    private Map<Class, String> classToProperty = new HashMap<>(5);
+    private final Map<Class, String> classToProperty = new HashMap<>(5);
 
     public DefaultPropertiesFactory() {
         super();
@@ -41,7 +41,7 @@ public class DefaultPropertiesFactory extends PropertiesFactory {
     public String getClassName(Class clazz, String name) {
         String className = super.getClassName(clazz, name);
         // 读取全局配置
-        if(!StringUtils.hasText(className) && this.classToProperty.containsKey(clazz)){
+        if (!StringUtils.hasText(className) && this.classToProperty.containsKey(clazz)) {
             String classNameProperty = this.classToProperty.get(clazz);
             className = environment.getProperty(NAMESPACE + "." + classNameProperty);
         }

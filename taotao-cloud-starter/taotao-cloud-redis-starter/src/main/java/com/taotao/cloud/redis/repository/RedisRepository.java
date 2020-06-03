@@ -1,4 +1,4 @@
-package com.taotao.cloud.redis.template;
+package com.taotao.cloud.redis.repository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -43,7 +43,7 @@ public class RedisRepository {
     /**
      * Spring Redis Template
      */
-    private RedisTemplate<String, Object> redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     public RedisRepository(RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;

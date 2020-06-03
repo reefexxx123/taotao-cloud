@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
  * @date 2017/11/17
  */
 @Data
+@RefreshScope
 @ConfigurationProperties(prefix = "taotao.cloud.ribbon.rest-template")
 public class RestTemplateProperties {
     /**

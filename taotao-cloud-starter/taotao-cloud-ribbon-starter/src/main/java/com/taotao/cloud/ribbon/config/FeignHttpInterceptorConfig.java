@@ -46,6 +46,7 @@ public class FeignHttpInterceptorConfig {
                 if (headerNames != null) {
                     String headerName;
                     String headerValue;
+
                     while (headerNames.hasMoreElements()) {
                         headerName = headerNames.nextElement();
                         if (requestHeaders.contains(headerName)) {
@@ -56,13 +57,13 @@ public class FeignHttpInterceptorConfig {
                 }
                 //传递access_token，无网络隔离时需要传递
 
-//                String token = extractHeaderToken(request);
-//                if (StrUtil.isEmpty(token)) {
-//                    token = request.getParameter(CommonConstant.ACCESS_TOKEN);
-//                }
-//                if (StrUtil.isNotEmpty(token)) {
-//                    template.header(CommonConstant.TOKEN_HEADER, CommonConstant.BEARER_TYPE + " " + token);
-//                }
+                String token = extractHeaderToken(request);
+                if (StrUtil.isEmpty(token)) {
+                    token = request.getParameter(CommonConstant.ACCESS_TOKEN);
+                }
+                if (StrUtil.isNotEmpty(token)) {
+                    template.header(CommonConstant.TOKEN_HEADER, CommonConstant.BEARER_TYPE + " " + token);
+                }
             }
         };
     }
@@ -70,13 +71,13 @@ public class FeignHttpInterceptorConfig {
     /**
      * 解析head中的token
      *
-     * @param request
+     * @param request request
      */
     private String extractHeaderToken(HttpServletRequest request) {
         Enumeration<String> headers = request.getHeaders(CommonConstant.TOKEN_HEADER);
         while (headers.hasMoreElements()) {
             String value = headers.nextElement();
-            if ((value.toLowerCase().startsWith(CommonConstant.BEARER_TYPE))) {
+            if (value.startsWith(CommonConstant.BEARER_TYPE)) {
                 String authHeaderValue = value.substring(CommonConstant.BEARER_TYPE.length()).trim();
                 int commaIndex = authHeaderValue.indexOf(',');
                 if (commaIndex > 0) {

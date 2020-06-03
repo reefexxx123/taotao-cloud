@@ -11,7 +11,6 @@ import feign.Util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -22,10 +21,11 @@ import java.nio.charset.Charset;
  * @author dengtao
  * @date 2018/9/18 14:04
  */
-public class FeignAutoConfigure implements InitializingBean {
+public class FeignAutoConfiguration implements InitializingBean {
+
     @Override
     public void afterPropertiesSet() throws Exception {
-        LogUtil.info(RibbonAutoConfigure.class, StarterNameConstant.TAOTAO_CLOUD_FEIGN_STARTER, "feign模块已启动");
+        LogUtil.info(RibbonAutoConfiguration.class, StarterNameConstant.TAOTAO_CLOUD_FEIGN_STARTER, "feign模块已启动");
     }
 
     @Bean

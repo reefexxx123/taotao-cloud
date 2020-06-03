@@ -7,6 +7,7 @@ import com.alibaba.ttl.TransmittableThreadLocal;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.taotao.cloud.auth.utils.SecurityUtil;
 import com.taotao.cloud.common.context.TenantContextHolder;
+import com.taotao.cloud.common.enums.LogOperateTypeEnum;
 import com.taotao.cloud.log.event.SysLogEvent;
 import com.taotao.cloud.log.properties.SysLogProperties;
 import com.taotao.cloud.log.util.LogUtil;
@@ -18,6 +19,7 @@ import org.aspectj.lang.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -57,7 +59,7 @@ public class SysLogAspect {
     /**
      * 事件发布是由ApplicationContext对象管控的，我们发布事件前需要注入ApplicationContext对象调用publishEvent方法完成事件发布
      *
-     * @param publisher
+     * @param publisher publisher
      */
     public SysLogAspect(ApplicationEventPublisher publisher) {
         this.publisher = publisher;
@@ -73,9 +75,7 @@ public class SysLogAspect {
 
     /***
      * 拦截控制层的操作日志
-     * @param joinPoint
-     * @return
-     * @throws Throwable
+     * @param joinPoint joinPoint
      */
     @Before(value = "sysLogAspect()")
     public void recordLog(JoinPoint joinPoint) throws Throwable {
@@ -111,10 +111,10 @@ public class SysLogAspect {
         SysLog sysLog = sysLogThreadLocal.get();
         if (Objects.nonNull(sysLog)) {
             R r = Convert.convert(R.class, ret);
-            if (r.getCode() == 200) {
-                sysLog.setType(1);
+            if (r.getCode() == HttpStatus.OK.value()) {
+                sysLog.setType(LogOperateTypeEnum.OPERATE_RECORD.getValue());
             } else {
-                sysLog.setType(2);
+                sysLog.setType(LogOperateTypeEnum.EXCEPTION_RECORD.getValue());
                 sysLog.setExDetail(r.getMsg());
             }
             sysLog.setTenantId(TenantContextHolder.getTenant());
@@ -125,20 +125,18 @@ public class SysLogAspect {
             publisher.publishEvent(new SysLogEvent(sysLog));
             sysLogThreadLocal.remove();
         }
-
     }
 
     @AfterThrowing(pointcut = "sysLogAspect()", throwing = "e")
     public void doAfterThrowable(Throwable e) {
         SysLog sysLog = sysLogThreadLocal.get();
         if (Objects.nonNull(sysLog)) {
-            sysLog.setType(2);
+            sysLog.setType(LogOperateTypeEnum.EXCEPTION_RECORD.getValue());
             sysLog.setExDetail(LogUtil.getStackTrace(e));
             sysLog.setExDesc(e.getMessage());
             publisher.publishEvent(new SysLogEvent(sysLog));
             sysLogThreadLocal.remove();
         }
-
     }
 
 }

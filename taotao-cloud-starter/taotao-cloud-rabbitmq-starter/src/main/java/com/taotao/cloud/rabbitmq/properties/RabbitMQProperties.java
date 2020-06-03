@@ -10,6 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @date 2020/5/28 17:35
  */
 @Data
+
 @ConfigurationProperties(prefix = "taotao.cloud.rabbitmq")
 public class RabbitMQProperties {
 

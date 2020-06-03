@@ -3,6 +3,7 @@ package com.taotao.cloud.social.properties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 /**
  * GiteeConfig
@@ -12,6 +13,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@RefreshScope
 @ConfigurationProperties(prefix = "taotao.cloud.social.security.gitee")
 public class GiteeProperties extends BaseSocialProperties {
 

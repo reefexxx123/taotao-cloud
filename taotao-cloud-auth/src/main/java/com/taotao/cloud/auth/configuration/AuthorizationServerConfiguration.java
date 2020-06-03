@@ -3,10 +3,9 @@ package com.taotao.cloud.auth.configuration;
 import com.taotao.cloud.auth.serializer.CustomWebResponseExceptionTranslator;
 import com.taotao.cloud.auth.service.impl.RedisClientDetailsService;
 import com.taotao.cloud.common.constant.SecurityConstant;
-import com.taotao.cloud.redis.template.RedisRepository;
+import com.taotao.cloud.redis.repository.RedisRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -20,9 +19,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
-import javax.annotation.Resource;
 import javax.sql.DataSource;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 授权服务器 主要是配置客户端信息和认证信息

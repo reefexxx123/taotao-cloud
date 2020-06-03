@@ -1,6 +1,8 @@
 package com.taotao.cloud.message.properties;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * 秒滴云短信
@@ -9,6 +11,8 @@ import lombok.Data;
  * @date 2020/4/30 10:19
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
+//@ConfigurationProperties(prefix = "taotao.cloud.message.sms.miaodiyun")
 public class MiaoDiYunSmsProperties extends BaseSmsProperties {
 
     /**

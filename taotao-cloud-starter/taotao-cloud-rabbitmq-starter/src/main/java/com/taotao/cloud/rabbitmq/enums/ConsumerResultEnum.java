@@ -1,4 +1,4 @@
-package com.taotao.cloud.rabbitmq.enumcode;
+package com.taotao.cloud.rabbitmq.enums;
 
 
 /**

@@ -2,7 +2,10 @@ package com.taotao.cloud.ribbon;
 
 import com.taotao.cloud.common.constant.StarterNameConstant;
 import com.taotao.cloud.common.utils.LogUtil;
-import com.taotao.cloud.ribbon.properties.RibbonProperties;
+import com.taotao.cloud.ribbon.filter.LbIsolationFilter;
+import com.taotao.cloud.ribbon.filter.TenantFilter;
+import com.taotao.cloud.ribbon.filter.TraceFilter;
+import com.taotao.cloud.ribbon.properties.RibbonIsolationProperties;
 import org.apache.http.client.HttpClient;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,32 +24,44 @@ import org.springframework.web.client.RestTemplate;
  * @author dengtao
  * @date 2018/11/17 9:24
  */
-@EnableConfigurationProperties(RibbonProperties.class)
-public class RibbonAutoConfigure implements InitializingBean {
+@EnableConfigurationProperties(RibbonIsolationProperties.class)
+public class RibbonAutoConfiguration implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        LogUtil.info(RibbonAutoConfigure.class, StarterNameConstant.TAOTAO_CLOUD_RIBBON_STARTER, "ribbon模块已启动");
+        LogUtil.info(RibbonAutoConfiguration.class, StarterNameConstant.TAOTAO_CLOUD_RIBBON_STARTER, "ribbon模块已启动");
     }
-
-    @Autowired
-    private HttpClient httpClient;
 
     @Bean
     public DefaultPropertiesFactory defaultPropertiesFactory() {
         return new DefaultPropertiesFactory();
     }
 
+    @Bean
+    public LbIsolationFilter lbIsolationFilter() {
+        return new LbIsolationFilter();
+    }
+
+    @Bean
+    public TraceFilter traceFilter() {
+        return new TraceFilter();
+    }
+
+    @Bean
+    public TenantFilter tenantFilter() {
+        return new TenantFilter();
+    }
+
     /**
      * httpclient 实现的ClientHttpRequestFactory
      */
     @Bean
-    public ClientHttpRequestFactory httpRequestFactory() {
+    public ClientHttpRequestFactory httpRequestFactory(@Autowired HttpClient httpClient) {
         return new HttpComponentsClientHttpRequestFactory(httpClient);
     }
 
-    @LoadBalanced
     @Bean
+    @LoadBalanced
     public RestTemplate restTemplate() {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setRequestFactory(new OkHttp3ClientHttpRequestFactory());

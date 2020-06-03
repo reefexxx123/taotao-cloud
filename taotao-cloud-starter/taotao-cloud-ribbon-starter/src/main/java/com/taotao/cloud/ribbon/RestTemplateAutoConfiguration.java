@@ -21,7 +21,7 @@ import org.springframework.core.annotation.Order;
  * @date 2018/11/17
  */
 @EnableConfigurationProperties(RestTemplateProperties.class)
-public class RestTemplateAutoConfigure {
+public class RestTemplateAutoConfiguration {
 
     @Autowired
     private RestTemplateProperties restTemplateProperties;

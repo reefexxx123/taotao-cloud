@@ -18,8 +18,8 @@ import java.util.Map;
  * @date 2020/4/30 10:11
  */
 @Data
-@ConfigurationProperties("taotao.cloud.swagger")
 @EnableAutoConfiguration
+@ConfigurationProperties("taotao.cloud.swagger")
 public class SwaggerProperties {
     /**
      * 是否开启swagger

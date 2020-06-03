@@ -1,9 +1,11 @@
 package com.taotao.cloud.message.properties;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 import java.util.List;
 
@@ -14,9 +16,11 @@ import java.util.List;
  * @date 2020/4/30 10:18
  */
 @Data
-@ConfigurationProperties(prefix = "taotao.cloud.message.sms.aliyun")
+@EqualsAndHashCode(callSuper = true)
+//@ConfigurationProperties(prefix = "taotao.cloud.message.sms.aliyun")
 public class AliYunSmsProperties extends BaseSmsProperties {
-    private boolean enabled = true;
+
+    private boolean enabled = false;
 
     /**
      * 验证码长度

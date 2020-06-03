@@ -12,9 +12,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
  *
  * @author dengtao
  * @date 2020/5/2 11:18
-*/
+ */
 @Slf4j
-@ConditionalOnProperty(name = "taotao.cloud.sys-log.log-type", havingValue = "db", matchIfMissing = true)
 public class DbSysLogServiceImpl implements ISysLogService {
 
     @Autowired
@@ -23,5 +22,6 @@ public class DbSysLogServiceImpl implements ISysLogService {
     @Override
     public void save(SysLog sysLog) {
         remoteLogService.saveLog(sysLog);
+        log.info("远程日志记录成功：{}", sysLog);
     }
 }
