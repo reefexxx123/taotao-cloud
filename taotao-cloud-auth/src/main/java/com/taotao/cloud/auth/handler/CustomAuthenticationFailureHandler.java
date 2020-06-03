@@ -25,9 +25,6 @@ import java.io.IOException;
 @Slf4j
 @Component
 public class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler {
-    @Resource
-    private ObjectMapper objectMapper;
-
     @Override
     public void onAuthenticationFailure(HttpServletRequest request,
                                         HttpServletResponse response,
@@ -40,7 +37,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
         } else {
             message = "用户认证失败";
         }
-        ResponseUtil.writeResponse(objectMapper, response, message, HttpStatus.UNAUTHORIZED.value());
+        ResponseUtil.writeResponse(response, message, HttpStatus.UNAUTHORIZED.value());
     }
 }
 

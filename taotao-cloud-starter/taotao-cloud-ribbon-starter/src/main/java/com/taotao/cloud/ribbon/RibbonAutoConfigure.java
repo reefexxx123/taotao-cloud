@@ -23,6 +23,7 @@ import org.springframework.web.client.RestTemplate;
  */
 @EnableConfigurationProperties(RibbonProperties.class)
 public class RibbonAutoConfigure implements InitializingBean {
+
     @Override
     public void afterPropertiesSet() throws Exception {
         LogUtil.info(RibbonAutoConfigure.class, StarterNameConstant.TAOTAO_CLOUD_RIBBON_STARTER, "ribbon模块已启动");

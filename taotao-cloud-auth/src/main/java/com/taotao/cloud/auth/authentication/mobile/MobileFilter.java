@@ -3,7 +3,7 @@ package com.taotao.cloud.auth.authentication.mobile;
 import com.taotao.cloud.auth.exception.ValidateCodeException;
 import com.taotao.cloud.auth.properties.SecurityProperties;
 import com.taotao.cloud.auth.service.ISmsCodeService;
-import com.taotao.cloud.auth.util.AuthUtils;
+import com.taotao.cloud.auth.utils.AuthUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -43,7 +43,7 @@ public class MobileFilter extends OncePerRequestFilter {
             // 判断是否有不验证验证码的client
             if (securityProperties.getCode().getIgnoreClientCode().length > 0) {
                 try {
-                    final String[] clientInfos = AuthUtils.extractClient(request);
+                    final String[] clientInfos = AuthUtil.extractClient(request);
                     String clientId = clientInfos[0];
                     for (String client : securityProperties.getCode().getIgnoreClientCode()) {
                         if (client.equals(clientId)) {

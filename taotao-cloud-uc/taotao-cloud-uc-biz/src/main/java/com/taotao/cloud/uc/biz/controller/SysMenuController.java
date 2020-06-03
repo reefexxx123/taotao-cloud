@@ -32,7 +32,7 @@ public class SysMenuController {
     private ISysMenuService menuService;
 
     @ApiOperation("添加菜单")
-    @SysOperateLog(descrption = "添加菜单")
+    @SysOperateLog(description = "添加菜单")
     @PreAuthorize("hasAuthority('sys:menu:add')")
     @PostMapping
     public Result<Boolean> add(@RequestBody SysMenu menu) {
@@ -54,7 +54,7 @@ public class SysMenuController {
 
     @ApiOperation("修改菜单")
     @PreAuthorize("hasAuthority('sys:menu:update')")
-    @SysOperateLog(descrption = "修改菜单")
+    @SysOperateLog(description = "修改菜单")
     @PutMapping
     public Result<Boolean> updateMenu(@RequestBody MenuDTO menuDto) {
         return Result.succeed(menuService.updateMenuById(menuDto));
@@ -62,7 +62,7 @@ public class SysMenuController {
 
     @ApiOperation("删除菜单")
     @PreAuthorize("hasAuthority('sys:menu:delete')")
-    @SysOperateLog(descrption = "删除菜单")
+    @SysOperateLog(description = "删除菜单")
     @DeleteMapping("/{id}")
     public Result<Boolean> deleteMenu(@PathVariable("id") Integer id) {
         return Result.succeed(menuService.removeMenuById(id));

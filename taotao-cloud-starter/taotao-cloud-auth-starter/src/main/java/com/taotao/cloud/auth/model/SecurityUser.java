@@ -24,6 +24,8 @@ import java.util.Set;
  */
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Accessors(chain = true)
 public class SecurityUser implements UserDetails, Serializable {
 

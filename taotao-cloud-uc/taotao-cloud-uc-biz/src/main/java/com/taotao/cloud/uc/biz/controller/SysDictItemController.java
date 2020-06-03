@@ -29,7 +29,7 @@ public class SysDictItemController {
     private ISysDictItemService dictItemService;
 
     @ApiOperation("分页查询字典详情内容")
-    @SysOperateLog(descrption = "分页查询字典详情内容")
+    @SysOperateLog(description = "分页查询字典详情内容")
     @GetMapping
     public Result<PageResult<SysDictItem>> getDictItemPage(Page page, SysDictItem sysDictItem) {
         Page pageResult = dictItemService.page(page, Wrappers.query(sysDictItem));
@@ -40,7 +40,7 @@ public class SysDictItemController {
     }
 
     @ApiOperation("添加字典详情")
-    @SysOperateLog(descrption = "添加字典详情")
+    @SysOperateLog(description = "添加字典详情")
     @PreAuthorize("hasAuthority('sys:dictItem:add')")
     @PostMapping
     public Result<Boolean> add(@RequestBody SysDictItem sysDictItem) {
@@ -48,7 +48,7 @@ public class SysDictItemController {
     }
 
     @ApiOperation("更新字典详情")
-    @SysOperateLog(descrption = "更新字典详情")
+    @SysOperateLog(description = "更新字典详情")
     @PreAuthorize("hasAuthority('sys:dictItem:edit')")
     @PutMapping
     public Result<Boolean> update(@RequestBody SysDictItem sysDictItem) {
@@ -56,7 +56,7 @@ public class SysDictItemController {
     }
 
     @ApiOperation("删除字典详情")
-    @SysOperateLog(descrption = "删除字典详情")
+    @SysOperateLog(description = "删除字典详情")
     @PreAuthorize("hasAuthority('sys:dictItem:del')")
     @DeleteMapping("/{id}")
     public Result<Boolean> delete(@PathVariable("id") String id) {

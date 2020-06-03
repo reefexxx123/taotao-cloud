@@ -43,7 +43,7 @@ public class SysRoleController {
     }
 
     @ApiOperation("添加角色")
-    @SysOperateLog(descrption = "添加角色")
+    @SysOperateLog(description = "添加角色")
     @PreAuthorize("hasAuthority('sys:role:add')")
     @PostMapping
     public Result<Boolean> add(@RequestBody RoleDTO roleDto) {
@@ -51,14 +51,14 @@ public class SysRoleController {
     }
 
     @ApiOperation("据角色id获取菜单")
-    @SysOperateLog(descrption = "据角色id获取菜单")
+    @SysOperateLog(description = "据角色id获取菜单")
     @GetMapping("/queryRolePermission/{roleId}")
     public Result<List<Integer>> getRoleMenus(@PathVariable("roleId") Integer roleId) {
         return Result.succeed(roleMenuService.getMenuIdByRoleId(roleId));
     }
 
     @ApiOperation("更新角色")
-    @SysOperateLog(descrption = "更新角色")
+    @SysOperateLog(description = "更新角色")
     @PreAuthorize("hasAuthority('sys:role:update')")
     @PutMapping
     public Result<Boolean> update(@RequestBody RoleDTO roleDto) {
@@ -66,7 +66,7 @@ public class SysRoleController {
     }
 
     @ApiOperation("更新角色权限")
-    @SysOperateLog(descrption = "更新角色权限")
+    @SysOperateLog(description = "更新角色权限")
     @PreAuthorize("hasAuthority('sys:role:update')")
     @PutMapping("/updateRolePermission")
     public Result<Boolean> updateRolePermission(@RequestBody RoleDTO roleDto) {
@@ -74,7 +74,7 @@ public class SysRoleController {
     }
 
     @ApiOperation("删除角色以及权限")
-    @SysOperateLog(descrption = "删除角色以及权限")
+    @SysOperateLog(description = "删除角色以及权限")
     @PreAuthorize("hasAuthority('sys:role:delete')")
     @DeleteMapping("/{roleId}")
     public Result<Boolean> delete(@PathVariable("roleId") Integer roleId) {
@@ -82,7 +82,7 @@ public class SysRoleController {
     }
 
     @ApiOperation("批量删除角色")
-    @SysOperateLog(descrption = "批量删除角色")
+    @SysOperateLog(description = "批量删除角色")
     @PreAuthorize("hasAuthority('sys:role:delete')")
     @DeleteMapping("/batchDelete")
     public Result<Boolean> deleteBatch(@RequestParam(name = "ids") String ids) {

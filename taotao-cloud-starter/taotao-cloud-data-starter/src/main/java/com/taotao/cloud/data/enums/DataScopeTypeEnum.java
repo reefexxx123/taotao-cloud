@@ -8,9 +8,7 @@ import lombok.Getter;
  *
  * @author dengtao
  * @date 2020/5/2 16:40
-*/
-@Getter
-@AllArgsConstructor
+ */
 public enum DataScopeTypeEnum {
 
     /**
@@ -25,7 +23,7 @@ public enum DataScopeTypeEnum {
     /**
      * 本级以及子级
      */
-    THIS_LEVEL_CHILDREN(3,"本级以及子级"),
+    THIS_LEVEL_CHILDREN(3, "本级以及子级"),
     /**
      * 自定义
      */
@@ -37,13 +35,32 @@ public enum DataScopeTypeEnum {
 
 
     public static DataScopeTypeEnum valueOf(int type) {
-        for(DataScopeTypeEnum typeVar : DataScopeTypeEnum.values()) {
-            if(typeVar.getType() == type) {
+        for (DataScopeTypeEnum typeVar : DataScopeTypeEnum.values()) {
+            if (typeVar.getType() == type) {
                 return typeVar;
             }
         }
-        return  ALL;
+        return ALL;
     }
 
+    DataScopeTypeEnum(int type, String description) {
+        this.type = type;
+        this.description = description;
+    }
 
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

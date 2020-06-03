@@ -20,7 +20,6 @@ public interface ISuperService<T> extends IService<T> {
      * @param lockKey      锁的key
      * @param countWrapper 判断是否存在的条件
      * @param msg          对象已存在提示信息
-     * @return
      */
     boolean saveIdempotency(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper, String msg);
 
@@ -31,7 +30,6 @@ public interface ISuperService<T> extends IService<T> {
      * @param lock         锁实例
      * @param lockKey      锁的key
      * @param countWrapper 判断是否存在的条件
-     * @return
      */
     boolean saveIdempotency(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper);
 

@@ -6,6 +6,7 @@ import com.taotao.cloud.common.utils.LogUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -30,10 +31,9 @@ import javax.annotation.Resource;
  * @date 2020/4/30 09:04
  */
 @Slf4j
-@Configuration
+@ConditionalOnProperty(prefix = "taotao.cloud.oauth2.security", name = "enabled", havingValue = "true")
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter implements InitializingBean {
 
     @Autowired
@@ -91,7 +91,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter implem
     /**
      * 留给子类重写扩展功能
      *
-     * @param http
+     * @param http http
      */
     public HttpSecurity setHttp(HttpSecurity http) {
         return http;
@@ -100,7 +100,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter implem
     /**
      * url权限控制，默认是认证就通过，可以重写实现个性化
      *
-     * @param authorizedUrl
+     * @param authorizedUrl authorizedUrl
      */
     public HttpSecurity setAuthenticate(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.AuthorizedUrl authorizedUrl) {
         return authorizedUrl.authenticated().and();

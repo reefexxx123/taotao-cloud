@@ -1,5 +1,6 @@
 package com.taotao.cloud.data.properties;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -14,10 +15,9 @@ import java.util.List;
  * @author dengtao
  * @date 2020/5/2 11:19
 */
-@Setter
-@Getter
-@ConfigurationProperties(prefix = "taotao.cloud.data.tenant")
+@Data
 @RefreshScope
+@ConfigurationProperties(prefix = "taotao.cloud.data.tenant")
 public class TenantProperties {
     /**
      * 是否开启多租户

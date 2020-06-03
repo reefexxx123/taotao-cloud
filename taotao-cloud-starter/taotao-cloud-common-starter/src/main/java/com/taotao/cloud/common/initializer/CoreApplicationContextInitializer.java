@@ -5,12 +5,13 @@ import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 
 /**
- * 邓滔
+ * CoreApplicationContextInitializer
  *
  * @author dengtao
  * @date 2020/5/15 10:45
  */
 public class CoreApplicationContextInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+
     @Override
     public void initialize(ConfigurableApplicationContext context) {
         if (ContextUtil.MainClass == null) {

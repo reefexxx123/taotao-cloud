@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.taotao.cloud.auth.properties.SecurityProperties;
 import com.taotao.cloud.auth.service.PermissionService;
-import com.taotao.cloud.auth.util.AuthUtils;
+import com.taotao.cloud.auth.utils.AuthUtil;
 import com.taotao.cloud.common.constant.CommonConstant;
 import com.taotao.cloud.common.context.TenantContextHolder;
 import com.taotao.cloud.auth.model.SecurityMenu;
@@ -48,7 +48,7 @@ public abstract class AbstractPermissionService implements PermissionService {
             }
 
             //超级管理员admin不需认证
-            String username = AuthUtils.getUsername(authentication);
+            String username = AuthUtil.getUsername(authentication);
             //todo  这里要修改
             if (!CommonConstant.ADMIN_USER_NAME.equals(username)) {
                 return true;

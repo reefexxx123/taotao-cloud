@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 /**
  * Feign统一配置
@@ -27,9 +28,6 @@ public class FeignAutoConfigure implements InitializingBean {
         LogUtil.info(RibbonAutoConfigure.class, StarterNameConstant.TAOTAO_CLOUD_FEIGN_STARTER, "feign模块已启动");
     }
 
-    /**
-     * Feign 日志级别
-     */
     @Bean
     Logger.Level feignLoggerLevel() {
         return Logger.Level.FULL;
@@ -37,7 +35,7 @@ public class FeignAutoConfigure implements InitializingBean {
 
     @Bean
     Retryer feignRetryer() {
-        return  new Retryer.Default();
+        return new Retryer.Default();
     }
 
     @Bean
@@ -51,19 +49,14 @@ public class FeignAutoConfigure implements InitializingBean {
 
         @Override
         public Exception decode(String methodKey, Response response) {
-            if (response.status() != HttpStatus.OK.value()) {
-                if (response.status() == HttpStatus.SERVICE_UNAVAILABLE.value()) {
-                    String errorContent;
-                    try {
-                        errorContent = Util.toString(response.body().asReader());
-                        return gson.fromJson(errorContent, BaseException.class);
-                    } catch (IOException e) {
-                        log.error("handle error exception");
-                        return new BaseException("500", e);
-                    }
-                }
+            String errorContent;
+            try {
+                errorContent = Util.toString(response.body().asReader(Charset.defaultCharset()));
+                return gson.fromJson(errorContent, BaseException.class);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return new BaseException("500", e);
             }
-            return new BaseException("500");
         }
     }
 }

@@ -5,7 +5,7 @@ package com.taotao.cloud.common.exception;
  *
  * @author dengtao
  * @date 2020/5/2 11:22
-*/
+ */
 public class IdempotencyException extends BaseException {
     public IdempotencyException(String message) {
         super(message);

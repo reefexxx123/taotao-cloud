@@ -32,7 +32,7 @@ public class SysDeptController {
     private ISysDeptService deptService;
 
     @ApiOperation("添加部门信息")
-    @SysOperateLog(descrption = "添加部门信息")
+    @SysOperateLog(description = "添加部门信息")
     @PostMapping
     @PreAuthorize("hasAuthority('sys:dept:add')")
     public Result<Boolean> add(@RequestBody SysDept sysDept) {
@@ -53,7 +53,7 @@ public class SysDeptController {
     }
 
     @ApiOperation("更新部门信息")
-    @SysOperateLog(descrption = "更新部门信息")
+    @SysOperateLog(description = "更新部门信息")
     @PutMapping
     @PreAuthorize("hasAuthority('sys:dept:update')")
     public Result<Boolean> update(@RequestBody DeptDTO deptDto) {
@@ -61,7 +61,7 @@ public class SysDeptController {
     }
 
     @ApiOperation("根据id删除部门信息")
-    @SysOperateLog(descrption = "根据id删除部门信息")
+    @SysOperateLog(description = "根据id删除部门信息")
     @PreAuthorize("hasAuthority('sys:dept:delete')")
     @DeleteMapping("/{id}")
     public Result<Boolean> delete(@PathVariable("id") Integer id) {
@@ -69,7 +69,7 @@ public class SysDeptController {
     }
 
     @ApiOperation("根据ids批量删除部门信息")
-    @SysOperateLog(descrption = "根据ids批量删除部门信息")
+    @SysOperateLog(description = "根据ids批量删除部门信息")
     @PreAuthorize("hasAuthority('sys:dept:delete')")
     @DeleteMapping("/batchDelete")
     public Result<Boolean> deleteBatch(@RequestParam(name = "ids") String ids) {

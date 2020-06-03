@@ -1,9 +1,8 @@
 package com.taotao.cloud.auth.handler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.taotao.cloud.auth.dto.OAuth2AccessTokenDTO;
 import com.taotao.cloud.auth.model.SecurityUser;
-import com.taotao.cloud.auth.util.AuthUtils;
+import com.taotao.cloud.auth.utils.AuthUtil;
 import com.taotao.cloud.common.utils.ResponseUtil;
 import com.taotao.cloud.common.utils.WebUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +18,6 @@ import org.springframework.security.oauth2.provider.token.AuthorizationServerTok
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,8 +37,6 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
     private PasswordEncoder passwordEncoder;
     @Autowired
     private ClientDetailsService clientDetailsService;
-    @Resource
-    private ObjectMapper objectMapper;
 
     @Qualifier("defaultAuthorizationServerTokenServices")
     @Autowired
@@ -52,7 +48,7 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
         if (header == null || !header.startsWith(BASIC_PREFIX)) {
             throw new UnapprovedClientAuthenticationException("请求头中无client信息");
         }
-        final String[] clientInfos = AuthUtils.extractClient(request);
+        final String[] clientInfos = AuthUtil.extractClient(request);
         String clientId = clientInfos[0];
         String clientSecret = clientInfos[1];
 
@@ -72,7 +68,7 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
             tokenDTO.setToken(oAuth2AccessToken);
             user.setPassword("");
             tokenDTO.setUser(user);
-            ResponseUtil.success(objectMapper, response, tokenDTO);
+            ResponseUtil.success(response, tokenDTO);
         }
     }
 

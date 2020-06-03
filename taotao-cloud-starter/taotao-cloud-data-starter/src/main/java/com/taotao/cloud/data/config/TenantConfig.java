@@ -7,12 +7,13 @@ import com.taotao.cloud.common.constant.StarterNameConstant;
 import com.taotao.cloud.common.context.TenantContextHolder;
 import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.data.properties.TenantProperties;
+import lombok.AllArgsConstructor;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.NullValue;
 import net.sf.jsqlparser.expression.StringValue;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
@@ -21,16 +22,18 @@ import org.springframework.context.annotation.Bean;
  *
  * @author dengtao
  * @date 2020/5/2 11:20
-*/
+ */
+@AllArgsConstructor
 @EnableConfigurationProperties(TenantProperties.class)
-public class TenantAutoConfigure implements InitializingBean {
+@ConditionalOnProperty(prefix = "taotao.cloud.data.tenant", name = "enabled", havingValue = "true")
+public class TenantConfig implements InitializingBean {
+
     @Override
     public void afterPropertiesSet() throws Exception {
-        LogUtil.info(TenantAutoConfigure.class, StarterNameConstant.TAOTAO_CLOUD_TENANT_STARTER, "tenant模式已开启");
+        LogUtil.info(TenantConfig.class, StarterNameConstant.TAOTAO_CLOUD_TENANT_STARTER, "tenant模式已开启");
     }
 
-    @Autowired
-    private TenantProperties tenantProperties;
+    private final TenantProperties tenantProperties;
 
     @Bean
     public TenantHandler tenantHandler() {

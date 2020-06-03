@@ -50,9 +50,7 @@ public class BeanUtil {
     private static void checkRegisterBean(ApplicationContext applicationContext, String name, Class clazz) {
         if (applicationContext.containsBean(name)) {
             Object bean = applicationContext.getBean(name);
-            if (bean.getClass().isAssignableFrom(clazz)) {
-                return;
-            } else {
+            if (!bean.getClass().isAssignableFrom(clazz)) {
                 throw new BaseException("BeanName 重复注册" + name);
             }
         }

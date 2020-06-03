@@ -31,8 +31,7 @@ public class LogStatisticsFilter extends AbstractMatcherFilter<ILoggingEvent> {
             logCount.set(0);
             errorCount.set(0);
         }
+
         return FilterReply.NEUTRAL;
     }
-
-
 }

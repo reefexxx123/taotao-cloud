@@ -1,7 +1,7 @@
 package com.taotao.cloud.common.utils;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.taotao.cloud.common.model.Result;
 import lombok.NonNull;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -10,8 +10,6 @@ import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.lang.NonNullApi;
-import org.springframework.util.Assert;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -27,6 +25,7 @@ import java.nio.charset.Charset;
  * @date 2020/5/2 11:22
  */
 public class ResponseUtil {
+    private static final Gson GSON = new Gson();
 
     private ResponseUtil() {
         throw new IllegalStateException("Utility class");
@@ -35,58 +34,52 @@ public class ResponseUtil {
     /**
      * 通过流写到前端
      *
-     * @param objectMapper 对象序列化
-     * @param response     response
-     * @param msg          返回信息
-     * @param httpStatus   返回状态码
+     * @param response   response
+     * @param msg        返回信息
+     * @param httpStatus 返回状态码
      */
-    public static void writeResponse(ObjectMapper objectMapper,
-                                      HttpServletResponse response,
-                                      String msg,
-                                      int httpStatus) throws IOException {
+    public static void writeResponse(HttpServletResponse response,
+                                     String msg,
+                                     int httpStatus) throws IOException {
         Result<String> result = Result.failed(httpStatus, msg);
-        writeResponse(objectMapper, response, result);
+        writeResponse(response, result);
     }
 
     /**
      * 通过流写到前端
      *
-     * @param objectMapper 对象序列化
-     * @param response     response
-     * @param obj          数据对象
+     * @param response response
+     * @param obj      数据对象
      */
-    public static void success(ObjectMapper objectMapper, HttpServletResponse response, @NonNull Object obj) throws IOException {
+    public static void success(HttpServletResponse response, @NonNull Object obj) throws IOException {
         Result<String> result = Result.succeed(obj.toString());
-        writeResponse(objectMapper, response, result);
+        writeResponse(response, result);
     }
 
     /**
      * 通过流写到前端
      *
-     * @param objectMapper 对象序列化
-     * @param response     response
-     * @param msg          数据
+     * @param response response
+     * @param msg      数据
      */
-    public static void failed(ObjectMapper objectMapper, HttpServletResponse response, String msg) throws IOException {
+    public static void failed(HttpServletResponse response, String msg) throws IOException {
         Result<String> result = Result.failed(msg);
-        writeResponse(objectMapper, response, result);
+        writeResponse(response, result);
     }
 
     /**
      * 功能描述
      *
-     * @param objectMapper objectMapper
-     * @param response     response
-     * @param result       result
-     * @return void
+     * @param response response
+     * @param result   result
      * @author dengtao
      * @date 2020/6/1 14:50
      */
-    private static void writeResponse(ObjectMapper objectMapper, HttpServletResponse response, Result<String> result) throws IOException {
+    private static void writeResponse(HttpServletResponse response, Result<String> result) throws IOException {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setHeader("Content-Type", "application/json;charset=UTF-8");
         try (Writer writer = response.getWriter()) {
-            writer.write(objectMapper.writeValueAsString(result));
+            writer.write(GSON.toJson(result));
             writer.flush();
         }
     }

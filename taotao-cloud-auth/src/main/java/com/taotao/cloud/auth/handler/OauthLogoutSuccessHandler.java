@@ -20,11 +20,8 @@ import java.io.IOException;
 @Slf4j
 public class OauthLogoutSuccessHandler implements LogoutSuccessHandler {
 
-    @Resource
-    private ObjectMapper objectMapper;
-
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-        ResponseUtil.success(objectMapper, response, "登出成功");
+        ResponseUtil.success(response, "登出成功");
     }
 }

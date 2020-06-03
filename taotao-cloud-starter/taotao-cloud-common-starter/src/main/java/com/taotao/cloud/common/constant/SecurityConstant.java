@@ -10,6 +10,10 @@ public interface SecurityConstant {
 
     String OAUTH_TOKEN_URL = "/oauth/token/user";
 
+    String AUTHORIZED = "Authorized";
+
+    String BASE_AUTHORIZED = "BaseAuthorized";
+
     String PHONE_KEY = "phone";
 
     String SMS_CODE = "smsCode";

@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
  * @date 2020/5/2 16:41
  */
 @Slf4j
-@AllArgsConstructor
-@Component
 public class RemoteLogFallbackImpl implements FallbackFactory<RemoteLogService> {
 
     @Override

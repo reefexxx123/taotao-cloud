@@ -11,8 +11,9 @@ import java.time.LocalDateTime;
  *
  * @author dengtao
  * @date 2020/5/2 11:22
-*/
+ */
 public class DateMetaObjectHandler implements MetaObjectHandler {
+
     private final MybatisPlusAutoFillProperties autoFillProperties;
 
     public DateMetaObjectHandler(MybatisPlusAutoFillProperties autoFillProperties) {

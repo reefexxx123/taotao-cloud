@@ -1,9 +1,12 @@
 package com.taotao.cloud.elk;
 
 import cn.hutool.core.util.StrUtil;
+import com.taotao.cloud.common.constant.CommonConstant;
+import com.taotao.cloud.common.constant.SecurityConstant;
 import com.taotao.cloud.common.utils.JsonUtil;
 import com.taotao.cloud.elk.properties.ElkHealthLogStatisticProperties;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -20,15 +23,16 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 /**
+ * 切面获取入参和出参
+ *
  * @author: dengtao
  * @version: 2019-08-21 14:49
- * 切面获取入参和出参
  */
-@Aspect
 @Slf4j
+@Aspect
 public class WebControllerAspect {
 
-//    private static final String[] tokenKeys = {"token", "login-token", "logintoken", CommonConstant.};
+    private static final String[] tokenKeys = {SecurityConstant.BASE_AUTHORIZED, SecurityConstant.AUTHORIZED};
 
     @Pointcut("@within(org.springframework.stereotype.Controller) " +
             "|| @within(org.springframework.web.bind.annotation.RestController)")
@@ -44,6 +48,7 @@ public class WebControllerAspect {
         Exception exception = null;
         Object result = null;
         long timeSpan = 0;
+
         HttpServletRequest request = RequestContextHolder.getRequestAttributes() == null ? null : ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         try {
             long start = System.currentTimeMillis();
@@ -74,14 +79,15 @@ public class WebControllerAspect {
         Method targetMethod = methodSignature.getMethod();
         Annotation[] annotations = targetMethod.getAnnotations();
         StringBuilder sb = new StringBuilder();
-        //try get token
-//        for (val tokenKey : tokenKeys) {
-//            String token = request.getHeader(tokenKey);
-//            if (StringUtils.isNotBlank(token)) {
-//                sb.append("token:").append(token).append(",");
-//                break;
-//            }
-//        }
+
+        for (val tokenKey : tokenKeys) {
+            String token = request.getHeader(tokenKey);
+            if (StringUtils.isNotBlank(token)) {
+                sb.append("token:").append(token).append(",");
+                break;
+            }
+        }
+
         for (Annotation annotation : annotations) {
             if (!annotation.annotationType().toString().contains("org.springframework.web.bind.annotation")) {
                 continue;
@@ -94,8 +100,7 @@ public class WebControllerAspect {
     /**
      * 返回数据
      *
-     * @param retVal
-     * @return
+     * @param retVal retVal
      */
     private String postHandle(Object retVal) {
         if (null == retVal) {

@@ -15,9 +15,9 @@ import java.util.Map;
  * @author dengtao
  * @date 2020/4/30 09:12
  */
-public class CustomOauthExceptionSerializer extends StdSerializer<CustomOauthException> {
+public class OauthExceptionSerializer extends StdSerializer<CustomOauthException> {
 
-    public CustomOauthExceptionSerializer() {
+    public OauthExceptionSerializer() {
         super(CustomOauthException.class);
     }
 

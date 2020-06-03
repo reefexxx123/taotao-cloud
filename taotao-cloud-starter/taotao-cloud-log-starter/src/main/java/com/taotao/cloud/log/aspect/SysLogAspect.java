@@ -5,7 +5,7 @@ import cn.hutool.core.util.URLUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import com.alibaba.ttl.TransmittableThreadLocal;
 import com.baomidou.mybatisplus.extension.api.R;
-import com.taotao.cloud.auth.util.SecurityUtil;
+import com.taotao.cloud.auth.utils.SecurityUtil;
 import com.taotao.cloud.common.context.TenantContextHolder;
 import com.taotao.cloud.log.event.SysLogEvent;
 import com.taotao.cloud.log.properties.SysLogProperties;
@@ -29,12 +29,12 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * @Classname SysLogAspect
- * @Description 系统日志切面
- * @Author 李号东 im.lihaodong@gmail.comgit reset --merge
- * @Date 2019-04-22 23:52
- * @Version 1.0
+ * 日志切面
+ * <p>
  * ①切面注解得到请求数据 -> ②发布监听事件 -> ③异步监听日志入库
+ *
+ * @author dengtao
+ * @date 2020/6/3 11:47
  */
 @Slf4j
 @Aspect

@@ -42,29 +42,24 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M,
      * @param lockKey      锁的key
      * @param countWrapper 判断是否存在的条件
      * @param msg          对象已存在提示信息
-     * @return
      */
     @Override
     public boolean saveIdempotency(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper, String msg) {
         if (lock == null) {
-            throw new LockException("DistributedLock is null");
+            throw new LockException("分布式锁为空");
         }
         if (StrUtil.isEmpty(lockKey)) {
-            throw new LockException("lockKey is null");
+            throw new LockException("锁的key为空");
         }
+
         try {
-            //加锁
             boolean isLock = lock.lock(lockKey);
             if (isLock) {
-                //判断记录是否已存在
                 int count = super.count(countWrapper);
                 if (count == 0) {
                     return super.save(entity);
                 } else {
-                    if (StrUtil.isEmpty(msg)) {
-                        msg = "已存在";
-                    }
-                    throw new IdempotencyException(msg);
+                    throw new IdempotencyException(StrUtil.isEmpty(msg) ? "数据已存在" : msg);
                 }
             } else {
                 throw new LockException("锁等待超时");
@@ -109,15 +104,12 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M,
             if (null != tableInfo && StrUtil.isNotEmpty(tableInfo.getKeyProperty())) {
                 Object idVal = ReflectionKit.getMethodValue(cls, entity, tableInfo.getKeyProperty());
                 if (StringUtils.checkValNull(idVal) || Objects.isNull(getById((Serializable) idVal))) {
-                    if (StrUtil.isEmpty(msg)) {
-                        msg = "已存在";
-                    }
-                    return this.saveIdempotency(entity, lock, lockKey, countWrapper, msg);
+                    return this.saveIdempotency(entity, lock, lockKey, countWrapper, StrUtil.isEmpty(msg) ? "数据已存在" : msg);
                 } else {
                     return updateById(entity);
                 }
             } else {
-                throw ExceptionUtils.mpe("Error:  Can not execute. Could not find @TableId.");
+                throw ExceptionUtils.mpe("执行错误,未找到@TableId.");
             }
         }
         return false;

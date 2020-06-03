@@ -1,7 +1,8 @@
-package com.taotao.cloud.auth.util;
+package com.taotao.cloud.auth.utils;
 
 import com.taotao.cloud.auth.model.SecurityUser;
 import com.taotao.cloud.common.constant.CommonConstant;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,14 +20,11 @@ import java.util.Enumeration;
  * @author dengtao
  * @date 2020/4/29 16:44
  */
+@UtilityClass
 @Slf4j
-public class AuthUtils {
+public class AuthUtil {
 
-    private AuthUtils() {
-        throw new IllegalStateException("Utility class");
-    }
-
-    private static final String BASIC_ = "Basic ";
+    private final String BASIC_ = "Basic ";
 
     /**
      * 获取request(header/param)中的token
@@ -36,7 +34,7 @@ public class AuthUtils {
      * @author dengtao
      * @date 2020/4/29 17:10
      */
-    public static String extractToken(HttpServletRequest request) {
+    public String extractToken(HttpServletRequest request) {
         String token = extractHeaderToken(request);
         if (token == null) {
             token = request.getParameter(OAuth2AccessToken.ACCESS_TOKEN);
@@ -56,7 +54,7 @@ public class AuthUtils {
      * @author dengtao
      * @date 2020/5/13 16:19
      */
-    public static boolean validatePass(String newPass, String passwordEncoderOldPass) {
+    public boolean validatePass(String newPass, String passwordEncoderOldPass) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.matches(newPass, passwordEncoderOldPass);
     }
@@ -69,7 +67,7 @@ public class AuthUtils {
      * @author dengtao
      * @date 2020/4/29 17:10
      */
-    private static String extractHeaderToken(HttpServletRequest request) {
+    private String extractHeaderToken(HttpServletRequest request) {
         Enumeration<String> headers = request.getHeaders(CommonConstant.TOKEN_HEADER);
         while (headers.hasMoreElements()) {
             String value = headers.nextElement();
@@ -93,7 +91,7 @@ public class AuthUtils {
      * @author dengtao
      * @date 2020/4/29 16:42
      */
-    public static String[] extractClient(HttpServletRequest request) {
+    public String[] extractClient(HttpServletRequest request) {
         String header = request.getHeader("BasicAuthorization");
         if (header == null || !header.startsWith(BASIC_)) {
             throw new UnapprovedClientAuthenticationException("请求头中client信息为空");
@@ -110,7 +108,7 @@ public class AuthUtils {
      * @author dengtao
      * @date 2020/4/29 17:12
      */
-    public static String[] extractHeaderClient(String header) {
+    public String[] extractHeaderClient(String header) {
         byte[] base64Client = header.substring(BASIC_.length()).getBytes(StandardCharsets.UTF_8);
         byte[] decoded = Base64.getDecoder().decode(base64Client);
         String clientStr = new String(decoded, StandardCharsets.UTF_8);
@@ -129,7 +127,7 @@ public class AuthUtils {
      * @author dengtao
      * @date 2020/4/29 17:13
      */
-    public static String getUsername(Authentication authentication) {
+    public String getUsername(Authentication authentication) {
         Object principal = authentication.getPrincipal();
         String username = null;
         if (principal instanceof SecurityUser) {

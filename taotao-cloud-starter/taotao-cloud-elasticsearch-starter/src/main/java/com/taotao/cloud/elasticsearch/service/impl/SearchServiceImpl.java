@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.taotao.cloud.common.model.PageResult;
 import com.taotao.cloud.elasticsearch.model.SearchDto;
 import com.taotao.cloud.elasticsearch.service.ISearchService;
-import com.taotao.cloud.elasticsearch.utils.SearchBuilder;
+import com.taotao.cloud.elasticsearch.builder.SearchBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 

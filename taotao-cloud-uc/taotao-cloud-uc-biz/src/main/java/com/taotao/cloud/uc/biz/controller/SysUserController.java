@@ -6,9 +6,9 @@ import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.taotao.cloud.auth.model.SecurityUser;
-import com.taotao.cloud.auth.util.SecurityUtil;
+import com.taotao.cloud.auth.utils.AuthUtil;
+import com.taotao.cloud.auth.utils.SecurityUtil;
 import com.taotao.cloud.common.enums.ResultEnum;
-import com.taotao.cloud.common.exception.BaseException;
 import com.taotao.cloud.common.exception.BusinessException;
 import com.taotao.cloud.common.model.PageResult;
 import com.taotao.cloud.common.model.Result;
@@ -20,7 +20,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,7 +40,7 @@ public class SysUserController {
     private ISysUserService userService;
 
     @ApiOperation("保存用户包括角色和部门")
-    @SysOperateLog(descrption = "保存用户包括角色和部门")
+    @SysOperateLog(description = "保存用户包括角色和部门")
     @PostMapping
     @PreAuthorize("hasAuthority('sys:user:add')")
     public Result<Boolean> add(@RequestBody UserDTO userDto) {
@@ -49,7 +48,7 @@ public class SysUserController {
     }
 
     @ApiOperation("查询用户集合")
-    @SysOperateLog(descrption = "查询用户集合")
+    @SysOperateLog(description = "查询用户集合")
     @PreAuthorize("hasAuthority('sys:user:view')")
     @GetMapping
     public Result<PageResult<SysUser>> getList(Page page, UserDTO userDTO) {
@@ -65,7 +64,7 @@ public class SysUserController {
 
 
     @ApiOperation("更新用户包括角色和部门")
-    @SysOperateLog(descrption = "更新用户包括角色和部门")
+    @SysOperateLog(description = "更新用户包括角色和部门")
     @PreAuthorize("hasAuthority('sys:user:update')")
     @PutMapping
     public Result<Boolean> update(@RequestBody UserDTO userDto) {
@@ -73,7 +72,7 @@ public class SysUserController {
     }
 
     @ApiOperation("根据用户id删除用户包括角色和部门")
-    @SysOperateLog(descrption = "根据用户id删除用户包括角色和部门")
+    @SysOperateLog(description = "根据用户id删除用户包括角色和部门")
     @PreAuthorize("hasAuthority('sys:user:delete')")
     @DeleteMapping("/{userId}")
     public Result<Boolean> delete(@PathVariable("userId") Integer userId) {
@@ -81,7 +80,7 @@ public class SysUserController {
     }
 
     @ApiOperation("重置密码")
-    @SysOperateLog(descrption = "重置密码")
+    @SysOperateLog(description = "重置密码")
     @PreAuthorize("hasAuthority('sys:user:rest:password')")
     @PutMapping("/rest/password")
     public Result<Boolean> restPass(@RequestBody UserDTO userDTO) {
@@ -95,7 +94,7 @@ public class SysUserController {
     }
 
     @ApiOperation("获取用户信息")
-    @SysOperateLog(descrption = "获取用户信息")
+    @SysOperateLog(description = "获取用户信息")
     @GetMapping("/info/{userIdOrUserNameOrMobileOrEmail}")
     public Result<SecurityUser> getInfo(@PathVariable String userIdOrUserNameOrMobileOrEmail) {
         SysUser user = userService.findUserByUserIdOrUserNameOrMobile(userIdOrUserNameOrMobileOrEmail);
@@ -106,7 +105,7 @@ public class SysUserController {
     }
 
     @ApiOperation("第三方登录调用获取用户信息")
-    @SysOperateLog(descrption = "第三方登录调用获取用户信息")
+    @SysOperateLog(description = "第三方登录调用获取用户信息")
     @GetMapping("/info/social")
     public Result<SecurityUser> getUserInfoBySocial(@RequestParam(value = "providerId") String providerId,
                                                     @RequestParam(value = "providerUserId") int providerUserId) {
@@ -119,22 +118,21 @@ public class SysUserController {
     }
 
     @ApiOperation("修改密码")
-    @SysOperateLog(descrption = "修改密码")
+    @SysOperateLog(description = "修改密码")
     @PreAuthorize("hasAuthority('sys:user:update:password')")
     @PutMapping("/update/password")
     public Result<Boolean> updatePass(@RequestBody SysUser sysUser) {
-        // 校验密码流程
+        // 校验密码
         SysUser user = userService.findUserByUserIdOrUserNameOrMobile(sysUser.getUsername());
-        if (!SecurityUtil.validatePass(sysUser.getPassword(), user.getPassword())) {
-            throw new BaseException("原密码错误");
+        if (!AuthUtil.validatePass(sysUser.getPassword(), user.getPassword())) {
+            throw new BusinessException("原密码错误");
         }
-        // 修改密码流程
+        // 修改密码
         SysUser userForPass = new SysUser();
         userForPass.setUserId(user.getUserId());
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         userForPass.setPassword(passwordEncoder.encode(sysUser.getPassword()));
         return Result.succeed(userService.updateUserInfo(userForPass));
     }
-
 }
 

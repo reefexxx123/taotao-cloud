@@ -1,7 +1,7 @@
 package com.taotao.cloud.auth.handler;
 
 import cn.hutool.core.util.StrUtil;
-import com.taotao.cloud.auth.util.AuthUtils;
+import com.taotao.cloud.auth.utils.AuthUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -31,7 +31,7 @@ public class OauthLogoutHandler implements LogoutHandler {
         Assert.notNull(tokenStore, "tokenStore must be set");
         String token = request.getParameter("token");
         if (StrUtil.isEmpty(token)) {
-            token = AuthUtils.extractToken(request);
+            token = AuthUtil.extractToken(request);
         }
 
         if (StrUtil.isNotEmpty(token)) {

@@ -32,7 +32,7 @@ public class ExceptionUtil {
     public static String trace2String(StackTraceElement[] stackTraceElements) {
         StringBuilder sb = new StringBuilder();
         for (StackTraceElement stackTraceElemen : stackTraceElements) {
-            sb.append(stackTraceElemen.toString() + "\n");
+            sb.append(stackTraceElemen.toString()).append("\n");
         }
         return sb.toString();
     }

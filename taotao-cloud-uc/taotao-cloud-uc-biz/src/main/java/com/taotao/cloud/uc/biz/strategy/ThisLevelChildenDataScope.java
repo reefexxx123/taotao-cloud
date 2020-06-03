@@ -1,6 +1,6 @@
 package com.taotao.cloud.uc.biz.strategy;
 
-import com.taotao.cloud.auth.util.SecurityUtil;
+import com.taotao.cloud.auth.utils.SecurityUtil;
 import com.taotao.cloud.data.enums.DataScopeTypeEnum;
 import com.taotao.cloud.uc.api.dto.RoleDTO;
 import com.taotao.cloud.uc.biz.service.ISysDeptService;

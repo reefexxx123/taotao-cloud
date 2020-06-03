@@ -6,7 +6,7 @@ import com.taotao.cloud.auth.dto.OAuth2AccessTokenDTO;
 import com.taotao.cloud.auth.model.SecurityUser;
 import com.taotao.cloud.auth.model.TokenVo;
 import com.taotao.cloud.auth.service.ITokensService;
-import com.taotao.cloud.auth.util.AuthUtils;
+import com.taotao.cloud.auth.utils.AuthUtil;
 import com.taotao.cloud.common.constant.SecurityConstant;
 import com.taotao.cloud.common.enums.ResultEnum;
 import com.taotao.cloud.common.model.PageResult;
@@ -102,7 +102,7 @@ public class RedisTokensServiceImpl implements ITokensService {
     @Override
     public OAuth2AccessTokenDTO getToken(HttpServletRequest request, HttpServletResponse response, AbstractAuthenticationToken token) {
         try {
-            final String[] clientInfos = AuthUtils.extractClient(request);
+            final String[] clientInfos = AuthUtil.extractClient(request);
             String clientId = clientInfos[0];
             String clientSecret = clientInfos[1];
 

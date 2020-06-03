@@ -8,7 +8,7 @@ import cn.hutool.db.Entity;
 import com.baomidou.mybatisplus.core.toolkit.PluginUtils;
 import com.baomidou.mybatisplus.extension.handlers.AbstractSqlParserHandler;
 import com.taotao.cloud.auth.model.SecurityUser;
-import com.taotao.cloud.auth.util.SecurityUtil;
+import com.taotao.cloud.auth.utils.SecurityUtil;
 import com.taotao.cloud.common.exception.CheckedException;
 import com.taotao.cloud.data.enums.DataScopeTypeEnum;
 import lombok.AllArgsConstructor;
@@ -36,12 +36,11 @@ import java.util.stream.Collectors;
 */
 @Slf4j
 @AllArgsConstructor
-@Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class, Integer.class})})
 @Component
+@Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class, Integer.class})})
 public class DataScopeInterceptor extends AbstractSqlParserHandler implements Interceptor {
 
-
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {

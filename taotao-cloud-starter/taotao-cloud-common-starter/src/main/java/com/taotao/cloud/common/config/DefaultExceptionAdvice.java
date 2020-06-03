@@ -1,9 +1,7 @@
 package com.taotao.cloud.common.config;
 
-import com.taotao.cloud.common.exception.BaseException;
-import com.taotao.cloud.common.exception.BusinessException;
-import com.taotao.cloud.common.exception.IdempotencyException;
-import com.taotao.cloud.common.exception.MessageException;
+import com.taotao.cloud.common.enums.ResultEnum;
+import com.taotao.cloud.common.exception.*;
 import com.taotao.cloud.common.model.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -29,11 +27,41 @@ import java.util.Objects;
  */
 @Slf4j
 public class DefaultExceptionAdvice {
-    /**
-     * IllegalArgumentException异常处理返回json
-     * 返回状态码:400
-     */
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+
+    @ExceptionHandler({LockException.class})
+    public Result<String> lockException(NativeWebRequest request, LockException e) {
+        printException(request, e);
+        return Result.failed(ResultEnum.LOCK_EXCEPTION.getCode(), e.getMessage());
+    }
+
+    @ExceptionHandler({IdempotencyException.class})
+    public Result<String> idempotencyException(NativeWebRequest request, IdempotencyException e) {
+        printException(request, e);
+        return Result.failed(ResultEnum.IDEMPOTENCY_EXCEPTION.getCode(), e.getMessage());
+    }
+
+    @ExceptionHandler({BusinessException.class})
+    public Result<String> businessException(NativeWebRequest request, BusinessException e) {
+        printException(request, e);
+        return Result.failed(ResultEnum.ERROR.getCode(), e.getMessage());
+    }
+
+    @ExceptionHandler({BaseException.class})
+    public Result<String> badBaseException(NativeWebRequest request, BaseException e) {
+        printException(request, e);
+        return Result.failed(ResultEnum.ERROR.getCode(), e.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public Result<String> handleException(NativeWebRequest request, Exception e) {
+        printException(request, e);
+        return Result.failed(ResultEnum.ERROR.getCode(), e.getMessage());
+    }
+
+
+    // ----------------------------------------------------------------
+
+
     @ExceptionHandler({IllegalArgumentException.class})
     public Result<String> badRequestException(NativeWebRequest request, IllegalArgumentException e) {
         printException(request, e);
@@ -50,15 +78,6 @@ public class DefaultExceptionAdvice {
         return Result.of(e.getMessage(), HttpStatus.FORBIDDEN.value(), "没有权限请求当前方法");
     }
 
-    /**
-     * AccessDeniedException异常处理返回json
-     * 返回状态码:403
-     */
-    @ExceptionHandler({BaseException.class})
-    public Result<String> badBaseException(NativeWebRequest request, BaseException e) {
-        printException(request, e);
-        return Result.of(e.getMessage(), HttpStatus.FORBIDDEN.value(), "没有权限请求当前方法");
-    }
 
     /**
      * AccessDeniedException异常处理返回json
@@ -108,35 +127,6 @@ public class DefaultExceptionAdvice {
         return Result.of(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value(), "SQLException异常");
     }
 
-    /**
-     * BusinessException 业务异常处理
-     * 返回状态码:500
-     */
-    @ExceptionHandler(BusinessException.class)
-    public Result<String> handleException(NativeWebRequest request, BusinessException e) {
-        printException(request, e);
-        return Result.of(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value(), "业务异常");
-    }
-
-    /**
-     * IdempotencyException 幂等性异常
-     * 返回状态码:200
-     */
-    @ExceptionHandler(IdempotencyException.class)
-    public Result<String> handleException(NativeWebRequest request, IdempotencyException e) {
-        printException(request, e);
-        return Result.of(e.getMessage(), HttpStatus.OK.value(), "幂等性异常");
-    }
-
-    /**
-     * 所有异常统一处理
-     * 返回状态码:500
-     */
-    @ExceptionHandler(Exception.class)
-    public Result<String> handleException(NativeWebRequest request, Exception e) {
-        printException(request, e);
-        return Result.of(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value(), "未知异常");
-    }
 
     private void printException(NativeWebRequest request, Exception e) {
         HttpServletRequest nativeRequest = request.getNativeRequest(HttpServletRequest.class);

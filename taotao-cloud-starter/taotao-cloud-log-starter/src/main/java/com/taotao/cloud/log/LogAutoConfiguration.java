@@ -23,11 +23,11 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * @date 2020/4/30 10:21
  */
 @EnableAsync
-@Configuration
 @ConditionalOnWebApplication
 @EnableConfigurationProperties({TraceProperties.class, SysLogProperties.class})
 @EnableFeignClients({"com.taotao.cloud.log.feign"})
 public class LogAutoConfiguration implements InitializingBean {
+
     @Override
     public void afterPropertiesSet() throws Exception {
         LogUtil.info(LogAutoConfiguration.class, StarterNameConstant.TAOTAO_CLOUD_LOG_STARTER, "日志模块已启动");

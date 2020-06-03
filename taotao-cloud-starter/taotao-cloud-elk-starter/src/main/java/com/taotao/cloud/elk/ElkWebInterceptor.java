@@ -15,8 +15,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Huang Zhaoping
- */
+ * ElkWebInterceptor
+ *
+ * @author dengtao
+ * @date 2020/6/3 10:49
+*/
 public class ElkWebInterceptor implements HandlerInterceptor {
 
     private final ThreadLocal<Long> local = new ThreadLocal<>();

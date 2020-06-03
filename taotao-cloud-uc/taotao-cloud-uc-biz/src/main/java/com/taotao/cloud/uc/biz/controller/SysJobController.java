@@ -11,7 +11,6 @@ import com.taotao.cloud.uc.biz.service.ISysJobService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +36,7 @@ public class SysJobController {
 
     @ApiOperation("获取岗位列表")
     @GetMapping
-    @SysOperateLog(descrption = "获取岗位列表")
+    @SysOperateLog(description = "获取岗位列表")
 //    @PreAuthorize("hasAuthority('sys:job:view')")
     public Result<IPage<SysJob>> getList(Integer page, Integer pageSize, @RequestParam(defaultValue = "") String jobName,
                                          HttpServletRequest request) {
@@ -52,7 +51,7 @@ public class SysJobController {
     }
 
     @ApiOperation("添加岗位")
-    @SysOperateLog(descrption = "添加岗位")
+    @SysOperateLog(description = "添加岗位")
     @PreAuthorize("hasAuthority('sys:job:add')")
     @PostMapping
     public Result<Boolean> add(@RequestBody SysJob sysJob) {
@@ -60,7 +59,7 @@ public class SysJobController {
     }
 
     @ApiOperation("根据id删除岗位")
-    @SysOperateLog(descrption = "根据id删除岗位")
+    @SysOperateLog(description = "根据id删除岗位")
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('sys:job:delete')")
     public Result<Boolean> delete(@PathVariable("id") Integer id) {
@@ -68,7 +67,7 @@ public class SysJobController {
     }
 
     @ApiOperation("批量删除岗位")
-    @SysOperateLog(descrption = "批量删除岗位")
+    @SysOperateLog(description = "批量删除岗位")
     @PreAuthorize("hasAuthority('sys:role:delete')")
     @DeleteMapping("/batchDelete")
     public Result<Boolean> deleteBatch(@RequestParam(name = "ids") String ids) {
@@ -77,7 +76,7 @@ public class SysJobController {
     }
 
     @ApiOperation("查询字典详情集合")
-    @SysOperateLog(descrption = "更新岗位")
+    @SysOperateLog(description = "更新岗位")
     @PreAuthorize("hasAuthority('sys:job:update')")
     @PutMapping
     public Result<Boolean> update(@RequestBody SysJob sysJob) {
@@ -85,7 +84,7 @@ public class SysJobController {
     }
 
     @ApiOperation("根据部门id查询所属下的岗位信息")
-    @SysOperateLog(descrption = "根据部门id查询所属下的岗位信息")
+    @SysOperateLog(description = "根据部门id查询所属下的岗位信息")
     @GetMapping("/{id}")
     public Result<List<SysJob>> selectJobListByDeptId(@PathVariable("id") Integer deptId) {
         return Result.succeed(jobService.selectJobListByDeptId(deptId));

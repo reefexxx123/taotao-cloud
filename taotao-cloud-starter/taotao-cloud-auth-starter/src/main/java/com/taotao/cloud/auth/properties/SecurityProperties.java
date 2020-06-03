@@ -17,7 +17,7 @@ public class SecurityProperties {
     /**
      * 是否开启权限认证 总开关
      */
-    private boolean enabled = true;
+    private boolean enabled = false;
 
     private AuthProperties auth = new AuthProperties();
 

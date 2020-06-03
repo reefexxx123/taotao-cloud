@@ -1,5 +1,6 @@
 package com.taotao.cloud.elasticsearch.properties;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -11,10 +12,9 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
  * @author dengtao
  * @date 2020/5/3 06:47
  */
-@Setter
-@Getter
-@ConfigurationProperties(prefix = "taotao.cloud.elasticsearch.rest-pool")
+@Data
 @RefreshScope
+@ConfigurationProperties(prefix = "taotao.cloud.elasticsearch.rest-pool")
 public class RestClientPoolProperties {
     /**
      * 链接建立超时时间

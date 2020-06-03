@@ -1,7 +1,7 @@
 package com.taotao.cloud.common.exception;
 
 /**
- * SmsCodeException
+ * 发送短信异常
  *
  * @author dengtao
  * @date 2020/5/2 16:40

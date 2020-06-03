@@ -12,12 +12,10 @@ import com.taotao.cloud.uc.biz.service.ISysLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -53,7 +51,7 @@ public class SysLogController {
     }
 
     @ApiOperation("根据id删除日志")
-    @SysOperateLog(descrption = "根据id删除日志")
+    @SysOperateLog(description = "根据id删除日志")
     @PreAuthorize("hasAuthority('sys:log:delete')")
     @DeleteMapping("/{logId}")
     public Result<Boolean> delete(@PathVariable("logId") Integer logId) {

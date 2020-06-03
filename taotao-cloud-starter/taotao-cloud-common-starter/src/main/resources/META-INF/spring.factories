@@ -1,2 +1,4 @@
 org.springframework.context.ApplicationContextInitializer=\
 com.taotao.cloud.common.initializer.CoreApplicationContextInitializer
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.taotao.cloud.common.bean.CustomizationBean

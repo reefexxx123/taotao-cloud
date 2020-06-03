@@ -1,7 +1,7 @@
 package com.taotao.cloud.auth.exception;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.taotao.cloud.auth.serializer.CustomOauthExceptionSerializer;
+import com.taotao.cloud.auth.serializer.OauthExceptionSerializer;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 
 /**
@@ -11,7 +11,7 @@ import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
  * @Date 2019-09-17 21:10
  * @Version 1.0
  */
-@JsonSerialize(using = CustomOauthExceptionSerializer.class)
+@JsonSerialize(using = OauthExceptionSerializer.class)
 public class InvalidException extends OAuth2Exception {
 
     public InvalidException(String msg) {

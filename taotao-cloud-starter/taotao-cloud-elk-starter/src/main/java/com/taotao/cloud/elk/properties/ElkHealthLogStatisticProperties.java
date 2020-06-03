@@ -8,16 +8,18 @@ package com.taotao.cloud.elk.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 /**
  * <br>
  *
  * @author dengtao
  * @version v1.0.0
- * @create 2020/5/3 15:34
  */
 @Data
-@ConfigurationProperties(prefix = "taotao.cloud.elk.health.log.statistic")
+@RefreshScope
+@ConfigurationProperties(prefix = "taotao.cloud.elk.log.statistic")
 public class ElkHealthLogStatisticProperties {
-    private boolean enabled = true;
+
+    private boolean enabled = false;
 }

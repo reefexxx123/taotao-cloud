@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +19,7 @@ import java.util.Date;
  * @date 2020/5/2 11:20
 */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class SuperEntity<T extends Model<?>> extends Model<T> {
     @TableId
     private Long id;

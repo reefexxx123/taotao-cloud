@@ -40,6 +40,7 @@ import java.util.Map;
  * @date 2019/5/7
  */
 public class AggregationServiceImpl implements IAggregationService {
+
     private final ElasticsearchRestTemplate elasticsearchRestTemplate;
 
     public AggregationServiceImpl(ElasticsearchRestTemplate elasticsearchRestTemplate) {

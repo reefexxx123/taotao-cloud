@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  * @author dengtao
  * @date 2020/5/2 11:17
-*/
-@ControllerAdvice
+ */
 @ResponseBody
+@ControllerAdvice
 public class ExceptionAdvice extends DefaultExceptionAdvice {
     /**
      * AccessDeniedException异常处理返回json

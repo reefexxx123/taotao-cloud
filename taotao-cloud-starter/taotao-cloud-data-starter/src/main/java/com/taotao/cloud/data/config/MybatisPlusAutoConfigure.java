@@ -17,6 +17,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
+import javax.annotation.Resource;
+
 /**
  * mybatis-plus自动配置
  *
@@ -24,18 +26,19 @@ import org.springframework.context.annotation.Bean;
  * @date 2020/5/2 11:20
  */
 @EnableConfigurationProperties(MybatisPlusAutoFillProperties.class)
+@ConditionalOnProperty(prefix = "taotao.cloud.data.mybatis-plus.auto-fill", name = "enabled", havingValue = "true")
 public class MybatisPlusAutoConfigure implements InitializingBean {
 
-    @Autowired
+    @Resource
     private TenantHandler tenantHandler;
 
-    @Autowired
+    @Resource
     private ISqlParserFilter sqlParserFilter;
 
-    @Autowired
+    @Resource
     private TenantProperties tenantProperties;
 
-    @Autowired
+    @Resource
     private MybatisPlusAutoFillProperties autoFillProperties;
 
     @Override
@@ -52,8 +55,7 @@ public class MybatisPlusAutoConfigure implements InitializingBean {
         boolean enableTenant = tenantProperties.getEnabled();
         //是否开启多租户隔离
         if (enableTenant) {
-            TenantSqlParser tenantSqlParser = new TenantSqlParser()
-                    .setTenantHandler(tenantHandler);
+            TenantSqlParser tenantSqlParser = new TenantSqlParser().setTenantHandler(tenantHandler);
             paginationInterceptor.setSqlParserList(CollUtil.toList(tenantSqlParser));
             paginationInterceptor.setSqlParserFilter(sqlParserFilter);
         }
@@ -62,7 +64,6 @@ public class MybatisPlusAutoConfigure implements InitializingBean {
 
     @Bean
     @ConditionalOnMissingBean
-    @ConditionalOnProperty(prefix = "taotao.cloud.mybatis-plus.auto-fill", name = "enabled", havingValue = "true", matchIfMissing = true)
     public MetaObjectHandler metaObjectHandler() {
         return new DateMetaObjectHandler(autoFillProperties);
     }

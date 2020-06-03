@@ -9,7 +9,7 @@ import lombok.Setter;
  *
  * @author dengtao
  * @date 2020/5/2 11:20
-*/
+ */
 @Data
 public class SmsCodeProperties {
     /**

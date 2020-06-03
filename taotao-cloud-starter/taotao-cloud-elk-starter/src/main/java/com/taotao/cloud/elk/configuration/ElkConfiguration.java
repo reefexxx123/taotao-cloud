@@ -1,10 +1,13 @@
-package com.taotao.cloud.elk;
+package com.taotao.cloud.elk.configuration;
 
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.encoder.Encoder;
+import cn.hutool.core.util.StrUtil;
 import com.taotao.cloud.common.constant.StarterNameConstant;
+import com.taotao.cloud.common.exception.BaseException;
 import com.taotao.cloud.common.utils.LogUtil;
+import com.taotao.cloud.elk.LogStatisticsFilter;
 import com.taotao.cloud.elk.properties.ElkControllerAspectProperties;
 import com.taotao.cloud.elk.properties.ElkHealthLogStatisticProperties;
 import com.taotao.cloud.elk.properties.ElkProperties;
@@ -19,47 +22,37 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
+import javax.annotation.Resource;
+
 /**
- * @version : 2019-05-27 14:30
- * @author: dengtao
- **/
-@EnableConfigurationProperties({ElkProperties.class, ElkControllerAspectProperties.class, ElkHealthLogStatisticProperties.class})
-@ConditionalOnProperty(name = "taotao.cloud.elk.enabled", havingValue = "true")
+ * ElkConfiguration
+ *
+ * @author dengtao
+ * @date 2020/6/3 10:43
+ */
+@ConditionalOnProperty(prefix = "taotao.cloud.elk", name = "enabled", havingValue = "true")
+@EnableConfigurationProperties({ElkProperties.class, ElkControllerAspectProperties.class})
 public class ElkConfiguration implements InitializingBean {
+
     @Override
     public void afterPropertiesSet() throws Exception {
         LogUtil.info(ElkConfiguration.class, StarterNameConstant.TAOTAO_CLOUD_ELK_STARTER, "elk模块已启动");
     }
 
-    @Autowired
+    @Resource
     private ElkProperties elkProperties;
 
-    @Autowired(required = false)
+    @Resource
     private LogStatisticsFilter logStatisticsFilter;
-
-    private Encoder<ILoggingEvent> createEncoder() {
-        LogstashEncoder encoder = new LogstashEncoder();
-        var appName = elkProperties.getAppName();
-        if (elkProperties.getAppName().length() == 0) {
-            appName = elkProperties.getSpringAppName();
-        }
-        if (appName.length() == 0) {
-            throw new IllegalArgumentException("缺少appName配置");
-        }
-        encoder.setCustomFields("{\"appname\":\"" + appName + "\",\"appindex\":\"applog\"}");
-        encoder.setEncoding("UTF-8");
-        return encoder;
-    }
 
     @Bean(initMethod = "start", destroyMethod = "stop")
     public LogstashTcpSocketAppender logstashTcpSocketAppender() {
         LogstashTcpSocketAppender appender = new LogstashTcpSocketAppender();
-        var destinations = elkProperties.getDestinations();
+        String[] destinations = elkProperties.getDestinations();
         if (elkProperties.getDestinations() == null || elkProperties.getDestinations().length == 0) {
-            throw new IllegalArgumentException("未设置elk地址");
-//            destinations = new String[]{
-//                    PropertyUtils.getPropertyCache(CoreEnvironmentEnum.ELK_DEV.getServerkey(), "")};
+            throw new BaseException("未设置elk地址");
         }
+
         for (String destination : destinations) {
             appender.addDestination(destination);
         }
@@ -71,6 +64,7 @@ public class ElkConfiguration implements InitializingBean {
             appender.setContext(context);
             context.getLogger("ROOT").addAppender(appender);
         }
+
         if (logStatisticsFilter != null) {
             //增加错误日志统计拦截
             appender.addFilter(logStatisticsFilter);
@@ -80,8 +74,24 @@ public class ElkConfiguration implements InitializingBean {
     }
 
     @Bean
-    @ConditionalOnProperty(name = "taotao.cloud.elk.health.log.statistic.enabled", havingValue = "true")
+    @ConditionalOnProperty(prefix = "taotao.cloud.elk.log.statistic", name = "enabled", havingValue = "true")
     LogStatisticsFilter getLogStatisticsFilter() {
         return new LogStatisticsFilter();
+    }
+
+    private Encoder<ILoggingEvent> createEncoder() {
+        LogstashEncoder encoder = new LogstashEncoder();
+        String appName = elkProperties.getAppName();
+        if (StrUtil.isBlank(appName)) {
+            appName = elkProperties.getSpringAppName();
+        }
+
+        if (StrUtil.isBlank(appName)) {
+            throw new BaseException("缺少appName配置");
+        }
+        encoder.setCustomFields("{\"appname\":\"" + appName + "\",\"appindex\":\"applog\"}");
+        encoder.setEncoding("UTF-8");
+
+        return encoder;
     }
 }

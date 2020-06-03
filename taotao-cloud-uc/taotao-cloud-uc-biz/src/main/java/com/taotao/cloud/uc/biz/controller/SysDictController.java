@@ -31,7 +31,7 @@ public class SysDictController {
     private ISysDictService dictService;
 
     @ApiOperation("添加字典信息")
-    @SysOperateLog(descrption = "添加字典信息")
+    @SysOperateLog(description = "添加字典信息")
     @PreAuthorize("hasAuthority('sys:dict:add')")
     @PostMapping
     public Result<Boolean> add(@RequestBody SysDict sysDict) {
@@ -39,7 +39,7 @@ public class SysDictController {
     }
 
     @ApiOperation("查询字典集合")
-    @SysOperateLog(descrption = "查询字典集合")
+    @SysOperateLog(description = "查询字典集合")
     @GetMapping
     @PreAuthorize("hasAuthority('sys:dipt:view')")
     public Result<PageResult<SysDict>> getList(Page page, SysDict sysDict) {
@@ -51,7 +51,7 @@ public class SysDictController {
     }
 
     @ApiOperation("更新字典")
-    @SysOperateLog(descrption = "更新字典")
+    @SysOperateLog(description = "更新字典")
     @PreAuthorize("hasAuthority('sys:dict:edit')")
     @PutMapping
     public Result<Boolean> update(@RequestBody DictDTO dictDto) {
@@ -59,7 +59,7 @@ public class SysDictController {
     }
 
     @ApiOperation("根据id删除字典")
-    @SysOperateLog(descrption = "根据id删除字典")
+    @SysOperateLog(description = "根据id删除字典")
     @PreAuthorize("hasAuthority('sys:dict:del')")
     @DeleteMapping("{id}")
     public Result<Boolean> delete(@PathVariable("id") int id) {

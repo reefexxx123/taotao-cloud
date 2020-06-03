@@ -63,16 +63,6 @@ public class CustomWebResponseExceptionTranslator implements WebResponseExceptio
     }
 
     private ResponseEntity<OAuth2Exception> handleOAuth2Exception(OAuth2Exception oAuth2Exception) {
-//        int status = e.getHttpErrorCode();
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.set("Cache-Control", "no-store");
-//        headers.set("Pragma", "no-cache");
-//        if (status == HttpStatus.UNAUTHORIZED.value() || (e instanceof InsufficientScopeException)) {
-//            headers.set("WWW-Authenticate", String.format("%s %s", OAuth2AccessToken.BEARER_TYPE, e.getSummary()));
-//        }
-//        CustomOauthException exception = new CustomOauthException(e.getMessage(), e.getOAuth2ErrorCode());
-//        return new ResponseEntity<>(exception, headers, HttpStatus.valueOf(status));
-
         ResponseEntity<OAuth2Exception> response = new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         Objects.requireNonNull(response.getBody()).addAdditionalInformation("code", oAuth2Exception.getHttpErrorCode() + "");
         response.getBody().addAdditionalInformation("message", oAuth2Exception.getMessage());

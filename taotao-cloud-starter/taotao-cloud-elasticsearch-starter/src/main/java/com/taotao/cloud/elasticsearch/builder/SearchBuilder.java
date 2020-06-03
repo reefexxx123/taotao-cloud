@@ -1,4 +1,4 @@
-package com.taotao.cloud.elasticsearch.utils;
+package com.taotao.cloud.elasticsearch.builder;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.BooleanUtil;
@@ -6,8 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.taotao.cloud.common.model.PageResult;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
@@ -33,8 +32,7 @@ import java.util.Map;
  * @author dengtao
  * @date 2020/5/3 06:49
 */
-@Setter
-@Getter
+@Data
 public class SearchBuilder {
     /**
      * 高亮前缀
@@ -232,23 +230,17 @@ public class SearchBuilder {
      */
     private <T> void populateHighLightedFields(T result, Map<String, HighlightField> highlightFields) {
         for (HighlightField field : highlightFields.values()) {
-//            try {
-//                String name = field.getName();
-//                if (!name.endsWith(".keyword")) {
-//                    System.out.println("---------");
-////                    PropertyUtils.setProperty(result, field.getName(), concat(field.fragments()));
-//                }
-//            } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-//                throw new ElasticsearchException("failed to set highlighted value for field: " + field.getName()
-//                        + " with value: " + Arrays.toString(field.getFragments()), e);
-//            }
+            String name = field.getName();
+            if (!name.endsWith(".keyword")) {
+
+            }
         }
     }
     /**
      * 拼凑数组为字符串
      */
     private String concat(Text[] texts) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (Text text : texts) {
             sb.append(text.toString());
         }

@@ -1,5 +1,6 @@
 package com.taotao.cloud.data.properties;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -10,11 +11,10 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
  *
  * @author dengtao
  * @date 2020/5/2 11:19
-*/
-@Setter
-@Getter
-@ConfigurationProperties(prefix = "taotao.cloud.data.mybatis-plus.auto-fill")
+ */
+@Data
 @RefreshScope
+@ConfigurationProperties(prefix = "taotao.cloud.data.mybatis-plus.auto-fill")
 public class MybatisPlusAutoFillProperties {
     /**
      * 是否开启自动填充字段

@@ -67,7 +67,7 @@ public class ContextUtil {
         Arrays.sort(beans);
         StringBuilder sb = new StringBuilder();
         for (String bean : beans) {
-            sb.append(bean + " -> " + ContextUtil.getApplicationContext().getBean(bean).getClass());
+            sb.append(bean).append(" -> ").append(ContextUtil.getApplicationContext().getBean(bean).getClass());
         }
         return sb.toString();
     }

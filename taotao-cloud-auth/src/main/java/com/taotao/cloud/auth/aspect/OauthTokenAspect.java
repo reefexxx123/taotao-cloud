@@ -28,8 +28,8 @@ import java.util.Map;
  * @date 2020/4/29 21:20
  */
 @Slf4j
-@Component
 @Aspect
+@Component
 public class OauthTokenAspect {
 
     @Around("execution(* org.springframework.security.oauth2.provider.endpoint.TokenEndpoint.postAccessToken(..))")

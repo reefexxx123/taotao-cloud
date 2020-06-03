@@ -49,7 +49,7 @@ public class LogUtil {
             if (method.getName().equals(methodName)) {
                 Class[] clazzs = method.getParameterTypes();
                 if (clazzs.length == args.length) {
-                    description = method.getAnnotation(SysOperateLog.class).descrption();
+                    description = method.getAnnotation(SysOperateLog.class).description();
                     break;
                 }
             }
