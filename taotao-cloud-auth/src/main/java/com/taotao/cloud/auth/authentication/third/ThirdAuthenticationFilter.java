@@ -31,7 +31,7 @@ public class ThirdAuthenticationFilter extends AbstractAuthenticationProcessingF
         String code = request.getParameter("code");
         String state = request.getParameter("state");
         if (StrUtil.isBlank(code) && StrUtil.isBlank(state)) {
-            throw new InvalidException("第三方认证参数错误");
+            throw new InvalidException("认证参数错误");
         }
         LoginTypeEnum loginTypeEnum = LoginTypeUtil.getLoginType(state);
         ThirdAuthenticationToken authRequest = new ThirdAuthenticationToken(code, loginTypeEnum);
