@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.taotao.cloud.data.datascope.DataScope;
 import com.taotao.cloud.uc.api.dto.UserDTO;
 import com.taotao.cloud.uc.api.entity.SysUser;
+import com.taotao.cloud.uc.api.query.UserQuery;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 import org.springframework.stereotype.Repository;
@@ -23,7 +24,7 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
     @Options(useGeneratedKeys = true, keyProperty = "userId", keyColumn = "user_id")
     boolean insertUser(SysUser sysUser);
 
-    IPage<SysUser> getUserVosPage(Page page, @Param("query") UserDTO userDTO, DataScope dataScope);
+    IPage<SysUser> getUserVosPage(Page<SysUser> page, @Param("query") UserQuery userQuery, DataScope dataScope);
 
     @Results({
            @Result(id = true, column="user_id", property = "userId", jdbcType = JdbcType.INTEGER),

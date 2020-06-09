@@ -75,14 +75,18 @@ security:
     client:
       client-id: server
       client-secret: server
-      scope: all
+      scope: server
       grant-type: client_credentials
       access-token-uri: http://127.0.0.1:9800/oauth/token
-      user-authorization-uri: http://127.0.0.1:9800/oauth/authorize
     resource:
       loadBalanced: false
+      # ec-auth 为服务名称 必须使用服务名称
       token-info-uri: http://127.0.0.1:9800/oauth/check_token
+#      user-authorization-uri: http://127.0.0.1:9800/oauth/authorize
+#    resource:
+#      token-info-uri: http://127.0.0.1:9800/oauth/check_token
 #      prefer-token-info: false
+#      user-info-uri: http://127.0.0.1:9800/oauth/check_token
 
 taotao:
   cloud:
@@ -215,33 +219,41 @@ feign:
       enabled: true
 
 hystrix:
+  threadpool:
+    default:
+      coreSize: 1200
+      maximumSize: 15000
+      allowMaximumSizeToDivergeFromCoreSize: true
+      maxQueueSize: 2000
+      queueSizeRejectionThreshold: 1800
   command:
     default:
       circuitBreaker:
         # 当在配置时间窗口内达到此数量的失败后，进行短路。默认20个
-        requestVolumeThreshold: 10
+        requestVolumeThreshold: 30
         # 触发短路的时间值，当该值设为5000时，则当触发 circuit break 后的5000毫秒内都会拒绝request
         # 也就是5000毫秒后才会关闭circuit。默认5000
-        sleepWindowInMilliseconds: 15000
-        # 强制打开熔断器，如果打开这个开关，那么拒绝所有request，默认false
-        forceOpen: false
-        # 强制关闭熔断器 如果这个开关打开，circuit将一直关闭且忽略，默认false
-        forceClosed: false
-      fallback:
-        enabled: true
+        sleepWindowInMilliseconds: 45000
       execution:
         timeout:
           enabled: true
         isolation:
-          strategy: THREAD
-        thread:
-          # 断路器超时时间，默认1000ms
-          timeoutInMilliseconds: 8000
-
+          thread:
+            timeoutInMilliseconds: 90000
 
 ribbon:
+  eager-load:
+    enabled: true
+  ServerListRefreshInterval: 10  #刷新服务列表源的间隔时间
+  httpclient:
+    enabled: false
   okhttp:
     enabled: true
+  ReadTimeout: 90000
+  ConnectTimeout: 90000
+  OkToRetryOnAllOperations: true
+  MaxAutoRetries: 1
+  MaxAutoRetriesNextServer: 1
 
 management:
   endpoints:

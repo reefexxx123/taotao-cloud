@@ -1,5 +1,6 @@
 package com.taotao.cloud.common.model;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.taotao.cloud.common.enums.ResultEnum;
 import lombok.Builder;
@@ -27,7 +28,7 @@ public class PageResult<T> implements Serializable {
     private long currentPage;
     private List<T> data;
 
-    public static <T> PageResult<T> succeed(Page<T> page) {
+    public static <T> PageResult<T> succeed(IPage<T> page) {
         return PageResult.<T>builder()
                 .code(ResultEnum.SUCCESS.getCode())
                 .message(ResultEnum.SUCCESS.getMessage())
@@ -38,7 +39,7 @@ public class PageResult<T> implements Serializable {
                 .build();
     }
 
-    public static <T> PageResult<T> succeed(Page<T> page, ResultEnum resultEnum) {
+    public static <T> PageResult<T> succeed(IPage<T> page, ResultEnum resultEnum) {
         return PageResult.<T>builder()
                 .code(resultEnum.getCode())
                 .message(resultEnum.getMessage())

@@ -23,7 +23,6 @@ stages:
       - runScriptConfig:
           image: busybox
           shellScript: date -R
-
   - name: PushImage
     when:
       branch: master
@@ -57,7 +56,6 @@ stages:
           env:
             PLUGIN_DEBUG: "true"
             PLUGIN_INSECURE: "true"
-
   - name: Deploy
     when:
       branch: master

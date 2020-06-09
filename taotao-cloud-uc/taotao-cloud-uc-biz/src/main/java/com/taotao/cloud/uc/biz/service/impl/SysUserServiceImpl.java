@@ -17,6 +17,7 @@ import com.taotao.cloud.uc.api.dto.RepeatCheckDTO;
 import com.taotao.cloud.uc.api.dto.UserDTO;
 import com.taotao.cloud.uc.api.entity.SysUser;
 import com.taotao.cloud.uc.api.entity.SysUserRole;
+import com.taotao.cloud.uc.api.query.UserQuery;
 import com.taotao.cloud.uc.biz.mapper.SysUserMapper;
 import com.taotao.cloud.uc.biz.service.*;
 import org.apache.commons.lang3.StringUtils;
@@ -51,11 +52,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private ISysRoleService roleService;
 
     @Override
-    public IPage<SysUser> getUsersWithRolePage(Page page, UserDTO userDTO) {
-        if (ObjectUtil.isNotNull(userDTO) && userDTO.getDeptId() != 0) {
-            userDTO.setDeptList(deptService.selectDeptIds(userDTO.getDeptId()));
-        }
-        IPage<SysUser> userList = baseMapper.getUserVosPage(page, userDTO, new DataScope());
+    public IPage<SysUser> getUsersWithRolePage(UserQuery userQuery) {
+//        if (ObjectUtil.isNotNull(userQuery) && userQuery.getDeptId() != 0) {
+//            userQuery.setDeptList(deptService.selectDeptIds(userQuery.getDeptId()));
+//        }
+        Page<SysUser> page = new Page<>(userQuery.getCurrent(), userQuery.getSize());
+
+        IPage<SysUser> userList = baseMapper.getUserVosPage(page, userQuery, new DataScope());
         userList.getRecords().forEach(user -> user.setRoleList(roleService.findRolesByUserId(user.getUserId())));
         return userList;
     }

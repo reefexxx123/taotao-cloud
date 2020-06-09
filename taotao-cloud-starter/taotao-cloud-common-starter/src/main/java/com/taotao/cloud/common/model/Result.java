@@ -1,5 +1,8 @@
 package com.taotao.cloud.common.model;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.taotao.cloud.common.enums.ResultEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,8 +21,11 @@ public class Result<T> implements Serializable {
 
     private static final long serialVersionUID = -3685249101751401211L;
 
+    @JSONField(serialzeFeatures= {SerializerFeature.WriteMapNullValue})
     private T data;
+    @JSONField(serialzeFeatures= {SerializerFeature.WriteMapNullValue})
     private Integer code;
+    @JSONField(serialzeFeatures= {SerializerFeature.WriteMapNullValue})
     private String message;
 
     public Result() {

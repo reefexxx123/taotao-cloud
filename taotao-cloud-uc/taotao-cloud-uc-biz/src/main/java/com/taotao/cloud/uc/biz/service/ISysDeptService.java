@@ -90,7 +90,7 @@ public interface ISysDeptService extends IService<SysDept> {
     List<SysDept> selectDeptListBydeptName(String deptName);
 
     /**
-     * 通过此部门id查询于此相关的部门ids
+     * 通过部门id查询于此相关的部门ids
      *
      * @param deptId
      * @return java.util.List<java.lang.Integer>

@@ -7,6 +7,7 @@ import com.taotao.cloud.auth.model.SecurityUser;
 import com.taotao.cloud.uc.api.dto.RepeatCheckDTO;
 import com.taotao.cloud.uc.api.dto.UserDTO;
 import com.taotao.cloud.uc.api.entity.SysUser;
+import com.taotao.cloud.uc.api.query.UserQuery;
 
 import java.util.Set;
 
@@ -21,13 +22,12 @@ public interface ISysUserService extends IService<SysUser> {
     /**
      * 分页查询用户信息（含有角色信息）
      *
-     * @param page
-     * @param userDTO
+     * @param userQuery
      * @return com.baomidou.mybatisplus.core.metadata.IPage<com.taotao.cloud.uc.api.entity.SysUser>
      * @author dengtao
      * @date 2020/4/30 13:20
      */
-    IPage<SysUser> getUsersWithRolePage(Page page, UserDTO userDTO);
+    IPage<SysUser> getUsersWithRolePage(UserQuery userQuery);
 
     /**
      * 保存用户以及角色部门等信息

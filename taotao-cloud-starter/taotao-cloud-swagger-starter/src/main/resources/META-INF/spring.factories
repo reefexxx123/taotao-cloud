@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.taotao.cloud.swagger.SwaggerAutoConfiguration
+com.taotao.cloud.swagger.SwaggerAutoConfiguration,\
+com.taotao.cloud.swagger.CustomSwagger2Controller

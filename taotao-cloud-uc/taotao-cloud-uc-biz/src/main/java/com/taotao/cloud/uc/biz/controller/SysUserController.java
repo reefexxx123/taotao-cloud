@@ -15,6 +15,7 @@ import com.taotao.cloud.common.model.Result;
 import com.taotao.cloud.log.annotation.SysOperateLog;
 import com.taotao.cloud.uc.api.dto.UserDTO;
 import com.taotao.cloud.uc.api.entity.SysUser;
+import com.taotao.cloud.uc.api.query.UserQuery;
 import com.taotao.cloud.uc.biz.service.ISysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -41,33 +42,27 @@ public class SysUserController {
 
     @ApiOperation("保存用户包括角色和部门")
     @SysOperateLog(description = "保存用户包括角色和部门")
-    @PostMapping
+    @PostMapping(value = "/add")
     @PreAuthorize("hasAuthority('sys:user:add')")
-    public Result<Boolean> add(@RequestBody UserDTO userDto) {
+    public Result<Boolean> addUser(@RequestBody UserDTO userDto) {
         return Result.succeed(userService.insertUser(userDto));
     }
 
     @ApiOperation("查询用户集合")
     @SysOperateLog(description = "查询用户集合")
     @PreAuthorize("hasAuthority('sys:user:view')")
-    @GetMapping
-    public Result<PageResult<SysUser>> getList(Page page, UserDTO userDTO) {
-        IPage<SysUser> pageResult = userService.getUsersWithRolePage(page, userDTO);
-
-        PageResult result = PageResult.builder().currentPage(page.getCurrent()).total(pageResult.getTotal())
-                .code(ResultEnum.SUCCESS.getCode())
-                .pageSize(pageResult.getSize())
-                .data(Collections.singletonList(pageResult.getRecords()))
-                .build();
-        return Result.succeed(result);
+    @PostMapping(value = "/list")
+    public PageResult<SysUser> getUserList(@RequestBody UserQuery userQuery) {
+        IPage<SysUser> pageResult = userService.getUsersWithRolePage(userQuery);
+        return PageResult.succeed(pageResult);
     }
 
 
     @ApiOperation("更新用户包括角色和部门")
     @SysOperateLog(description = "更新用户包括角色和部门")
     @PreAuthorize("hasAuthority('sys:user:update')")
-    @PutMapping
-    public Result<Boolean> update(@RequestBody UserDTO userDto) {
+    @PostMapping(value = "/update")
+    public Result<Boolean> updateUser(@RequestBody UserDTO userDto) {
         return Result.succeed(userService.updateUser(userDto));
     }
 
@@ -75,7 +70,7 @@ public class SysUserController {
     @SysOperateLog(description = "根据用户id删除用户包括角色和部门")
     @PreAuthorize("hasAuthority('sys:user:delete')")
     @DeleteMapping("/{userId}")
-    public Result<Boolean> delete(@PathVariable("userId") Integer userId) {
+    public Result<Boolean> deleteUser(@PathVariable("userId") Integer userId) {
         return Result.succeed(userService.removeUser(userId));
     }
 
@@ -96,7 +91,7 @@ public class SysUserController {
     @ApiOperation("获取用户信息")
     @SysOperateLog(description = "获取用户信息")
     @GetMapping("/info/{userIdOrUserNameOrMobileOrEmail}")
-    public Result<SecurityUser> getInfo(@PathVariable String userIdOrUserNameOrMobileOrEmail) {
+    public Result<SecurityUser> getUserInfo(@PathVariable String userIdOrUserNameOrMobileOrEmail) {
         SysUser user = userService.findUserByUserIdOrUserNameOrMobile(userIdOrUserNameOrMobileOrEmail);
         if (user == null) {
             throw new BusinessException("未查询到用户数据");
@@ -120,7 +115,7 @@ public class SysUserController {
     @ApiOperation("修改密码")
     @SysOperateLog(description = "修改密码")
     @PreAuthorize("hasAuthority('sys:user:update:password')")
-    @PutMapping("/update/password")
+    @PostMapping("/update/password")
     public Result<Boolean> updatePass(@RequestBody SysUser sysUser) {
         // 校验密码
         SysUser user = userService.findUserByUserIdOrUserNameOrMobile(sysUser.getUsername());

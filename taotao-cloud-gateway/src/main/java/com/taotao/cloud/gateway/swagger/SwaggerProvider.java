@@ -24,7 +24,7 @@ import java.util.Set;
  * @date 2020/4/29 22:14
  */
 @Primary
-@ConditionalOnProperty(prefix = "taotao.cloud.swagger-agg", name = "enabled", havingValue = "false")
+@ConditionalOnProperty(prefix = "taotao.cloud.swagger-agg", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class SwaggerProvider implements SwaggerResourcesProvider {
     private final RouteLocator routeLocator;
     private final GatewayProperties gatewayProperties;

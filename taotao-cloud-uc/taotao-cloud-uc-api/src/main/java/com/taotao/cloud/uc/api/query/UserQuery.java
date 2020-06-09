@@ -1,6 +1,8 @@
-package com.taotao.cloud.uc.api.dto;
+package com.taotao.cloud.uc.api.query;
 
+import com.taotao.cloud.common.model.PageParam;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
@@ -11,17 +13,12 @@ import java.util.List;
  * @date 2020/5/14 10:44
  */
 @Data
-public class UserDTO{
+@EqualsAndHashCode(callSuper = true)
+public class UserQuery extends PageParam {
     private Integer userId;
     private String username;
-    private String password;
     private Integer deptId;
     private Integer jobId;
     private String phone;
     private String email;
-    private String avatar;
-    private String lockFlag;
-    private String delFlag;
-    private List<Integer> roleList;
-    private List<Integer> deptList;
 }
