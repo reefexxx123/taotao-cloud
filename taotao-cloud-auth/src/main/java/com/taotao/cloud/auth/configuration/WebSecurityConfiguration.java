@@ -29,7 +29,7 @@ import javax.annotation.Resource;
  * @author dengtao
  * @date 2020/4/29 20:14
  */
-@Order(90)
+@Order(-9000)
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -54,13 +54,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http.authorizeRequests()
                 .anyRequest()
                 //授权服务器关闭basic认证
                 .permitAll().and()
-                .formLogin()
-                .loginPage("/login.html")
-                .loginProcessingUrl("/user/login")
+                .formLogin().permitAll()
+//                .loginPage("/login.html")
+//                .loginProcessingUrl("/user/login")
                 .successHandler(authenticationSuccessHandler)
                 .failureHandler(authenticationFailureHandler).and()
                 .logout()
