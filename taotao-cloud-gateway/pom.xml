@@ -20,12 +20,6 @@
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-auth-starter</artifactId>
-            <exclusions>
-                <exclusion>
-                    <artifactId>spring-webmvc</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
@@ -33,7 +27,11 @@
             <artifactId>taotao-cloud-redis-starter</artifactId>
         </dependency>
 
-        <!--nacos注册中心客户端-->
+        <dependency>
+            <groupId>com.taotao.cloud</groupId>
+            <artifactId>taotao-cloud-ribbon-starter</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
@@ -85,10 +83,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-models</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-ui</artifactId>
@@ -115,11 +115,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-oauth2</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
@@ -134,7 +129,6 @@
             <artifactId>UserAgentUtils</artifactId>
         </dependency>
     </dependencies>
-
 
     <build>
         <plugins>

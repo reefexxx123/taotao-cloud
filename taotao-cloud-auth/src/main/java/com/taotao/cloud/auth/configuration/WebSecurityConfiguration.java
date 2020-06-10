@@ -3,10 +3,8 @@ package com.taotao.cloud.auth.configuration;
 import com.taotao.cloud.auth.authentication.mobile.MobileAuthenticationSecurityConfig;
 import com.taotao.cloud.auth.authentication.openid.OpenIdAuthenticationSecurityConfig;
 import com.taotao.cloud.auth.authentication.third.ThirdAuthenticationSecurityConfig;
-import com.taotao.cloud.auth.filter.LoginProcessSetTenantFilter;
 import com.taotao.cloud.auth.handler.OauthLogoutSuccessHandler;
 import com.taotao.cloud.auth.service.IUserDetailsService;
-import com.taotao.cloud.auth.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,12 +15,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 import javax.annotation.Resource;
@@ -75,7 +71,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .apply(openIdAuthenticationSecurityConfig).and()
                 .apply(mobileAuthenticationSecurityConfig).and()
                 .apply(thirdAuthenticationSecurityConfig).and()
-                .addFilterBefore(new LoginProcessSetTenantFilter(), UsernamePasswordAuthenticationFilter.class)
                 .csrf().disable()
                 // 解决不允许显示在iframe的问题
                 .headers().frameOptions().disable().cacheControl();

@@ -1,7 +1,6 @@
 package com.taotao.cloud.common.exception;
 
 import com.taotao.cloud.common.enums.ResultEnum;
-import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 

@@ -11,5 +11,7 @@
 
     <artifactId>taotao-cloud-demo</artifactId>
 
-
+    <modules>
+        <module>taotao-cloud-demo-gateway</module>
+    </modules>
 </project>

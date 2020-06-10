@@ -6,7 +6,6 @@
 //import com.taotao.cloud.auth.authentication.third.ThirdAuthenticationSecurityConfig;
 //import lombok.AllArgsConstructor;
 //import lombok.extern.slf4j.Slf4j;
-//import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.context.annotation.Configuration;
 //import org.springframework.context.annotation.Primary;
 //import org.springframework.core.annotation.Order;
@@ -18,7 +17,6 @@
 //import org.springframework.security.web.AuthenticationEntryPoint;
 //import org.springframework.security.web.access.AccessDeniedHandler;
 //import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-//import org.springframework.social.security.SpringSocialConfigurer;
 //
 ///**
 // * oauth2资源服务器

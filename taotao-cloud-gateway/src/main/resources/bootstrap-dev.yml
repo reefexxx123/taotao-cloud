@@ -1,5 +1,12 @@
 server:
   port: 9900
+  http2:
+    enabled: true
+  undertow:
+    buffer-size: 2048
+    direct-buffers: true
+    io-threads: 24
+    worker-threads: 1500
 
 spring:
   cache:
@@ -178,7 +185,7 @@ taotao:
   cloud:
     gateway:
       prefix: /api/
-      version: 1.0
+      version: v1.0
       base-uri: ${taotao.cloud.gateway.prefix}${taotao.cloud.gateway.version}
       #网关动态路由
       dynamicRoute:

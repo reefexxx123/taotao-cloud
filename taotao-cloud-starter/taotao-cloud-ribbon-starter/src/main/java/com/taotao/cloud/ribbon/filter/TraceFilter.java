@@ -2,7 +2,6 @@ package com.taotao.cloud.ribbon.filter;
 
 import cn.hutool.core.util.StrUtil;
 import com.taotao.cloud.common.constant.CommonConstant;
-import com.taotao.cloud.log.properties.TraceProperties;
 import org.slf4j.MDC;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -24,13 +23,13 @@ import java.io.IOException;
 @ConditionalOnClass(Filter.class)
 public class TraceFilter extends OncePerRequestFilter {
 
-    @Resource
-    private TraceProperties traceProperties;
-
-    @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) {
-        return traceProperties.getEnable();
-    }
+//    @Resource
+//    private TraceProperties traceProperties;
+//
+//    @Override
+//    protected boolean shouldNotFilter(HttpServletRequest request) {
+//        return traceProperties.getEnable();
+//    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,

@@ -57,7 +57,6 @@ public class SysUserController {
         return PageResult.succeed(pageResult);
     }
 
-
     @ApiOperation("更新用户包括角色和部门")
     @SysOperateLog(description = "更新用户包括角色和部门")
     @PreAuthorize("hasAuthority('sys:user:update')")

@@ -5,14 +5,9 @@ import com.taotao.cloud.common.exception.*;
 import com.taotao.cloud.common.model.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.context.request.NativeWebRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -68,15 +63,15 @@ public class DefaultExceptionAdvice {
         return Result.of(e.getMessage(), HttpStatus.BAD_REQUEST.value(), "参数解析失败");
     }
 
-    /**
-     * AccessDeniedException异常处理返回json
-     * 返回状态码:403
-     */
-    @ExceptionHandler({AccessDeniedException.class})
-    public Result<String> badMethodExpressException(NativeWebRequest request, AccessDeniedException e) {
-        printException(request, e);
-        return Result.of(e.getMessage(), HttpStatus.FORBIDDEN.value(), "没有权限请求当前方法");
-    }
+//    /**
+//     * AccessDeniedException异常处理返回json
+//     * 返回状态码:403
+//     */
+//    @ExceptionHandler({AccessDeniedException.class})
+//    public Result<String> badMethodExpressException(NativeWebRequest request, AccessDeniedException e) {
+//        printException(request, e);
+//        return Result.of(e.getMessage(), HttpStatus.FORBIDDEN.value(), "没有权限请求当前方法");
+//    }
 
 
     /**
@@ -89,15 +84,15 @@ public class DefaultExceptionAdvice {
         return Result.of(e.getMessage(), HttpStatus.FORBIDDEN.value(), "发送消息异常");
     }
 
-    /**
-     * AccessDeniedException异常处理返回json
-     * 返回状态码:403
-     */
-    @ExceptionHandler({UsernameNotFoundException.class})
-    public Result<String> badUsernameNotFoundException(NativeWebRequest request, UsernameNotFoundException e) {
-        printException(request, e);
-        return Result.of(e.getMessage(), HttpStatus.FORBIDDEN.value(), "错误");
-    }
+//    /**
+//     * AccessDeniedException异常处理返回json
+//     * 返回状态码:403
+//     */
+//    @ExceptionHandler({UsernameNotFoundException.class})
+//    public Result<String> badUsernameNotFoundException(NativeWebRequest request, UsernameNotFoundException e) {
+//        printException(request, e);
+//        return Result.of(e.getMessage(), HttpStatus.FORBIDDEN.value(), "错误");
+//    }
 
     /**
      * 返回状态码:405

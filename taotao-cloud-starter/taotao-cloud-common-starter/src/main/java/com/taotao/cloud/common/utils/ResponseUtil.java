@@ -2,6 +2,7 @@ package com.taotao.cloud.common.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.taotao.cloud.common.model.Result;
 import lombok.NonNull;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -79,7 +80,8 @@ public class ResponseUtil {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setHeader("Content-Type", "application/json;charset=UTF-8");
         try (Writer writer = response.getWriter()) {
-            writer.write(GSON.toJson(result));
+            Gson gs = new GsonBuilder().serializeNulls().create();
+            writer.write(gs.toJson(result));
             writer.flush();
         }
     }

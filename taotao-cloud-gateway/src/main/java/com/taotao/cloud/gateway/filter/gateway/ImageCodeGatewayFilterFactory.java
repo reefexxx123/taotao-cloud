@@ -1,8 +1,6 @@
 package com.taotao.cloud.gateway.filter.gateway;
 
 import cn.hutool.core.util.StrUtil;
-import com.taotao.cloud.auth.exception.ValidateCodeException;
-import com.taotao.cloud.common.constant.CommonConstant;
 import com.taotao.cloud.common.constant.SecurityConstant;
 import com.taotao.cloud.redis.repository.RedisRepository;
 import lombok.AllArgsConstructor;
@@ -51,20 +49,20 @@ public class ImageCodeGatewayFilterFactory extends AbstractGatewayFilterFactory<
         MultiValueMap<String, String> params = request.getQueryParams();
         String code = params.getFirst(PARAM_CODE);
         String t = params.getFirst(PARAM_T);
-        if (StrUtil.isBlank(code)) {
-            throw new ValidateCodeException(NOT_CODE_NULL);
-        }
-        String key = CommonConstant.TAOTAO_CAPTCHA_KEY + t;
-        if (!redisRepository.exists(key)) {
-            throw new ValidateCodeException(NOT_LEGAL);
-        }
+//        if (StrUtil.isBlank(code)) {
+//            throw new ValidateCodeException(NOT_CODE_NULL);
+//        }
+//        String key = CommonConstant.TAOTAO_CAPTCHA_KEY + t;
+//        if (!redisRepository.exists(key)) {
+//            throw new ValidateCodeException(NOT_LEGAL);
+//        }
 
-        Object captcha = redisRepository.get(key);
-        if (captcha == null) {
-            throw new ValidateCodeException(INVALID);
-        }
-        if (!code.toLowerCase().equals(captcha)) {
-            throw new ValidateCodeException(ERROR);
-        }
+//        Object captcha = redisRepository.get(key);
+//        if (captcha == null) {
+//            throw new ValidateCodeException(INVALID);
+//        }
+//        if (!code.toLowerCase().equals(captcha)) {
+//            throw new ValidateCodeException(ERROR);
+//        }
     }
 }

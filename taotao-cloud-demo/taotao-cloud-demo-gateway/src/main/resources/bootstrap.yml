@@ -1,0 +1,154 @@
+server:
+  port: 9900
+  http2:
+    enabled: true
+  undertow:
+    buffer-size: 2048
+    direct-buffers: true
+    io-threads: 24
+    worker-threads: 1500
+
+spring:
+  cache:
+    type: none
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: taotao-cloud-gateway-center
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        metadata:
+          version: 4
+      config:
+        enabled: false
+    gateway:
+      loadbalancer:
+        use404: false
+      discovery:
+        locator:
+          lower-case-service-id: true
+          enabled: true
+      routes:
+        - id: taotao-cloud-uc-center
+          uri: lb://taotao-cloud-uc-center
+          predicates:
+            - Path=/uc/**
+          filters:
+            - StripPrefix=1
+        - id: taotao-cloud-auth-center
+          uri: lb://taotao-cloud-auth-center
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
+            - PreserveHostHeader
+      default-filters:
+        # 降级配置
+        - name: Hystrix
+          args:
+            name: default
+            fallbackUri: 'forward:/fallback'
+
+hystrix:
+  threadpool:
+    default:
+      coreSize: 1200
+      maximumSize: 15000
+      allowMaximumSizeToDivergeFromCoreSize: true
+      maxQueueSize: 2000
+      queueSizeRejectionThreshold: 1800
+  command:
+    default:
+      circuitBreaker:
+        # 当在配置时间窗口内达到此数量的失败后，进行短路。默认20个
+        requestVolumeThreshold: 30
+        # 触发短路的时间值，当该值设为5000时，则当触发 circuit break 后的5000毫秒内都会拒绝request
+        # 也就是5000毫秒后才会关闭circuit。默认5000
+        sleepWindowInMilliseconds: 45000
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 90000
+
+ribbon:
+  eager-load:
+    enabled: true
+  ServerListRefreshInterval: 10  #刷新服务列表源的间隔时间
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+  ReadTimeout: 90000
+  ConnectTimeout: 90000
+  OkToRetryOnAllOperations: true
+  MaxAutoRetries: 1
+  MaxAutoRetriesNextServer: 1
+
+feign:
+  hystrix:
+    enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+taotao:
+  cloud:
+#    gateway:
+#      prefix: /api/
+#      version: 1.0
+#      base-uri: ${taotao.cloud.gateway.prefix}${taotao.cloud.gateway.version}
+#      #网关动态路由
+#      dynamicRoute:
+#        enabled: false
+#        data-type: nacos
+    swagger-agg:
+      enabled: true
+      api-docs-path: /api-docs
+      swagger-version: 2.0
+      generate-routes: taotao-cloud-uc-center,taotao-cloud-auth-center
+#    oauth2:
+#      token:
+#        store:
+#          type: redis
+#      security:
+#        ignore:
+#          # 忽略认证的地址
+#          http-urls: >
+#            /*/api-docs,
+#            /code,
+#            /uc/repeat/check,
+#            /auth/oauth/token/*,
+#            /auth/oauth/token,
+#            /auth/mobile/login,
+#            /auth/sms/code,
+#            /auth/social/**,
+#            /auth/css/**,
+#            /auth/images/**,
+#            /auth/js/**,
+#            /favicon.ico,
+#            /manifest.json,
+#            /robots.txt
+#        auth:
+#          # 续签
+#          renew:
+#            enable: true
+#            # 白名单
+#            include-client-ids:
+#              - webApp
+#    # 日志模块
+#    log:
+#      trace:
+#        enabled: true

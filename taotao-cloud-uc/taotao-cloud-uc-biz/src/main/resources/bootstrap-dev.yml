@@ -3,10 +3,10 @@ server:
   http2:
     enabled: true
   undertow:
-    buffer-size: 20480
+    buffer-size: 2048
     direct-buffers: true
-    io-threads: 12
-    worker-threads: 20
+    io-threads: 24
+    worker-threads: 1500
 
 spring:
   main:
@@ -70,18 +70,18 @@ mybatis-plus:
     cache-enabled: false
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
-security:
-  oauth2:
-    client:
-      client-id: server
-      client-secret: server
-      scope: server
-      grant-type: client_credentials
-      access-token-uri: http://127.0.0.1:9800/oauth/token
-    resource:
-      loadBalanced: false
-      # ec-auth 为服务名称 必须使用服务名称
-      token-info-uri: http://127.0.0.1:9800/oauth/check_token
+#security:
+#  oauth2:
+#    client:
+#      client-id: server
+#      client-secret: server
+#      scope: server
+#      grant-type: client_credentials
+#      access-token-uri: http://127.0.0.1:9800/oauth/token
+#    resource:
+#      loadBalanced: false
+#      # ec-auth 为服务名称 必须使用服务名称
+#      token-info-uri: http://127.0.0.1:9800/oauth/check_token
 #      user-authorization-uri: http://127.0.0.1:9800/oauth/authorize
 #    resource:
 #      token-info-uri: http://127.0.0.1:9800/oauth/check_token

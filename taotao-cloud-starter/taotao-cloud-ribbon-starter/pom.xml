@@ -17,10 +17,10 @@
             <artifactId>taotao-cloud-common-starter</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.taotao.cloud</groupId>
-            <artifactId>taotao-cloud-log-starter</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.taotao.cloud</groupId>-->
+<!--            <artifactId>taotao-cloud-log-starter</artifactId>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>

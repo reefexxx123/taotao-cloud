@@ -9,7 +9,6 @@ import com.taotao.cloud.gateway.handler.JsonAccessDeniedHandler;
 import com.taotao.cloud.gateway.handler.Oauth2AuthSuccessHandler;
 import com.taotao.cloud.gateway.properties.CustomGatewayProperties;
 import lombok.AllArgsConstructor;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -41,7 +40,7 @@ public class ResourceServerConfiguration {
 
     @Bean
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
-        //认证处理器
+//        //认证处理器
         ReactiveAuthenticationManager customAuthenticationManager = new CustomAuthenticationManager(tokenStore);
 
         //token转换器

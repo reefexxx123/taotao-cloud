@@ -31,8 +31,8 @@ import javax.annotation.Resource;
  * @date 2020/4/30 09:04
  */
 @Slf4j
-@ConditionalOnProperty(prefix = "taotao.cloud.oauth2.security", name = "enabled", havingValue = "true")
 @EnableResourceServer
+@ConditionalOnProperty(prefix = "taotao.cloud.oauth2.security", name = "enabled", havingValue = "true")
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter implements InitializingBean {
 

@@ -23,8 +23,11 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class OauthLogoutHandler implements LogoutHandler {
 
-    @Autowired
-    private TokenStore tokenStore;
+    private final TokenStore tokenStore;
+
+    public OauthLogoutHandler(TokenStore tokenStore){
+        this.tokenStore = tokenStore;
+    }
 
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {

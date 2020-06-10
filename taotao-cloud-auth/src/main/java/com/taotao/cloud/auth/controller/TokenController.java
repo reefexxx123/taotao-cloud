@@ -42,7 +42,7 @@ public class TokenController {
     @ApiOperation(value = "用户名密码获取token")
     @GetMapping("/user")
     public Result<OAuth2AccessTokenDTO> getUserTokenInfo(@RequestParam(value = "username") String username,
-                                                         @RequestParam(value = "username") String password,
+                                                         @RequestParam(value = "password") String password,
                                                          HttpServletRequest request, HttpServletResponse response) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
         OAuth2AccessTokenDTO oAuth2AccessToken = tokensService.getToken(request, response, token);

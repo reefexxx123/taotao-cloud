@@ -93,7 +93,7 @@ public class WebUtil {
      *
      * @return 请求体
      */
-    private String getBodyString(ServerHttpRequest serverHttpRequest) {
+    public static String getBodyString(ServerHttpRequest serverHttpRequest) {
         HttpMessageReader<byte[]> httpMessageReader = new DecoderHttpMessageReader(new ByteArrayDecoder());
         ResolvableType resolvableType = ResolvableType.forClass(byte[].class);
         Mono<byte[]> mono = httpMessageReader.readMono(resolvableType, serverHttpRequest, Collections.emptyMap());
