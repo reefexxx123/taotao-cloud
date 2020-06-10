@@ -29,9 +29,8 @@ import java.util.stream.Collectors;
 @Api(value = "角色管理API", tags = { "角色管理API" })
 public class SysRoleController {
 
-    @Resource
+    @Autowired
     private ISysRoleService roleService;
-
     @Autowired
     private ISysRoleMenuService roleMenuService;
 

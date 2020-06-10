@@ -36,7 +36,7 @@ import javax.annotation.Resource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter implements InitializingBean {
 
-    @Autowired
+    @Resource
     private TokenStore tokenStore;
 
     @Resource
@@ -48,7 +48,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter implem
     @Resource
     private OAuth2AccessDeniedHandler oAuth2AccessDeniedHandler;
 
-    @Autowired
+    @Resource
     private SecurityProperties securityProperties;
 
     @Override

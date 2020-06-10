@@ -6,6 +6,7 @@ import cn.hutool.extra.servlet.ServletUtil;
 import com.alibaba.ttl.TransmittableThreadLocal;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.taotao.cloud.auth.utils.SecurityUtil;
+import com.taotao.cloud.common.constant.CommonConstant;
 import com.taotao.cloud.common.context.TenantContextHolder;
 import com.taotao.cloud.common.enums.LogOperateTypeEnum;
 import com.taotao.cloud.log.event.SysLogEvent;
@@ -16,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
@@ -29,6 +31,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.Objects;
+
+import static com.taotao.cloud.common.utils.WebUtil.getRequest;
 
 /**
  * 日志切面
@@ -82,10 +86,12 @@ public class SysLogAspect {
         if (sysLogProperties.getEnabled()) {
             SysLog sysLog = new SysLog();
             sysLogThreadLocal.set(sysLog);
-
-            HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+            ServletRequestAttributes attributes = (ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes());
+            RequestContextHolder.setRequestAttributes(attributes,true);
+            HttpServletRequest request = attributes.getRequest();
             sysLog.setApplicationName(applicationName);
             sysLog.setStartTime(LocalDateTime.now());
+            sysLog.setTraceId(MDC.get(CommonConstant.LOG_TRACE_ID));
             sysLog.setRequestIp(ServletUtil.getClientIP(request));
             sysLog.setClientId(SecurityUtil.getClientId());
             sysLog.setUserId(SecurityUtil.getUserId());

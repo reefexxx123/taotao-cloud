@@ -1,4 +1,4 @@
-package com.taotao.coud.order.biz;
+package com.taotao.cloud.order.biz;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

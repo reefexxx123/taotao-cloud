@@ -12,7 +12,9 @@ import com.taotao.cloud.auth.model.SecurityUser;
 import com.taotao.cloud.common.enums.DelFlagEnum;
 import com.taotao.cloud.common.enums.UserTypeEnum;
 import com.taotao.cloud.common.exception.BaseException;
+import com.taotao.cloud.common.model.Result;
 import com.taotao.cloud.data.datascope.DataScope;
+import com.taotao.cloud.order.api.feign.RemoteOrderService;
 import com.taotao.cloud.uc.api.dto.RepeatCheckDTO;
 import com.taotao.cloud.uc.api.dto.UserDTO;
 import com.taotao.cloud.uc.api.entity.SysUser;
@@ -20,6 +22,7 @@ import com.taotao.cloud.uc.api.entity.SysUserRole;
 import com.taotao.cloud.uc.api.query.UserQuery;
 import com.taotao.cloud.uc.biz.mapper.SysUserMapper;
 import com.taotao.cloud.uc.biz.service.*;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +42,7 @@ import java.util.stream.Collectors;
  * @date 2020/4/30 13:22
  */
 @Service
+@Slf4j
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
     @Autowired
     private ISysUserRoleService userRoleService;
@@ -50,12 +54,16 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private ISysMenuService menuService;
     @Autowired
     private ISysRoleService roleService;
+    @Autowired
+    private RemoteOrderService remoteOrderService;
 
     @Override
     public IPage<SysUser> getUsersWithRolePage(UserQuery userQuery) {
 //        if (ObjectUtil.isNotNull(userQuery) && userQuery.getDeptId() != 0) {
 //            userQuery.setDeptList(deptService.selectDeptIds(userQuery.getDeptId()));
 //        }
+        Result<String> orderInfoResult = remoteOrderService.getOrderInfoById("1234566");
+        log.info(orderInfoResult.getData());
         Page<SysUser> page = new Page<>(userQuery.getCurrent(), userQuery.getSize());
 
         IPage<SysUser> userList = baseMapper.getUserVosPage(page, userQuery, new DataScope());

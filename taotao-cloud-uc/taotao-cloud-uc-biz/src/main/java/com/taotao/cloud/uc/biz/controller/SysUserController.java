@@ -4,11 +4,9 @@ package com.taotao.cloud.uc.biz.controller;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.taotao.cloud.auth.model.SecurityUser;
 import com.taotao.cloud.auth.utils.AuthUtil;
 import com.taotao.cloud.auth.utils.SecurityUtil;
-import com.taotao.cloud.common.enums.ResultEnum;
 import com.taotao.cloud.common.exception.BusinessException;
 import com.taotao.cloud.common.model.PageResult;
 import com.taotao.cloud.common.model.Result;
@@ -23,8 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collections;
 
 /**
  * 用户管理API

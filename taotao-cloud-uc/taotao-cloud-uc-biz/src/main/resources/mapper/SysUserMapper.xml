@@ -28,7 +28,7 @@
         SELECT
         `user`.user_id,
         `user`.username,
-        `user`.phone,
+        `user`.mobile,
         `user`.email,
         `user`.avatar,
         `user`.dept_id,

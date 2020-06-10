@@ -21,10 +21,13 @@ import reactor.core.publisher.Mono;
  * @date 2020/4/29 22:13
  */
 @Component
-@AllArgsConstructor
-public class TraceFilter implements GlobalFilter, Ordered {
+public class TraceLogFilter implements GlobalFilter, Ordered {
 
     private final TraceProperties traceProperties;
+
+    public TraceLogFilter(TraceProperties traceProperties){
+        this.traceProperties = traceProperties;
+    }
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -44,7 +47,7 @@ public class TraceFilter implements GlobalFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return Ordered.HIGHEST_PRECEDENCE;
+        return Ordered.LOWEST_PRECEDENCE;
     }
 }
 

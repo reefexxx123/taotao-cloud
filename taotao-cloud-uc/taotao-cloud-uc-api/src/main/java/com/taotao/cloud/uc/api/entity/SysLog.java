@@ -33,6 +33,11 @@ public class SysLog implements Serializable {
     private Integer id;
 
     /**
+     * 请求日志id
+     */
+    private String traceId;
+
+    /**
      * 服务名称
     */
     private String applicationName;

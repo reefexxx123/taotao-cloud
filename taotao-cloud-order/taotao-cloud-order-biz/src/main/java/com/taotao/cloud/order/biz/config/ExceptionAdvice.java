@@ -1,4 +1,4 @@
-package com.taotao.coud.order.biz.config;
+package com.taotao.cloud.order.biz.config;
 
 
 import com.taotao.cloud.common.config.DefaultExceptionAdvice;
@@ -12,4 +12,5 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 */
 @ControllerAdvice
 public class ExceptionAdvice extends DefaultExceptionAdvice {
+
 }

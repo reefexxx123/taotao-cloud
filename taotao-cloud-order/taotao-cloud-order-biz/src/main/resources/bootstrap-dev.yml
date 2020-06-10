@@ -1,5 +1,5 @@
 server:
-  port: 9700
+  port: 9600
   http2:
     enabled: true
   undertow:
@@ -12,7 +12,7 @@ spring:
   main:
     allow-bean-definition-overriding: true
   application:
-    name: taotao-cloud-uc-center
+    name: taotao-cloud-order-center
   cloud:
     nacos:
       discovery:
@@ -25,7 +25,7 @@ spring:
   #        file-extension: yml
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:3306}/taotao-cloud-uc-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:3306}/taotao-cloud-order-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
     username: ${TAOTAO-CLOUD-MYSQL-USERNAME:root}
     password: ${TAOTAO-CLOUD-MYSQL-PASSWORD:123456}
     driver-class-name: com.mysql.jdbc.Driver
@@ -48,16 +48,11 @@ spring:
         max-wait: -1
         max-idle: 8
         min-idle: 0
-  elasticsearch:
-    rest:
-      uris: ${TAOTAO-CLOUD-ELASTICSEARCH-HOST:127.0.0.1}:${TAOTAO-CLOUD-ELASTICSEARCH-PASSWORD:9200}
-      username: elastic
-      password: elastic
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/*Mapper.xml
   #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: com.taotao.cloud.uc.api.entity
+  typeAliasesPackage: com.taotao.cloud.order.api.entity
   global-config:
     db-config:
       id-type: auto
@@ -79,14 +74,7 @@ security:
       grant-type: client_credentials
       access-token-uri: http://127.0.0.1:9800/oauth/token
     resource:
-      loadBalanced: false
-      # ec-auth 为服务名称 必须使用服务名称
       token-info-uri: http://127.0.0.1:9800/oauth/check_token
-      user-authorization-uri: http://127.0.0.1:9800/oauth/authorize
-#    resource:
-#      token-info-uri: http://127.0.0.1:9800/oauth/check_token
-#      prefer-token-info: false
-#      user-info-uri: http://127.0.0.1:9800/oauth/check_token
 
 taotao:
   cloud:
@@ -102,9 +90,6 @@ taotao:
           http-urls: >
             /user/info/**,
             /api-docs,
-            /qq,
-            /gitee,
-            /github,
             /user/login,
             /repeat/check,
             /socket/**,
@@ -112,8 +97,8 @@ taotao:
     # swagger模块
     swagger:
       enabled: true
-      title: 用户中心
-      description: 用户中心接口文档
+      title: 订单中心
+      description: 订单中心接口文档
       version: 1.0
       license: Apache
       license-url: https://opensource.org/licenses/Apache-2.0Url
@@ -121,7 +106,7 @@ taotao:
         name: dengtao
         url: http://dtbox.top/
         email: 981376577@qq.com
-      base-package: com.taotao.cloud.uc.biz.controller
+      base-package: com.taotao.cloud.order.biz.controller
       host: ${spring.cloud.client.ip-address}:${server.port}
     # ribbon模块
     ribbon:
@@ -140,60 +125,16 @@ taotao:
             second: 300
           - key: user
             second: 1800
-    # 消息模块
-    message:
-      sms:
-        enabled: true
-        aliyun:
-          enabled: true
-          configs:
-            - type: login
-              code: lasdfjasjd234234
-            - type: register
-              code: sldj234osfu
     # 日志模块
     log:
       enabled: true
       trace:
         enabled: true
-    # elk模块
-    elk:
-      enabled: false
-      app-name: ${spring.application.name}
-      spring-app-name: ${spring.application.name}
-      destinations: >
-        127.0.0.1:4560
-      log:
-        statistic:
-          enabled: false
-      web:
-        aspect:
-          enabled: false
-    # elasticsearch模块
-    elasticsearch:
-      indices:
-        show:
-      rest-pool:
-        connect-time-out: 1000
-        socket-time-out: 30000
-        connection-request-time-out: 500
-        max-connect-num: 30
-        max-connect-per-route: 10
-      web:
-        controller:
-          aspect:
-            enabled: true
     #持久层配置
     data:
       mybatis-plus:
         auto-fill:
           enabled: false
-      tenant:
-        enabled: false
-        ignore-tables:
-          - sys_user
-        ignore-sqls:
-          - com.central.user.mapper.SysRoleMapper.findAll
 feign:
   sentinel:
     enabled: false

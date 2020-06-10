@@ -1,9 +1,7 @@
-package com.taotao.cloud.uc.biz;
+package com.taotao.cloud.order.biz;
 
 import com.taotao.cloud.auth.annotation.EnableTaoTaoOauth2Client;
 import com.taotao.cloud.data.annotation.EnableTaoTaoTenantAutoConfigure;
-import com.taotao.cloud.elasticsearch.annotation.EnableTaoTaoSearchClient;
-import com.taotao.cloud.elk.annotation.EnableTaoTaoELKAutoConfigure;
 import com.taotao.cloud.ribbon.annotation.EnableTaoTaoFeignInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -12,20 +10,19 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableTaoTaoFeignInterceptor
-@EnableTaoTaoSearchClient
 @EnableTaoTaoOauth2Client
 @EnableTaoTaoTenantAutoConfigure
-@EnableTaoTaoELKAutoConfigure
 @EnableTransactionManagement
 @EnableFeignClients(basePackages = "com.taotao.cloud.*.api.feign")
-@MapperScan(value = "com.taotao.cloud.uc.biz.mapper")
-public class UcBizApplication {
+@MapperScan(value = "com.taotao.cloud.order.biz.mapper")
+public class OrderBizApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(UcBizApplication.class, args);
+        SpringApplication.run(OrderBizApplication.class, args);
     }
 
 }
