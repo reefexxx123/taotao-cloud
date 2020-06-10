@@ -3,8 +3,11 @@ package com.taotao.cloud.ribbon.config;
 import cn.hutool.core.util.StrUtil;
 import com.taotao.cloud.common.constant.CommonConstant;
 import com.taotao.cloud.common.constant.SecurityConstant;
+import com.taotao.cloud.common.context.TenantContextHolder;
 import feign.RequestInterceptor;
+import org.slf4j.MDC;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -13,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * feign拦截器，只包含http相关数据
@@ -38,9 +42,10 @@ public class FeignHttpInterceptorConfig {
     @Bean
     public RequestInterceptor httpFeignInterceptor() {
         return template -> {
-            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder
-                    .getRequestAttributes();
-            if (attributes != null) {
+            RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+            if (requestAttributes != null) {
+                ServletRequestAttributes attributes = (ServletRequestAttributes) Objects.requireNonNull(requestAttributes);
+                RequestContextHolder.setRequestAttributes(attributes, true);
                 HttpServletRequest request = attributes.getRequest();
                 Enumeration<String> headerNames = request.getHeaderNames();
                 if (headerNames != null) {
@@ -55,8 +60,18 @@ public class FeignHttpInterceptorConfig {
                         }
                     }
                 }
+                //传递client
                 //传递access_token，无网络隔离时需要传递
+                String tenant = TenantContextHolder.getTenant();
+                if (StrUtil.isNotEmpty(tenant)) {
+                    template.header(SecurityConstant.TENANT_HEADER, tenant);
+                }
 
+                //传递日志traceId
+                String traceId = MDC.get(CommonConstant.LOG_TRACE_ID);
+                if (StrUtil.isNotEmpty(traceId)) {
+                    template.header(CommonConstant.TRACE_ID_HEADER, traceId);
+                }
                 String token = extractHeaderToken(request);
                 if (StrUtil.isEmpty(token)) {
                     token = request.getParameter(CommonConstant.ACCESS_TOKEN);

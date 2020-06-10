@@ -9,15 +9,19 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>taotao-cloud-product-biz</artifactId>
     <version>1.0</version>
+
     <dependencies>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
-            <artifactId>taotao-cloud-product-api</artifactId>
+            <artifactId>taotao-cloud-common-starter</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.taotao.cloud</groupId>
-            <artifactId>taotao-cloud-common-starter</artifactId>
+            <artifactId>taotao-cloud-uc-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.taotao.cloud</groupId>
+            <artifactId>taotao-cloud-file-api</artifactId>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
@@ -35,7 +39,18 @@
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-data-starter</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.taotao.cloud</groupId>
+            <artifactId>taotao-cloud-ribbon-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.taotao.cloud</groupId>
+            <artifactId>taotao-cloud-sentinel-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.taotao.cloud</groupId>
+            <artifactId>taotao-cloud-elk-starter</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -45,18 +60,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
-        <!--mysql数据库-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <!--Mybatis-Plus-->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-        </dependency>
-        <!--nacos注册中心-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
@@ -66,8 +74,6 @@
         <!--            <groupId>com.alibaba.cloud</groupId>-->
         <!--            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>-->
         <!--        </dependency>-->
-
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-test</artifactId>

@@ -1,7 +1,6 @@
 package com.taotao.cloud.ribbon.annotation;
 
 import com.taotao.cloud.ribbon.config.FeignHttpInterceptorConfig;
-import com.taotao.cloud.ribbon.config.FeignInterceptorConfig;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.ElementType;
@@ -17,7 +16,7 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import({FeignInterceptorConfig.class, FeignHttpInterceptorConfig.class})
+@Import({FeignHttpInterceptorConfig.class})
 public @interface EnableTaoTaoFeignInterceptor {
 
 }

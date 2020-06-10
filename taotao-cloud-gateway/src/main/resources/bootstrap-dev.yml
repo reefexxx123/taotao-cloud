@@ -124,6 +124,14 @@ spring:
             - Path=${taotao.cloud.gateway.base-uri}/product/**
           filters:
             - StripPrefix=3
+            - name: RequestRateLimiter
+              args:
+                #使用SpEL按名称引用bean
+                key-resolver: "#{@remoteAddrKeyResolver}"
+                #允许用户每秒处理多少个请求
+                redis-rate-limiter.replenishRate: 1
+                #令牌桶的容量，允许在一秒钟内完成的最大请求数
+                redis-rate-limiter.burstCapacity: 5
       default-filters:
         # 降级配置
         - name: Hystrix

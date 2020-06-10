@@ -12,6 +12,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.web.context.request.RequestContextListener;
 
 /**
  * 认证服务器使用Redis存取令牌
@@ -30,6 +31,11 @@ public class OAuth2RedisTokenStore implements InitializingBean {
     @Bean
     public TokenStore tokenStore() {
         return new CustomRedisTokenStore(connectionFactory, securityProperties);
+    }
+
+    @Bean
+    public RequestContextListener requestContextListener(){
+        return new RequestContextListener();
     }
 
     @Override

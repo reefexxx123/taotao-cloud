@@ -18,6 +18,10 @@
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
+            <artifactId>taotao-cloud-product-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-uc-api</artifactId>
         </dependency>
         <dependency>

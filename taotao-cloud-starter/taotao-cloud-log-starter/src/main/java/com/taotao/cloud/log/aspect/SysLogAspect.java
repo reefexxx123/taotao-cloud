@@ -32,7 +32,6 @@ import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.Objects;
 
-import static com.taotao.cloud.common.utils.WebUtil.getRequest;
 
 /**
  * 日志切面

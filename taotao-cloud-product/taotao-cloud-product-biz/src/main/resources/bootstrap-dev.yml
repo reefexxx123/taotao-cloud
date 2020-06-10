@@ -1,0 +1,201 @@
+server:
+  port: 9500
+  http2:
+    enabled: true
+  undertow:
+    buffer-size: 2048
+    direct-buffers: true
+    io-threads: 24
+    worker-threads: 1500
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: taotao-cloud-product-center
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:8848}
+        metadata:
+          version: 5
+  #      config:
+  #        server-addr: 127.0.0.1:8848
+  #        namespace: 2c421c7d-7c62-422e-a4f3-996a2d301c67
+  #        file-extension: yml
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:3306}/taotao-cloud-product-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    username: ${TAOTAO-CLOUD-MYSQL-USERNAME:root}
+    password: ${TAOTAO-CLOUD-MYSQL-PASSWORD:123456}
+    driver-class-name: com.mysql.jdbc.Driver
+    hikari:
+      connection-test-query: SELECT 1
+      max-lifetime: 120000
+      maximum-pool-size: 15
+      minimum-idle: 3
+      connection-timeout: 30000
+      idle-timeout: 30000
+      auto-commit: true
+      pool-name: DatebookHikariCP
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: 123456
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.taotao.cloud.product.api.entity
+  global-config:
+    db-config:
+      id-type: auto
+      table-underline: true
+      field-strategy: NOT_NULL
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+security:
+  oauth2:
+    client:
+      client-id: server
+      client-secret: server
+      scope: server
+      grant-type: client_credentials
+      access-token-uri: http://127.0.0.1:9800/oauth/token
+    resource:
+      token-info-uri: http://127.0.0.1:9800/oauth/check_token
+
+taotao:
+  cloud:
+    # 认证模块
+    oauth2:
+      token:
+        store:
+          type: redis
+      security:
+        enabled: true
+        ignore:
+          # 忽略认证的地址
+          http-urls: >
+            /api-docs
+    # swagger模块
+    swagger:
+      enabled: true
+      title: 订单中心
+      description: 订单中心接口文档
+      version: 1.0
+      license: Apache
+      license-url: https://opensource.org/licenses/Apache-2.0Url
+      contact:
+        name: dengtao
+        url: http://dtbox.top/
+        email: 981376577@qq.com
+      base-package: com.taotao.cloud.product.biz.controller
+      host: ${spring.cloud.client.ip-address}:${server.port}
+    # ribbon模块
+    ribbon:
+      isolation:
+        enabled: true
+      rest-template:
+        max-total: 200
+        max-per-route: 50
+        read-timeout: 35000
+        connect-timeout: 10000
+    # redis缓存模块
+    redis:
+      cache-manager:
+        configs:
+          - key: menu
+            second: 300
+          - key: user
+            second: 1800
+    # 日志模块
+    log:
+      enabled: true
+      trace:
+        enabled: true
+    #持久层配置
+    data:
+      mybatis-plus:
+        auto-fill:
+          enabled: false
+feign:
+  sentinel:
+    enabled: false
+  hystrix:
+    enabled: true
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
+    max-connections: 1000
+    max-connections-per-route: 100
+  client:
+    config:
+      feignName:
+        connectTimeout: 30000
+        readTimeout: 30000
+  compression:
+    request:
+      enabled: true
+      mime-types: text/xml,application/xml,application/json
+      min-request-size: 2048
+    response:
+      enabled: true
+
+hystrix:
+  threadpool:
+    default:
+      coreSize: 1200
+      maximumSize: 15000
+      allowMaximumSizeToDivergeFromCoreSize: true
+      maxQueueSize: 2000
+      queueSizeRejectionThreshold: 1800
+  command:
+    default:
+      circuitBreaker:
+        # 当在配置时间窗口内达到此数量的失败后，进行短路。默认20个
+        requestVolumeThreshold: 30
+        # 触发短路的时间值，当该值设为5000时，则当触发 circuit break 后的5000毫秒内都会拒绝request
+        # 也就是5000毫秒后才会关闭circuit。默认5000
+        sleepWindowInMilliseconds: 45000
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 90000
+
+ribbon:
+  eager-load:
+    enabled: true
+  ServerListRefreshInterval: 10  #刷新服务列表源的间隔时间
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+  ReadTimeout: 90000
+  ConnectTimeout: 90000
+  OkToRetryOnAllOperations: true
+  MaxAutoRetries: 1
+  MaxAutoRetriesNextServer: 1
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
