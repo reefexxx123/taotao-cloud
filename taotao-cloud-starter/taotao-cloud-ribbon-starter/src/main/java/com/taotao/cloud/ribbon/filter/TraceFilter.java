@@ -6,7 +6,6 @@ import org.slf4j.MDC;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.annotation.Resource;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -22,14 +21,6 @@ import java.io.IOException;
  */
 @ConditionalOnClass(Filter.class)
 public class TraceFilter extends OncePerRequestFilter {
-
-//    @Resource
-//    private TraceProperties traceProperties;
-//
-//    @Override
-//    protected boolean shouldNotFilter(HttpServletRequest request) {
-//        return traceProperties.getEnable();
-//    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,

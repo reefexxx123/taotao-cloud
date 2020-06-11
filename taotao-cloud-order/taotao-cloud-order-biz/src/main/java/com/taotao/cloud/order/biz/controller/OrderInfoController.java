@@ -30,7 +30,7 @@ public class OrderInfoController {
 
     @ApiOperation("获取订单信息")
     @GetMapping("/{id}")
-    @SysOperateLog(description = "lsdfjalskdfl")
+//    @SysOperateLog(description = "lsdfjalskdfl")
     @PreAuthorize("hasAuthority('sys:user:view')")
     public Result<String> getDeptList(@PathVariable(value = "id") String id) {
         String orderInfo = orderInfoService.getOrderInfoById(id);

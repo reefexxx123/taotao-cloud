@@ -92,6 +92,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Transactional(rollbackFor = Exception.class)
     @Override
+    public boolean removeUser(Integer userId) {
+        baseMapper.updateById(new SysUser().setUserId(userId).setDelFlag(DelFlagEnum.DELETE.getValue()));
+        return userRoleService.remove(Wrappers.<SysUserRole>lambdaQuery().eq(SysUserRole::getUserId, userId));
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
     public boolean updateUser(UserDTO userDto) {
         SysUser sysUser = new SysUser();
         BeanUtils.copyProperties(userDto, sysUser);
@@ -105,13 +112,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }).collect(Collectors.toList());
 
         return userRoleService.saveBatch(userRoles);
-    }
-
-    @Transactional(rollbackFor = Exception.class)
-    @Override
-    public boolean removeUser(Integer userId) {
-        baseMapper.updateById(new SysUser().setUserId(userId).setDelFlag(DelFlagEnum.DELETE.getValue()));
-        return userRoleService.remove(Wrappers.<SysUserRole>lambdaQuery().eq(SysUserRole::getUserId, userId));
     }
 
     @Override
