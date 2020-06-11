@@ -66,9 +66,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         log.info(orderInfoResult.getData());
         Page<SysUser> page = new Page<>(userQuery.getCurrent(), userQuery.getSize());
 
-        IPage<SysUser> userList = baseMapper.getUserVosPage(page, userQuery, new DataScope());
-        userList.getRecords().forEach(user -> user.setRoleList(roleService.findRolesByUserId(user.getUserId())));
-        return userList;
+//        IPage<SysUser> userList = baseMapper.getUserVosPage(page, userQuery, new DataScope());
+//        userList.getRecords().forEach(user -> user.setRoleList(roleService.findRolesByUserId(user.getUserId())));
+        return page;
     }
 
     @Transactional(rollbackFor = Exception.class)

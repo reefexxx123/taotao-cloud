@@ -1,5 +1,6 @@
 package com.taotao.cloud.gateway.auth;
 
+import com.taotao.cloud.common.enums.ResultEnum;
 import com.taotao.cloud.common.utils.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,6 @@ public class JsonAuthenticationEntryPoint implements ServerAuthenticationEntryPo
 
     @Override
     public Mono<Void> commence(ServerWebExchange exchange, AuthenticationException e) {
-        return ResponseUtil.failed(exchange, HttpStatus.UNAUTHORIZED.value(), UN_AUTHORIZED);
+        return ResponseUtil.failed(exchange, ResultEnum.UNAUTHORIZED.getCode(), UN_AUTHORIZED);
     }
 }

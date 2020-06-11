@@ -9,8 +9,12 @@ import com.taotao.cloud.log.listener.SysLogListener;
 import com.taotao.cloud.log.properties.SysLogProperties;
 import com.taotao.cloud.log.properties.TraceProperties;
 import com.taotao.cloud.log.service.impl.DbSysLogServiceImpl;
+import com.taotao.cloud.log.service.impl.KafkaSysLogServiceImpl;
+import com.taotao.cloud.log.service.impl.RedisSysLogServiceImpl;
 import feign.Logger;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -52,15 +56,31 @@ public class LogAutoConfiguration implements InitializingBean {
         return Logger.Level.FULL;
     }
 
-    @Bean
-    public RemoteLogFallbackImpl remoteLogFallback() {
-        return new RemoteLogFallbackImpl();
+    @Configuration
+    @ConditionalOnProperty(name = "taotao.cloud.log.type", havingValue = "db")
+    public static class DbSysLogService{
+        @Bean
+        public DbSysLogServiceImpl dbSysLogService() {
+            return new DbSysLogServiceImpl();
+        }
+
+        @Bean
+        public RemoteLogFallbackImpl remoteLogFallback() {
+            return new RemoteLogFallbackImpl();
+        }
     }
 
     @Bean
-    @ConditionalOnProperty(name = "taotao.cloud.log.type", havingValue = "db", matchIfMissing = true)
-    public DbSysLogServiceImpl dbSysLogService() {
-        return new DbSysLogServiceImpl();
+    @ConditionalOnMissingBean
+    @ConditionalOnProperty(name = "taotao.cloud.log.type", havingValue = "redis")
+    public RedisSysLogServiceImpl redisSysLogService() {
+        return new RedisSysLogServiceImpl();
+    }
+
+    @Bean
+    @ConditionalOnProperty(name = "taotao.cloud.log.type", havingValue = "kafka")
+    public KafkaSysLogServiceImpl kafkaSysLogService() {
+        return new KafkaSysLogServiceImpl();
     }
 
 }

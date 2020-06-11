@@ -23,6 +23,7 @@ public class ProductController {
 
     @ApiOperation("根据id查询商品信息")
     @GetMapping("/{id}")
+    @SysOperateLog(description = "根据id查询商品信息")
     @PreAuthorize("hasAuthority('sys:user:view')")
     public Result<String> add(@PathVariable(value = "id") Integer id) {
         log.info("******************* : " + id);

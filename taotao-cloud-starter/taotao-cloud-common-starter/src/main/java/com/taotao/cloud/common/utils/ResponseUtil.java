@@ -1,8 +1,6 @@
 package com.taotao.cloud.common.utils;
 
-import com.alibaba.fastjson.JSONObject;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.taotao.cloud.common.enums.ResultEnum;
 import com.taotao.cloud.common.model.Result;
 import lombok.NonNull;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -26,7 +24,6 @@ import java.nio.charset.Charset;
  * @date 2020/5/2 11:22
  */
 public class ResponseUtil {
-    private static final Gson GSON = new Gson();
 
     private ResponseUtil() {
         throw new IllegalStateException("Utility class");
@@ -80,8 +77,7 @@ public class ResponseUtil {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setHeader("Content-Type", "application/json;charset=UTF-8");
         try (Writer writer = response.getWriter()) {
-            Gson gs = new GsonBuilder().serializeNulls().create();
-            writer.write(gs.toJson(result));
+            writer.write(GsonUtil.toGson(result));
             writer.flush();
         }
     }
@@ -127,7 +123,7 @@ public class ResponseUtil {
      */
     public static Mono<Void> failed(ServerWebExchange exchange, int httpStatus, String msg) {
         Result<String> result = Result.failed(httpStatus, msg);
-        return writeResponse(exchange, httpStatus, result);
+        return writeResponse(exchange, ResultEnum.SUCCESS.getCode(), result);
     }
 
     /**
@@ -141,14 +137,13 @@ public class ResponseUtil {
      * @date 2020/6/1 14:53
      */
     public static Mono<Void> writeResponse(ServerWebExchange exchange, int httpStatus, Result<String> result) {
-        if (httpStatus == 0) {
-            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR.value();
-        }
         ServerHttpResponse response = exchange.getResponse();
+        response.getHeaders().setAccessControlAllowCredentials(true);
+        response.getHeaders().setAccessControlAllowOrigin("*");
         response.setStatusCode(HttpStatus.valueOf(httpStatus));
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
         DataBufferFactory dataBufferFactory = response.bufferFactory();
-        DataBuffer buffer = dataBufferFactory.wrap(JSONObject.toJSONString(result).getBytes(Charset.defaultCharset()));
-        return response.writeWith(Mono.just(buffer)).doOnError((error) -> DataBufferUtils.release(buffer));
+        DataBuffer buffer = dataBufferFactory.wrap(GsonUtil.toGson(result).getBytes(Charset.defaultCharset()));
+        return response.writeWith(Mono.just(buffer)).doOnSuccess((error) -> DataBufferUtils.release(buffer));
     }
 }

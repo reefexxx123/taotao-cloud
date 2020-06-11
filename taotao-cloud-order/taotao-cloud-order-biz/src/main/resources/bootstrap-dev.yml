@@ -127,6 +127,7 @@ taotao:
             second: 1800
     # 日志模块
     log:
+      type: redis
       enabled: true
       trace:
         enabled: true
