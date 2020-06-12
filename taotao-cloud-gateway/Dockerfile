@@ -1,4 +1,6 @@
-FROM anapsix/alpine-java:8_server-jre_unlimited
+# 此处不能用openjdk 验证码接口会报空指针异常
+#FROM anapsix/alpine-java:8_server-jre_unlimited
+FROM java:8
 
 MAINTAINER 981376577@qq.com
 

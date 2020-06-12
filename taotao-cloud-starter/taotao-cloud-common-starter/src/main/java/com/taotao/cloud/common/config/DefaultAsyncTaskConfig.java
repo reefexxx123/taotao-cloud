@@ -36,7 +36,7 @@ public class DefaultAsyncTaskConfig {
     /**
      * 线程池前缀
      */
-    @Value("${taotao.cloud.asyc-task.threadNamePrefix:TaotaoExecutor-}")
+    @Value("${taotao.cloud.asyc-task.threadNamePrefix:taotao-cloud-executor-}")
     private String threadNamePrefix;
 
     @Bean

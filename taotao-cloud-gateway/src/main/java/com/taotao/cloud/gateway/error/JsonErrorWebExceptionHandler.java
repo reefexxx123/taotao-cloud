@@ -1,6 +1,7 @@
 package com.taotao.cloud.gateway.error;
 
 import com.taotao.cloud.common.enums.ResultEnum;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.boot.autoconfigure.web.reactive.error.DefaultErrorWebExceptionHandler;
@@ -18,6 +19,7 @@ import java.util.Map;
  * @author dengtao
  * @date 2020/4/29 22:12
  */
+@Slf4j
 public class JsonErrorWebExceptionHandler extends DefaultErrorWebExceptionHandler {
     public JsonErrorWebExceptionHandler(ErrorAttributes errorAttributes,
                                         ResourceProperties resourceProperties,
@@ -29,6 +31,7 @@ public class JsonErrorWebExceptionHandler extends DefaultErrorWebExceptionHandle
     @Override
     protected Map<String, Object> getErrorAttributes(ServerRequest request, boolean includeStackTrace) {
         Throwable error = super.getError(request);
+        log.error(error.getMessage(), error);
         return responseError(error.getMessage());
     }
 

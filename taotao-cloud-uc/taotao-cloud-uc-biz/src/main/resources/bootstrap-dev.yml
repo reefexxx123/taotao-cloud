@@ -194,7 +194,7 @@ taotao:
               code: sldj234osfu
     # 日志模块
     log:
-      type: redis
+      type: kafka
       enabled: true
       trace:
         enabled: true

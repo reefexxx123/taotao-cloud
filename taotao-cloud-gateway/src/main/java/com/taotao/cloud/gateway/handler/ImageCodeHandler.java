@@ -32,21 +32,21 @@ public class ImageCodeHandler implements HandlerFunction<ServerResponse> {
 
     @Override
     public Mono<ServerResponse> handle(ServerRequest request) {
-        ArithmeticCaptcha captcha = CaptchaUtil.getArithmeticCaptcha();
-        String text = captcha.text();
         try {
+            ArithmeticCaptcha captcha = CaptchaUtil.getArithmeticCaptcha();
+            String text = captcha.text();
             MultiValueMap<String, String> params = request.queryParams();
             String t = params.getFirst(PARAM_T);
             redisRepository.setExpire(CommonConstant.TAOTAO_CAPTCHA_KEY + t, text.toLowerCase(), 120);
+
+            return ServerResponse
+                    .status(HttpStatus.OK)
+                    .bodyValue(Result.succeed(captcha.toBase64()));
         } catch (Exception e) {
             return ServerResponse
                     .status(HttpStatus.OK.value())
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(BodyInserters.fromValue(Result.failed("服务异常,请稍后重试")));
         }
-
-        return ServerResponse
-                .status(HttpStatus.OK)
-                .bodyValue(Result.succeed(captcha.toBase64()));
     }
 }
