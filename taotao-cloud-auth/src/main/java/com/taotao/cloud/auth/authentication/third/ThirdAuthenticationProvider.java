@@ -2,9 +2,9 @@ package com.taotao.cloud.auth.authentication.third;
 
 import com.taotao.cloud.common.enums.LoginTypeEnum;
 import com.taotao.cloud.auth.exception.InvalidException;
-import com.taotao.cloud.auth.model.SecurityUser;
 import com.taotao.cloud.auth.service.IUserDetailsService;
 import com.taotao.cloud.auth.token.ThirdAuthenticationToken;
+import com.taotao.cloud.common.model.SecurityUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;

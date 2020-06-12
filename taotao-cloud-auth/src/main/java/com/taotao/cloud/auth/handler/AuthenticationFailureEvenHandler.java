@@ -1,6 +1,6 @@
 package com.taotao.cloud.auth.handler;
 
-import com.taotao.cloud.auth.model.SecurityUser;
+import com.taotao.cloud.common.model.SecurityUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AbstractAuthenticationFailureEvent;

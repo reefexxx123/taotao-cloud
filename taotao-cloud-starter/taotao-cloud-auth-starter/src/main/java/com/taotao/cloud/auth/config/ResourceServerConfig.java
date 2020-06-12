@@ -5,10 +5,7 @@ import com.taotao.cloud.common.constant.StarterNameConstant;
 import com.taotao.cloud.common.utils.LogUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -40,16 +37,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter implem
 
     @Resource
     private TokenStore tokenStore;
-
     @Resource
     private AuthenticationEntryPoint authenticationEntryPoint;
-
     @Resource
     private OAuth2WebSecurityExpressionHandler expressionHandler;
-
     @Resource
     private OAuth2AccessDeniedHandler oAuth2AccessDeniedHandler;
-
     @Resource
     private SecurityProperties securityProperties;
 

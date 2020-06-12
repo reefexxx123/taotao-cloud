@@ -1,9 +1,9 @@
 package com.taotao.cloud.auth.authentication.mobile;
 
 import com.taotao.cloud.auth.exception.InvalidException;
-import com.taotao.cloud.auth.model.SecurityUser;
 import com.taotao.cloud.auth.service.IUserDetailsService;
 import com.taotao.cloud.auth.token.MobileAuthenticationToken;
+import com.taotao.cloud.common.model.SecurityUser;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 

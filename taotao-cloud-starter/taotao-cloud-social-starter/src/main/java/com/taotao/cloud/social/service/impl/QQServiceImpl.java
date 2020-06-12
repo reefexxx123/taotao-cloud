@@ -2,7 +2,6 @@ package com.taotao.cloud.social.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.taotao.cloud.common.enums.LoginTypeEnum;
-import com.taotao.cloud.auth.exception.SocialServiceException;
 import com.taotao.cloud.common.exception.BaseException;
 import com.taotao.cloud.social.properties.QqProperties;
 import com.taotao.cloud.social.rest.SocialRestTemplate;
@@ -74,7 +73,7 @@ public class QQServiceImpl implements QQService {
         } catch (Exception e) {
             log.error("QQ登录信息错误,{}", e.getLocalizedMessage());
         }
-        throw new SocialServiceException("QQ登录信息错误", null);
+        throw new BaseException("QQ登录信息错误", null);
 
     }
 

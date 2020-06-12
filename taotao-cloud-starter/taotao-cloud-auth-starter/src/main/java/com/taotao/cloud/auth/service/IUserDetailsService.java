@@ -1,9 +1,8 @@
 package com.taotao.cloud.auth.service;
 
 import com.taotao.cloud.common.enums.LoginTypeEnum;
-import com.taotao.cloud.auth.model.SecurityUser;
+import com.taotao.cloud.common.model.SecurityUser;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.social.security.SocialUserDetailsService;
 
 /**
  * IUserDetailsService
@@ -11,7 +10,7 @@ import org.springframework.social.security.SocialUserDetailsService;
  * @author dengtao
  * @date 2020/4/29 17:33
  */
-public interface IUserDetailsService extends UserDetailsService, SocialUserDetailsService {
+public interface IUserDetailsService extends UserDetailsService {
 
     /**
      * 根据电话号码查询用户
@@ -36,7 +35,7 @@ public interface IUserDetailsService extends UserDetailsService, SocialUserDetai
     /**
      * 获取用户
      *
-     * @param para      para
+     * @param para          para
      * @param loginTypeEnum loginType
      * @return com.taotao.cloud.auth.model.SecurityUser
      * @author dengtao

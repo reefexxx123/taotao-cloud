@@ -83,6 +83,7 @@ taotao:
           http-urls: >
             /sms/code,
             /mobile/login,
+            /current/user,
             /token/oauth/user/token,
             /social/**,
             /auth/**,

@@ -2,6 +2,7 @@ package com.taotao.cloud.auth.annotation;
 
 import com.taotao.cloud.auth.config.ResourceServerConfig;
 import com.taotao.cloud.auth.config.SecurityHandlerConfig;
+import com.taotao.cloud.auth.service.impl.UserDetailsServiceImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Import;
 

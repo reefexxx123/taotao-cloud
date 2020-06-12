@@ -1,7 +1,6 @@
 package com.taotao.cloud.social.service.impl;
 
 import com.taotao.cloud.common.enums.LoginTypeEnum;
-import com.taotao.cloud.auth.exception.SocialServiceException;
 import com.taotao.cloud.common.exception.BaseException;
 import com.taotao.cloud.social.properties.GitHubProperties;
 import com.taotao.cloud.social.rest.SocialRestTemplate;
@@ -90,7 +89,7 @@ public class GitHubServiceImpl implements GitHubService {
         } catch (Exception e) {
             log.error("GitHub登录信息错误,{}", e.getLocalizedMessage());
         }
-        throw new SocialServiceException("GitHub登录信息错误", null);
+        throw new BaseException("GitHub登录信息错误", null);
     }
 
     @Override

@@ -7,7 +7,8 @@
  */
 package com.taotao.cloud.auth.service;
 
-import com.taotao.cloud.auth.model.SecurityMenu;
+
+import com.taotao.cloud.common.model.SecurityMenu;
 
 import java.util.List;
 

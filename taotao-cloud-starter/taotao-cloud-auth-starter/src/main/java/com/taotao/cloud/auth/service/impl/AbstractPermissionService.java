@@ -7,7 +7,7 @@ import com.taotao.cloud.auth.service.PermissionService;
 import com.taotao.cloud.auth.utils.AuthUtil;
 import com.taotao.cloud.common.constant.CommonConstant;
 import com.taotao.cloud.common.context.TenantContextHolder;
-import com.taotao.cloud.auth.model.SecurityMenu;
+import com.taotao.cloud.common.model.SecurityMenu;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;

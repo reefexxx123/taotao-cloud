@@ -1,27 +1,47 @@
 package com.taotao.cloud.log.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
+import com.taotao.cloud.common.utils.GsonUtil;
 import com.taotao.cloud.log.feign.RemoteLogService;
 import com.taotao.cloud.log.service.ISysLogService;
 import com.taotao.cloud.uc.api.entity.SysLog;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
+import org.springframework.util.concurrent.ListenableFuture;
+import org.springframework.util.concurrent.ListenableFutureCallback;
+
+import javax.annotation.Resource;
 
 /**
  * 审计日志实现类-打印日志
  *
  * @author dengtao
  * @date 2020/5/2 11:18
-*/
+ */
 @Slf4j
-@ConditionalOnProperty(name = "taotao.cloud.log.type", havingValue = "kafka")
 public class KafkaSysLogServiceImpl implements ISysLogService {
 
-    @Autowired
-    private RemoteLogService remoteLogService;
+    public static final String SYS_LOG_TOPIC = "sys.log.topic";
+
+    @Resource
+    private KafkaTemplate<String, Object> kafkaTemplate;
 
     @Override
     public void save(SysLog sysLog) {
-        remoteLogService.saveLog(sysLog);
+        String obj = GsonUtil.toGson(sysLog);
+        ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(SYS_LOG_TOPIC, obj);
+        future.addCallback(new ListenableFutureCallback<SendResult<String, Object>>() {
+            @Override
+            public void onFailure(Throwable throwable) {
+                log.error("kafka主题: {}, 远程日志记录失败：{}", SYS_LOG_TOPIC, throwable.getMessage());
+            }
+            @Override
+            public void onSuccess(SendResult<String, Object> stringObjectSendResult) {
+                log.info("kafka主题: {}, 远程日志记录成功：{}", SYS_LOG_TOPIC, sysLog);
+            }
+        });
     }
 }

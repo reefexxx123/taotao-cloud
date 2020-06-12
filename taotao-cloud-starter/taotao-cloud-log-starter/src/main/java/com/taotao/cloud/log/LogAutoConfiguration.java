@@ -71,7 +71,6 @@ public class LogAutoConfiguration implements InitializingBean {
     }
 
     @Bean
-    @ConditionalOnMissingBean
     @ConditionalOnProperty(name = "taotao.cloud.log.type", havingValue = "redis")
     public RedisSysLogServiceImpl redisSysLogService() {
         return new RedisSysLogServiceImpl();

@@ -1,7 +1,7 @@
 package com.taotao.cloud.uc.api.feign.fallback;
 
-import com.taotao.cloud.auth.model.SecurityUser;
 import com.taotao.cloud.common.model.Result;
+import com.taotao.cloud.common.model.SecurityUser;
 import com.taotao.cloud.uc.api.feign.RemoteUserService;
 import feign.hystrix.FallbackFactory;
 import lombok.AllArgsConstructor;

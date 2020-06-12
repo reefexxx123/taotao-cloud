@@ -1,5 +1,6 @@
 package com.taotao.cloud.log.service.impl;
 
+import com.taotao.cloud.common.model.Result;
 import com.taotao.cloud.log.feign.RemoteLogService;
 import com.taotao.cloud.log.service.ISysLogService;
 import com.taotao.cloud.uc.api.entity.SysLog;
@@ -21,7 +22,12 @@ public class DbSysLogServiceImpl implements ISysLogService {
 
     @Override
     public void save(SysLog sysLog) {
-        remoteLogService.saveLog(sysLog);
-        log.info("远程日志记录成功：{}", sysLog);
+        Result<Boolean> result = remoteLogService.saveLog(sysLog);
+        Boolean data = result.getData();
+        if (data) {
+            log.info("数据库远程日志记录成功：{}", sysLog);
+        } else {
+            log.error("数据库远程日志记录失败：{}", sysLog);
+        }
     }
 }

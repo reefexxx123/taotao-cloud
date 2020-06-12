@@ -30,6 +30,11 @@ public class RedisSysLogServiceImpl implements ISysLogService {
     @Override
     public void save(SysLog sysLog) {
         String date = DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneId.systemDefault()).format(Instant.now());
-        redisRepository.leftPush(SYS_LOG + date, GsonUtil.toGson(sysLog));
+        Long index = redisRepository.leftPush(SYS_LOG + date, GsonUtil.toGson(sysLog));
+        if (index > 0) {
+            log.info("redis远程日志记录成功：{}", sysLog);
+        } else {
+            log.error("redis远程日志记录失败：{}", sysLog);
+        }
     }
 }

@@ -6,7 +6,7 @@
  */
 package com.taotao.cloud.auth.dto;
 
-import com.taotao.cloud.auth.model.SecurityUser;
+import com.taotao.cloud.common.model.SecurityUser;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;

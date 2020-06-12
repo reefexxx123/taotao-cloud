@@ -16,9 +16,10 @@ spring:
   application:
     name: taotao-cloud-gateway-center
   redis:
-    host: 127.0.0.1
-    port: 6379
-    password: 123456
+    client-name: taotao-cloud-gateway-redis-client
+    host: ${TAOTAO-CLOUD-REDIS-HOST:127.0.0.1}
+    port: ${TAOTAO-CLOUD-REDIS-PORT:6379}
+    password: ${TAOTAO-CLOUD-REDIS-PASSWORD:123456}
     lettuce:
       pool:
         max-active: 8
@@ -31,7 +32,7 @@ spring:
         enabled: false
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848
+        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:8848}
         metadata:
           version: 4
       # 开发时候关闭nacos配置中心
@@ -215,7 +216,7 @@ taotao:
             /*/api-docs,
             /code,
             /uc/repeat/check,
-            /auth/oauth/*,
+            /auth/oauth/**,
             /auth/mobile/login,
             /auth/sms/code,
             /auth/social/**,

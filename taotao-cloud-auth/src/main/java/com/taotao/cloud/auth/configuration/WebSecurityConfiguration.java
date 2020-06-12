@@ -60,8 +60,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //授权服务器关闭basic认证
                 .permitAll().and()
                 .formLogin().permitAll()
-//                .loginPage("/login.html")
-//                .loginProcessingUrl("/user/login")
+                .loginPage("/login.html")
+                .loginProcessingUrl("/user/login")
                 .successHandler(authenticationSuccessHandler)
                 .failureHandler(authenticationFailureHandler).and()
                 .logout()

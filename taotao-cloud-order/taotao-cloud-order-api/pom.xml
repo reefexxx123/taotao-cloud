@@ -18,31 +18,8 @@
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
-            <artifactId>taotao-cloud-data-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.taotao.cloud</groupId>
-            <artifactId>taotao-cloud-redis-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-swagger-starter</artifactId>
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>com.taotao.cloud</groupId>-->
-        <!--            <artifactId>taotao-cloud-ribbon-starter</artifactId>-->
-        <!--            <version>${project.parent.version}</version>-->
-        <!--        </dependency>-->
-        <dependency>
-            <groupId>com.taotao.cloud</groupId>
-            <artifactId>taotao-cloud-auth-starter</artifactId>
-        </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>com.taotao.cloud</groupId>-->
-        <!--            <artifactId>taotao-cloud-sentinel-starter</artifactId>-->
-        <!--            <version>${project.parent.version}</version>-->
-        <!--        </dependency>-->
-
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>

@@ -4,8 +4,6 @@ import com.taotao.cloud.common.model.PageParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.List;
-
 /**
  * 用户注册DTO
  *

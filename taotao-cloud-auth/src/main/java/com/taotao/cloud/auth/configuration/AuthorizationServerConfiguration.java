@@ -3,6 +3,7 @@ package com.taotao.cloud.auth.configuration;
 import com.taotao.cloud.auth.serializer.CustomWebResponseExceptionTranslator;
 import com.taotao.cloud.auth.service.impl.RedisClientDetailsService;
 import com.taotao.cloud.common.constant.SecurityConstant;
+import com.taotao.cloud.common.model.SecurityUser;
 import com.taotao.cloud.redis.repository.RedisRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,15 +12,20 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 授权服务器 主要是配置客户端信息和认证信息
@@ -69,7 +75,11 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .authenticationManager(authenticationManager)
                 .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
 
+        DefaultAccessTokenConverter defaultAccessTokenConverter=new DefaultAccessTokenConverter();
+        defaultAccessTokenConverter.setUserTokenConverter(new CustomUserAuthenticationConverter());
+
         endpoints.tokenServices(defaultTokenServices());
+        endpoints.accessTokenConverter(defaultAccessTokenConverter);
         endpoints.exceptionTranslator(new CustomWebResponseExceptionTranslator());
     }
 
@@ -83,7 +93,24 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         tokenServices.setAccessTokenValiditySeconds(60 * 60 * 24 * 90);
         // refresh_token 90天
         tokenServices.setRefreshTokenValiditySeconds(60 * 60 * 24 * 90);
+        tokenServices.setTokenEnhancer(tokenEnhancer());
+
+
         return tokenServices;
+    }
+
+    @Bean
+    public TokenEnhancer tokenEnhancer() {
+        return (accessToken, authentication) -> {
+            final Map<String, Object> additionalInfo = new HashMap<>(4);
+            SecurityUser user = (SecurityUser) authentication.getUserAuthentication().getPrincipal();
+            additionalInfo.put("userId", user.getUserId());
+            additionalInfo.put("userName", user.getUsername());
+            additionalInfo.put("mobile", user.getMobile());
+            additionalInfo.put("deptId", user.getDeptId());
+            ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
+            return accessToken;
+        };
     }
 
     /**

@@ -14,5 +14,5 @@ EXPOSE 9800
 
 ADD ./target/taotao-cloud-auth-1.0.jar ./
 
-CMD sleep 30; java -Djava.security.egd=file:/dev/./urandom -jar taotao-cloud-auth-1.0.jar
+CMD sleep 30; java -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=dev -jar taotao-cloud-auth-1.0.jar
 

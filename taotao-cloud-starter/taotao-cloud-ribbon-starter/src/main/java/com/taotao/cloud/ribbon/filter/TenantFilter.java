@@ -5,6 +5,7 @@ import com.taotao.cloud.common.constant.CommonConstant;
 import com.taotao.cloud.common.constant.SecurityConstant;
 import com.taotao.cloud.common.context.TenantContextHolder;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -41,8 +42,7 @@ public class TenantFilter extends OncePerRequestFilter {
             if (StrUtil.isNotEmpty(tenantId)) {
                 TenantContextHolder.setTenant(tenantId);
             }
-            ServletRequestAttributes attributes = (ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes());
-            RequestContextHolder.setRequestAttributes(attributes,true);
+
 
             filterChain.doFilter(request, response);
         } finally {

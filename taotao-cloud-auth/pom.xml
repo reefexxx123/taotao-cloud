@@ -16,10 +16,10 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>com.taotao.cloud</groupId>
-            <artifactId>taotao-cloud-uc-api</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.taotao.cloud</groupId>-->
+<!--            <artifactId>taotao-cloud-uc-api</artifactId>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-common-starter</artifactId>
@@ -52,10 +52,10 @@
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-auth-starter</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.taotao.cloud</groupId>
-            <artifactId>taotao-cloud-social-starter</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.taotao.cloud</groupId>-->
+<!--            <artifactId>taotao-cloud-social-starter</artifactId>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-ribbon-starter</artifactId>
@@ -134,10 +134,10 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>io.fabric8</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>io.fabric8</groupId>-->
+<!--                <artifactId>docker-maven-plugin</artifactId>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 

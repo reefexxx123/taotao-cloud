@@ -8,17 +8,17 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.taotao.cloud.auth.model.SecurityUser;
 import com.taotao.cloud.common.enums.DelFlagEnum;
 import com.taotao.cloud.common.enums.UserTypeEnum;
 import com.taotao.cloud.common.exception.BaseException;
 import com.taotao.cloud.common.model.Result;
-import com.taotao.cloud.data.datascope.DataScope;
+import com.taotao.cloud.common.model.SecurityUser;
 import com.taotao.cloud.order.api.feign.RemoteOrderService;
 import com.taotao.cloud.uc.api.dto.RepeatCheckDTO;
 import com.taotao.cloud.uc.api.dto.UserDTO;
 import com.taotao.cloud.uc.api.entity.SysUser;
 import com.taotao.cloud.uc.api.entity.SysUserRole;
+import com.taotao.cloud.uc.api.feign.RemoteUserService;
 import com.taotao.cloud.uc.api.query.UserQuery;
 import com.taotao.cloud.uc.biz.mapper.SysUserMapper;
 import com.taotao.cloud.uc.biz.service.*;
@@ -30,7 +30,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -56,12 +55,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private ISysRoleService roleService;
     @Autowired
     private RemoteOrderService remoteOrderService;
+    @Autowired
+    private RemoteUserService remoteUserService;
 
     @Override
     public IPage<SysUser> getUsersWithRolePage(UserQuery userQuery) {
-//        if (ObjectUtil.isNotNull(userQuery) && userQuery.getDeptId() != 0) {
-//            userQuery.setDeptList(deptService.selectDeptIds(userQuery.getDeptId()));
-//        }
         Result<String> orderInfoResult = remoteOrderService.getOrderInfoById("1234566");
         log.info(orderInfoResult.getData());
         Page<SysUser> page = new Page<>(userQuery.getCurrent(), userQuery.getSize());

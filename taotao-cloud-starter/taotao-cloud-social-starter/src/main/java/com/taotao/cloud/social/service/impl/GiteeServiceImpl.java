@@ -5,7 +5,6 @@ import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.taotao.cloud.common.enums.LoginTypeEnum;
-import com.taotao.cloud.auth.exception.SocialServiceException;
 import com.taotao.cloud.common.exception.BaseException;
 import com.taotao.cloud.common.utils.ContextUtil;
 import com.taotao.cloud.social.properties.GiteeProperties;
@@ -105,7 +104,7 @@ public class GiteeServiceImpl implements GiteeService {
         } catch (Exception e) {
             log.error("码云登录信息错误,{}", e.getLocalizedMessage());
         }
-        throw new SocialServiceException("码云登录信息错误", null);
+        throw new BaseException("码云登录信息错误", null);
     }
 
     @Override

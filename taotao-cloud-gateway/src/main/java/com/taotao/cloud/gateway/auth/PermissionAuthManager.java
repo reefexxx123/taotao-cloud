@@ -1,7 +1,7 @@
 package com.taotao.cloud.gateway.auth;
 
-import com.taotao.cloud.auth.model.SecurityMenu;
 import com.taotao.cloud.auth.service.impl.AbstractPermissionService;
+import com.taotao.cloud.common.model.SecurityMenu;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.authorization.AuthorizationDecision;

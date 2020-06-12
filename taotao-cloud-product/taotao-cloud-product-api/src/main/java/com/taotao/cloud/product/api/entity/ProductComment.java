@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -79,7 +78,7 @@ public class ProductComment extends Model<ProductComment> {
 
     private LocalDateTime createTime;
 
-    @ApiModelProperty(value = "0隐藏  1显示", example = "0")
+//    @ApiModelProperty(value = "0隐藏  1显示", example = "0")
     private short status;
 
 }

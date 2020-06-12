@@ -2,8 +2,9 @@ package com.taotao.cloud.auth.utils;
 
 import cn.hutool.core.util.CharsetUtil;
 import com.alibaba.fastjson.JSON;
-import com.taotao.cloud.auth.model.SecurityUser;
 import com.taotao.cloud.common.model.Result;
+import com.taotao.cloud.common.model.SecurityUser;
+import com.taotao.cloud.common.utils.GsonUtil;
 import lombok.experimental.UtilityClass;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
@@ -13,6 +14,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -48,6 +50,8 @@ public class SecurityUtil {
         Object principal = authentication.getPrincipal();
         if (principal instanceof SecurityUser) {
             return (SecurityUser) principal;
+        }else if(principal instanceof Map){
+            return GsonUtil.gson().fromJson(GsonUtil.toGson(principal), SecurityUser.class);
         }
         return null;
     }

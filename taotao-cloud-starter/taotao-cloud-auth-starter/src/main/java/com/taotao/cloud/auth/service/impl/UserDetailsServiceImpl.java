@@ -4,8 +4,8 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.taotao.cloud.auth.service.IUserDetailsService;
 import com.taotao.cloud.common.enums.LoginTypeEnum;
-import com.taotao.cloud.auth.model.SecurityUser;
 import com.taotao.cloud.common.model.Result;
+import com.taotao.cloud.common.model.SecurityUser;
 import com.taotao.cloud.social.entity.GiteeUserInfo;
 import com.taotao.cloud.social.service.GiteeService;
 import com.taotao.cloud.uc.api.entity.SysGiteeUser;
@@ -15,8 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.social.security.SocialUserDetails;
-import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * UserServiceDetail
@@ -25,15 +25,16 @@ import org.springframework.stereotype.Service;
  * @date 2020/4/29 17:46
  */
 @Slf4j
-@Service
 public class UserDetailsServiceImpl implements IUserDetailsService {
+    public UserDetailsServiceImpl(){
+        System.out.println("lsdkfs");
+    }
 
-    @Autowired
+    @Resource
     private RemoteUserService remoteUserService;
-    @Autowired
+    @Resource
     private RemoteSocialService remoteSocialService;
-
-    @Autowired
+    @Autowired(required = false)
     private GiteeService giteeService;
 
     /**
@@ -93,11 +94,6 @@ public class UserDetailsServiceImpl implements IUserDetailsService {
             Result<SecurityUser> securityUserResult = remoteUserService.getUserInfoBySocial(type, userInfo.getProviderUserId());
             return securityUserResult.getData();
         }
-        return null;
-    }
-
-    @Override
-    public SocialUserDetails loadUserByUserId(String s) throws UsernameNotFoundException {
         return null;
     }
 }

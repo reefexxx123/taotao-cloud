@@ -14,7 +14,12 @@ import lombok.experimental.UtilityClass;
 public class GsonUtil {
 
     public String toGson(Object src) {
-        Gson gson = new GsonBuilder().serializeNulls().create();
+        Gson gson = gson();
         return gson.toJson(src);
     }
+
+    public Gson gson() {
+        return new GsonBuilder().serializeNulls().create();
+    }
+
 }

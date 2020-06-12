@@ -1,9 +1,12 @@
 package com.taotao.cloud.auth.config;
 
+import com.taotao.cloud.auth.service.IUserDetailsService;
+import com.taotao.cloud.auth.service.impl.UserDetailsServiceImpl;
 import com.taotao.cloud.common.utils.ResponseUtil;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 import org.springframework.security.oauth2.provider.expression.OAuth2WebSecurityExpressionHandler;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -42,5 +45,10 @@ public class SecurityHandlerConfig {
                 ResponseUtil.failed(response, "无效的token拒绝访问");
             }
         };
+    }
+
+    @Bean
+    public IUserDetailsService userDetailsService(){
+        return new UserDetailsServiceImpl();
     }
 }

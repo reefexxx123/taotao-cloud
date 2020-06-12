@@ -1,8 +1,8 @@
 package com.taotao.cloud.auth.handler;
 
 import com.taotao.cloud.auth.dto.OAuth2AccessTokenDTO;
-import com.taotao.cloud.auth.model.SecurityUser;
 import com.taotao.cloud.auth.utils.AuthUtil;
+import com.taotao.cloud.common.model.SecurityUser;
 import com.taotao.cloud.common.utils.ResponseUtil;
 import com.taotao.cloud.common.utils.WebUtil;
 import lombok.extern.slf4j.Slf4j;

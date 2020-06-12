@@ -1,8 +1,8 @@
 package com.taotao.cloud.file.api.feign;
 
-import com.taotao.cloud.auth.model.SecurityUser;
 import com.taotao.cloud.common.constant.ServiceNameConstant;
 import com.taotao.cloud.common.model.Result;
+import com.taotao.cloud.common.model.SecurityUser;
 import com.taotao.cloud.file.api.feign.fallback.RemoteFileFallbackImpl;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

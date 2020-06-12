@@ -1,9 +1,8 @@
 package com.taotao.cloud.gateway.handler;
 
 import cn.hutool.core.collection.CollectionUtil;
-//import com.taotao.cloud.auth.model.SecurityUser;
-import com.taotao.cloud.auth.model.SecurityUser;
 import com.taotao.cloud.common.constant.SecurityConstant;
+import com.taotao.cloud.common.model.SecurityUser;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;

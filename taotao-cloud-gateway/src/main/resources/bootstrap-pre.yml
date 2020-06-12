@@ -1,24 +1,50 @@
 server:
   port: 9900
+  http2:
+    enabled: true
+  undertow:
+    buffer-size: 2048
+    direct-buffers: true
+    io-threads: 24
+    worker-threads: 1500
 
 spring:
+  cache:
+    type: none
+  main:
+    allow-bean-definition-overriding: true
   application:
     name: taotao-cloud-gateway-center
+  redis:
+    host: ${TAOTAO-CLOUD-REDIS-HOST:127.0.0.1}
+    port: ${TAOTAO-CLOUD-REDIS-PORT:6379}
+    password: ${TAOTAO-CLOUD-REDIS-PASSWORD:123456}
+    client-name: taotao-cloud-gateway-redis-client
+    cluster:
+      nodes: 172.16.10.13:7000,172.16.10.13:7001,172.16.10.13:7002,172.16.10.13:7003,172.16.10.13:7004,172.16.10.13:7005,172.16.10.13:7006
+      max-redirects: 4
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
   cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
     nacos:
       discovery:
-        server-addr: 172.16.10.220:8848
+        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:8848}
         metadata:
           version: 4
+      # 开发时候关闭nacos配置中心
       config:
         enabled: false
     #      config:
     #        server-addr: 127.0.0.1:8848
     #        namespace: f402a0ea-5ce7-43cc-b19b-3fb7ded6e46e
     #        file-extension: yml
-    loadbalancer:
-      ribbon:
-        enabled: false
     gateway:
       loadbalancer:
         use404: false
@@ -27,7 +53,7 @@ spring:
           lower-case-service-id: true
           enabled: true
       routes:
-        - id: auth-login-token
+        - id: auth-user-password-token
           uri: lb://taotao-cloud-auth-center
           predicates:
             - Path=${taotao.cloud.gateway.base-uri}/auth/oauth/token/user
@@ -45,7 +71,7 @@ spring:
             - RequestTime=true
             - PreserveHostHeader
         # 发送短信接口要做接口限制
-        - id: auth-login-token
+        - id: auth-sms-code
           uri: lb://taotao-cloud-auth-center
           predicates:
             - Path=${taotao.cloud.gateway.base-uri}/auth/sms/code
@@ -54,7 +80,7 @@ spring:
             - RequestTime=true
             - PreserveHostHeader
         # 数据重复校验要做接口限制
-        - id: taotao-cloud-uc-center
+        - id: uc-repeact-check
           uri: lb://taotao-cloud-uc-center
           predicates:
             - Path=${taotao.cloud.gateway.base-uri}/uc/repeat/check
@@ -102,26 +128,21 @@ spring:
             - Path=${taotao.cloud.gateway.base-uri}/product/**
           filters:
             - StripPrefix=3
+            - name: RequestRateLimiter
+              args:
+                #使用SpEL按名称引用bean
+                key-resolver: "#{@remoteAddrKeyResolver}"
+                #允许用户每秒处理多少个请求
+                redis-rate-limiter.replenishRate: 1
+                #令牌桶的容量，允许在一秒钟内完成的最大请求数
+                redis-rate-limiter.burstCapacity: 5
       default-filters:
         # 降级配置
         - name: Hystrix
           args:
             name: default
             fallbackUri: 'forward:/fallback'
-  cache:
-    type: none
-  main:
-    allow-bean-definition-overriding: true
-  redis:
-    host: ${TAOTAO-CLOUD-REDIS-HOST:172.16.10.220}
-    port: ${TAOTAO-CLOUD-REDIS-PORT:6379}
-    password: ${TAOTAO-CLOUD-REDIS-PASSWORD:123456}
-    lettuce:
-      pool:
-        max-active: 8
-        max-wait: -1
-        max-idle: 8
-        min-idle: 0
+
 #    sentinel:
 #      datasource.ds1.nacos:
 #        server-addr: ${spring.cloud.nacos.server-addr}
@@ -131,28 +152,22 @@ spring:
 #      filter:
 #        enabled: true
 
-
 hystrix:
   threadpool:
     default:
-      coreSize: 100
-      maximumSize: 5000
+      coreSize: 1200
+      maximumSize: 15000
       allowMaximumSizeToDivergeFromCoreSize: true
-      maxQueueSize: -1
+      maxQueueSize: 2000
+      queueSizeRejectionThreshold: 1800
   command:
     default:
       circuitBreaker:
         # 当在配置时间窗口内达到此数量的失败后，进行短路。默认20个
-        requestVolumeThreshold: 10
+        requestVolumeThreshold: 30
         # 触发短路的时间值，当该值设为5000时，则当触发 circuit break 后的5000毫秒内都会拒绝request
         # 也就是5000毫秒后才会关闭circuit。默认5000
-        sleepWindowInMilliseconds: 15000
-        # 强制打开熔断器，如果打开这个开关，那么拒绝所有request，默认false
-        forceOpen: false
-        # 强制关闭熔断器 如果这个开关打开，circuit将一直关闭且忽略，默认false
-        forceClosed: false
-      fallback:
-        enabled: true
+        sleepWindowInMilliseconds: 45000
       execution:
         timeout:
           enabled: true
@@ -182,13 +197,14 @@ taotao:
   cloud:
     gateway:
       prefix: /api/
-      version: 1.0
+      version: v1.0
       base-uri: ${taotao.cloud.gateway.prefix}${taotao.cloud.gateway.version}
       #网关动态路由
       dynamicRoute:
         enabled: false
         data-type: nacos
     swagger-agg:
+      enabled: true
       api-docs-path: /api-docs
       swagger-version: 2.0
       generate-routes: taotao-cloud-uc-center,taotao-cloud-auth-center,taotao-cloud-order-center,taotao-cloud-product-center
@@ -203,14 +219,16 @@ taotao:
             /*/api-docs,
             /code,
             /uc/repeat/check,
-            /auth/oauth/token/*,
-            /auth/oauth/token,
+            /auth/oauth/*,
             /auth/mobile/login,
             /auth/sms/code,
             /auth/social/**,
             /auth/css/**,
             /auth/images/**,
-            /auth/js/**
+            /auth/js/**,
+            /favicon.ico,
+            /manifest.json,
+            /robots.txt
         auth:
           # 续签
           renew:
@@ -231,7 +249,3 @@ management:
   endpoint:
     health:
       show-details: always
-
-
-
-

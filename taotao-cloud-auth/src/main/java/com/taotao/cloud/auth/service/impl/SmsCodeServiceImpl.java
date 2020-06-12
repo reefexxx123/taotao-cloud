@@ -2,11 +2,11 @@ package com.taotao.cloud.auth.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.taotao.cloud.auth.exception.ValidateCodeException;
-import com.taotao.cloud.auth.model.SecurityUser;
 import com.taotao.cloud.auth.service.ISmsCodeService;
 import com.taotao.cloud.auth.service.IUserDetailsService;
 import com.taotao.cloud.common.constant.SecurityConstant;
 import com.taotao.cloud.common.model.Result;
+import com.taotao.cloud.common.model.SecurityUser;
 import com.taotao.cloud.message.domain.SmsResponse;
 import com.taotao.cloud.message.enums.SmsEnum;
 import com.taotao.cloud.message.service.IAliyunSmsMessageService;
@@ -31,11 +31,11 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 public class SmsCodeServiceImpl implements ISmsCodeService {
 
-    @Autowired
+    @Resource
     private RedisRepository redisRepository;
     @Resource
     private IUserDetailsService userService;
-    @Autowired
+    @Resource
     private IAliyunSmsMessageService aliyunSmsMessageService;
 
     /**

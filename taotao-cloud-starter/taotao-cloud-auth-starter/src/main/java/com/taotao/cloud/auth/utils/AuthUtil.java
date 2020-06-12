@@ -1,7 +1,7 @@
 package com.taotao.cloud.auth.utils;
 
-import com.taotao.cloud.auth.model.SecurityUser;
 import com.taotao.cloud.common.constant.CommonConstant;
+import com.taotao.cloud.common.model.SecurityUser;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
