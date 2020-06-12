@@ -2,7 +2,6 @@ package com.taotao.cloud.auth.config;
 
 import com.taotao.cloud.auth.properties.SecurityProperties;
 import com.taotao.cloud.common.constant.StarterNameConstant;
-import com.taotao.cloud.common.utils.LogUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -48,7 +47,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter implem
 
     @Override
     public void afterPropertiesSet() {
-        LogUtil.info(ResourceServerConfig.class, StarterNameConstant.TAOTAO_CLOUD_AUTH_STARTER, "资源服务器已启动");
+        log.info("[TAOTAO CLOUD][" + StarterNameConstant.TAOTAO_CLOUD_AUTH_STARTER + "]" + "资源服务器已启动");
     }
 
     @Override

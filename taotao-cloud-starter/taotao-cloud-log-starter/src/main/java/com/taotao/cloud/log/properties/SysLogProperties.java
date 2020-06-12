@@ -23,8 +23,8 @@ public class SysLogProperties {
     private Boolean enabled = false;
 
     /**
-     * 日志记录类型(logger/redis/db/es)
+     * 日志记录类型(logger/redis/db/kafka)
      */
-    private String type = LogTypeEnum.DB.getName();
+    private String type = LogTypeEnum.KAFKA.getName();
 
 }

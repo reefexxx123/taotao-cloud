@@ -2,6 +2,7 @@ package com.taotao.cloud.gateway.handler;
 
 import com.taotao.cloud.common.model.Result;
 import com.taotao.cloud.common.utils.JsonUtil;
+import com.taotao.cloud.log.utils.LogUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -38,7 +39,7 @@ public class HystrixFallbackHandler implements HandlerFunction<ServerResponse> {
         Optional<Object> originalUris = serverRequest.attribute(GATEWAY_ORIGINAL_REQUEST_URL_ATTR);
         Optional<InetSocketAddress> socketAddress = serverRequest.remoteAddress();
 
-        originalUris.ifPresent(originalUri -> log.error("网关执行请求:{}失败,请求主机: {},请求数据:{} hystrix服务降级处理", originalUri,
+        originalUris.ifPresent(originalUri -> LogUtil.error("网关执行请求:{}失败,请求主机: {},请求数据:{} hystrix服务降级处理", null, originalUri,
                 socketAddress.orElse(new InetSocketAddress(DEFAULT_PORT)).getHostString(), buildMessage(serverRequest)));
 
         return ServerResponse

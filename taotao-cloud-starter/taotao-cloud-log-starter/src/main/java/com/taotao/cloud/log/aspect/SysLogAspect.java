@@ -11,7 +11,7 @@ import com.taotao.cloud.common.context.TenantContextHolder;
 import com.taotao.cloud.common.enums.LogOperateTypeEnum;
 import com.taotao.cloud.log.event.SysLogEvent;
 import com.taotao.cloud.log.properties.SysLogProperties;
-import com.taotao.cloud.log.util.LogUtil;
+import com.taotao.cloud.log.utils.LogUtil;
 import com.taotao.cloud.uc.api.entity.SysLog;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

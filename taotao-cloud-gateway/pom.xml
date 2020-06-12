@@ -24,6 +24,11 @@
 
         <dependency>
             <groupId>com.taotao.cloud</groupId>
+            <artifactId>taotao-cloud-log-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-redis-starter</artifactId>
         </dependency>
 

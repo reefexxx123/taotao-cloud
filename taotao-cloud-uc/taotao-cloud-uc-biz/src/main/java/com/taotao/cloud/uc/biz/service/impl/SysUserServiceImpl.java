@@ -11,8 +11,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.taotao.cloud.common.enums.DelFlagEnum;
 import com.taotao.cloud.common.enums.UserTypeEnum;
 import com.taotao.cloud.common.exception.BaseException;
-import com.taotao.cloud.common.model.Result;
 import com.taotao.cloud.common.model.SecurityUser;
+import com.taotao.cloud.log.utils.LogUtil;
 import com.taotao.cloud.order.api.feign.RemoteOrderService;
 import com.taotao.cloud.uc.api.dto.RepeatCheckDTO;
 import com.taotao.cloud.uc.api.dto.UserDTO;
@@ -24,6 +24,7 @@ import com.taotao.cloud.uc.biz.mapper.SysUserMapper;
 import com.taotao.cloud.uc.biz.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.MDC;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -60,10 +61,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public IPage<SysUser> getUsersWithRolePage(UserQuery userQuery) {
-        Result<String> orderInfoResult = remoteOrderService.getOrderInfoById("1234566");
-        log.info(orderInfoResult.getData());
+//        Result<String> orderInfoResult = remoteOrderService.getOrderInfoById("1234566");
+//        log.info(orderInfoResult.getData());
         Page<SysUser> page = new Page<>(userQuery.getCurrent(), userQuery.getSize());
-
+        String traceId = MDC.get("traceId");
+        LogUtil.info(traceId);
+        LogUtil.info("***************");
+        LogUtil.debug("naslkdfj;lasdf;lsd;flslfd");
+        LogUtil.error("asfljsldfjasldflasdf", null);
+        LogUtil.warn("warnwarnwarnwarnwarnwarnwarn");
 //        IPage<SysUser> userList = baseMapper.getUserVosPage(page, userQuery, new DataScope());
 //        userList.getRecords().forEach(user -> user.setRoleList(roleService.findRolesByUserId(user.getUserId())));
         return page;

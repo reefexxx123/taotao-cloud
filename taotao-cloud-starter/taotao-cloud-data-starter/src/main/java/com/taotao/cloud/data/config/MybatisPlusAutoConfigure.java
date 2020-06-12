@@ -7,11 +7,10 @@ import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
 import com.taotao.cloud.common.constant.StarterNameConstant;
-import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.data.properties.MybatisPlusAutoFillProperties;
 import com.taotao.cloud.data.properties.TenantProperties;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -25,6 +24,7 @@ import javax.annotation.Resource;
  * @author dengtao
  * @date 2020/5/2 11:20
  */
+@Slf4j
 @EnableConfigurationProperties(MybatisPlusAutoFillProperties.class)
 @ConditionalOnProperty(prefix = "taotao.cloud.data.mybatis-plus.auto-fill", name = "enabled", havingValue = "true")
 public class MybatisPlusAutoConfigure implements InitializingBean {
@@ -43,7 +43,7 @@ public class MybatisPlusAutoConfigure implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        LogUtil.info(MybatisPlusAutoConfigure.class, StarterNameConstant.TAOTAO_CLOUD_MYBATIS_PLUS_STARTER, "mybatis plus模式已开启");
+        log.info("[TAOTAO CLOUD][" + StarterNameConstant.TAOTAO_CLOUD_MYBATIS_PLUS_STARTER + "]" + "mybatis-plus模式已开启");
     }
 
     /**

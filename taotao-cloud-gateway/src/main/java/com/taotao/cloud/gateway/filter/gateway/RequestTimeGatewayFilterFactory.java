@@ -6,10 +6,12 @@
  */
 package com.taotao.cloud.gateway.filter.gateway;
 
+import com.taotao.cloud.log.utils.LogUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
@@ -49,12 +51,13 @@ public class RequestTimeGatewayFilterFactory extends AbstractGatewayFilterFactor
                     Mono.fromRunnable(() -> {
                         Long startTime = exchange.getAttribute(COUNT_START_TIME);
                         if (Objects.nonNull(startTime)) {
-                            StringBuilder sb = new StringBuilder(exchange.getRequest().getURI().getRawPath())
+                            ServerHttpRequest request = exchange.getRequest();
+                            StringBuilder sb = new StringBuilder(request.getURI().getRawPath())
                                     .append(" 请求时间: ")
                                     .append(System.currentTimeMillis() - startTime)
                                     .append("ms");
-                            sb.append(" 请求参数: ").append(exchange.getRequest().getQueryParams());
-                            log.info(sb.toString());
+                            sb.append(" 请求参数: ").append(request.getQueryParams());
+                            LogUtil.info(sb.toString());
                         }
                     })
             );

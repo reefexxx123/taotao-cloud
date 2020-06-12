@@ -7,8 +7,7 @@
 package com.taotao.cloud.gateway.filter.global;
 
 import com.taotao.cloud.gateway.loadBalancer.GrayLoadBalancer;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.taotao.cloud.log.utils.LogUtil;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerUriTools;
 import org.springframework.cloud.client.loadbalancer.reactive.DefaultRequest;
@@ -40,7 +39,6 @@ import java.net.URI;
 @Component
 public class GrayReactiveLoadBalancerClientFilter implements GlobalFilter, Ordered {
 
-    private static final Log log = LogFactory.getLog(ReactiveLoadBalancerClientFilter.class);
     private static final int LOAD_BALANCER_CLIENT_FILTER_ORDER = 10150;
     private final LoadBalancerClientFactory clientFactory;
     private final LoadBalancerProperties properties;
@@ -61,9 +59,7 @@ public class GrayReactiveLoadBalancerClientFilter implements GlobalFilter, Order
         String schemePrefix = exchange.getAttribute(ServerWebExchangeUtils.GATEWAY_SCHEME_PREFIX_ATTR);
         if (url != null && ("grayLb".equals(url.getScheme()) || "grayLb".equals(schemePrefix))) {
             ServerWebExchangeUtils.addOriginalRequestUrl(exchange, url);
-            if (log.isTraceEnabled()) {
-                log.trace(ReactiveLoadBalancerClientFilter.class.getSimpleName() + " url before: " + url);
-            }
+            LogUtil.info(ReactiveLoadBalancerClientFilter.class.getSimpleName() + " url before: " + url);
 
             return this.choose(exchange).doOnNext((response) -> {
                 if (!response.hasServer()) {
@@ -77,9 +73,7 @@ public class GrayReactiveLoadBalancerClientFilter implements GlobalFilter, Order
 
                     DelegatingServiceInstance serviceInstance = new DelegatingServiceInstance(response.getServer(), overrideScheme);
                     URI requestUrl = this.reconstructURI(serviceInstance, uri);
-                    if (log.isTraceEnabled()) {
-                        log.trace("LoadBalancerClientFilter url chosen: " + requestUrl);
-                    }
+                    LogUtil.info("LoadBalancerClientFilter url chosen: " + requestUrl);
 
                     exchange.getAttributes().put(ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR, requestUrl);
                 }

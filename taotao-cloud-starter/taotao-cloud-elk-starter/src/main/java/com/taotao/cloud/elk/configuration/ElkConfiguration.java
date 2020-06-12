@@ -6,18 +6,15 @@ import ch.qos.logback.core.encoder.Encoder;
 import cn.hutool.core.util.StrUtil;
 import com.taotao.cloud.common.constant.StarterNameConstant;
 import com.taotao.cloud.common.exception.BaseException;
-import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.elk.LogStatisticsFilter;
 import com.taotao.cloud.elk.properties.ElkControllerAspectProperties;
-import com.taotao.cloud.elk.properties.ElkHealthLogStatisticProperties;
 import com.taotao.cloud.elk.properties.ElkProperties;
-import lombok.var;
+import lombok.extern.slf4j.Slf4j;
 import net.logstash.logback.appender.LogstashTcpSocketAppender;
 import net.logstash.logback.encoder.LogstashEncoder;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -30,13 +27,14 @@ import javax.annotation.Resource;
  * @author dengtao
  * @date 2020/6/3 10:43
  */
+@Slf4j
 @ConditionalOnProperty(prefix = "taotao.cloud.elk", name = "enabled", havingValue = "true")
 @EnableConfigurationProperties({ElkProperties.class, ElkControllerAspectProperties.class})
 public class ElkConfiguration implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        LogUtil.info(ElkConfiguration.class, StarterNameConstant.TAOTAO_CLOUD_ELK_STARTER, "elk模块已启动");
+        log.info("[TAOTAO CLOUD][" + StarterNameConstant.TAOTAO_CLOUD_ELK_STARTER + "]" + "elk模块已启动");
     }
 
     @Resource

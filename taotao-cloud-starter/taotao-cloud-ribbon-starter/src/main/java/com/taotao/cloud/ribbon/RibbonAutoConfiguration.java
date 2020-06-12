@@ -1,11 +1,11 @@
 package com.taotao.cloud.ribbon;
 
 import com.taotao.cloud.common.constant.StarterNameConstant;
-import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.ribbon.filter.LbIsolationFilter;
 import com.taotao.cloud.ribbon.filter.TenantFilter;
 import com.taotao.cloud.ribbon.filter.TraceFilter;
 import com.taotao.cloud.ribbon.properties.RibbonIsolationProperties;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.HttpClient;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +24,13 @@ import org.springframework.web.client.RestTemplate;
  * @author dengtao
  * @date 2018/11/17 9:24
  */
+@Slf4j
 @EnableConfigurationProperties(RibbonIsolationProperties.class)
 public class RibbonAutoConfiguration implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        LogUtil.info(RibbonAutoConfiguration.class, StarterNameConstant.TAOTAO_CLOUD_RIBBON_STARTER, "ribbon模块已启动");
+        log.info("[TAOTAO CLOUD][" + StarterNameConstant.TAOTAO_CLOUD_RIBBON_STARTER + "]" + "ribbon模块已启动");
     }
 
     @Bean

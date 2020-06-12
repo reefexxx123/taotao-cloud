@@ -1,11 +1,11 @@
 package com.taotao.cloud.redis;
 
 import com.taotao.cloud.common.constant.StarterNameConstant;
-import com.taotao.cloud.common.utils.LogUtil;
 import com.taotao.cloud.redis.lock.RedisDistributedLock;
 import com.taotao.cloud.redis.properties.CacheManagerProperties;
 import com.taotao.cloud.redis.repository.RedisRepository;
 import com.taotao.cloud.redis.serializer.RedisObjectSerializer;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
@@ -33,13 +33,14 @@ import java.util.Map;
  * @author dengtao
  * @date 2020/4/30 10:13
  */
+@Slf4j
 @EnableCaching
 @EnableConfigurationProperties({RedisProperties.class, CacheManagerProperties.class})
 public class RedisAutoConfigure implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        LogUtil.info(RedisAutoConfigure.class, StarterNameConstant.TAOTAO_CLOUD_REDIS_STARTER, "redis模块已启动");
+        log.info("[TAOTAO CLOUD][" + StarterNameConstant.TAOTAO_CLOUD_REDIS_STARTER + "]" + "redis模块已启动");
     }
 
     @Autowired

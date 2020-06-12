@@ -4,7 +4,7 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
 import com.taotao.cloud.common.constant.StarterNameConstant;
-import com.taotao.cloud.common.utils.LogUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.InitializingBean;
@@ -32,6 +32,7 @@ import java.util.stream.Collectors;
  * @author dengtao
  * @date 2020/4/30 10:10
  */
+@Slf4j
 @Import({Swagger2Configuration.class})
 public class SwaggerAutoConfiguration implements BeanFactoryAware, InitializingBean {
     private static final String AUTH_KEY = "Authorization";
@@ -40,7 +41,7 @@ public class SwaggerAutoConfiguration implements BeanFactoryAware, InitializingB
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        LogUtil.info(SwaggerAutoConfiguration.class, StarterNameConstant.TAOTAO_CLOUD_SWAGGER_STARTER, "swagger模块已启动!");
+        log.info("[TAOTAO CLOUD][" + StarterNameConstant.TAOTAO_CLOUD_SWAGGER_STARTER + "]" + "swagger模块已启动");
     }
 
     @Bean

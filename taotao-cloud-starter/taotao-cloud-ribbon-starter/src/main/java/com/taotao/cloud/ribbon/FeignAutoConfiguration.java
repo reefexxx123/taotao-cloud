@@ -3,7 +3,6 @@ package com.taotao.cloud.ribbon;
 import com.google.gson.Gson;
 import com.taotao.cloud.common.constant.StarterNameConstant;
 import com.taotao.cloud.common.exception.BaseException;
-import com.taotao.cloud.common.utils.LogUtil;
 import feign.Logger;
 import feign.Response;
 import feign.Retryer;
@@ -21,11 +20,12 @@ import java.nio.charset.Charset;
  * @author dengtao
  * @date 2018/9/18 14:04
  */
+@Slf4j
 public class FeignAutoConfiguration implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        LogUtil.info(RibbonAutoConfiguration.class, StarterNameConstant.TAOTAO_CLOUD_FEIGN_STARTER, "feign模块已启动");
+        log.info("[TAOTAO CLOUD][" + StarterNameConstant.TAOTAO_CLOUD_FEIGN_STARTER + "]" + "feign模块已启动");
     }
 
     @Bean
