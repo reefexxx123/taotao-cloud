@@ -5,6 +5,7 @@ import com.taotao.cloud.gateway.properties.DynamicRouteProperties;
 import com.taotao.cloud.gateway.properties.TraceProperties;
 import com.taotao.cloud.gateway.swagger.SwaggerAggProperties;
 import com.taotao.cloud.gateway.swagger.SwaggerProvider;
+import com.taotao.cloud.log.utils.LogUtil;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +17,8 @@ import org.springframework.web.filter.reactive.HiddenHttpMethodFilter;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
+import zipkin2.Span;
+import zipkin2.reporter.Reporter;
 
 import java.util.Objects;
 
@@ -43,6 +46,16 @@ public class WebConfiguration {
             @Override
             public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
                 return chain.filter(exchange);
+            }
+        };
+    }
+
+    @Bean(name = "zipkinReporter")
+    public Reporter<Span> spanReporter() {
+        return new Reporter<Span>() {
+            @Override
+            public void report(Span span) {
+                LogUtil.info("customer report:" + span);
             }
         };
     }

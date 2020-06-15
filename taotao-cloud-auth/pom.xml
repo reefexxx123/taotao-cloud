@@ -52,6 +52,11 @@
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-auth-starter</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>
 <!--        <dependency>-->
 <!--            <groupId>com.taotao.cloud</groupId>-->
 <!--            <artifactId>taotao-cloud-social-starter</artifactId>-->

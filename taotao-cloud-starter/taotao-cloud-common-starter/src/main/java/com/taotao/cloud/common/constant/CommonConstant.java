@@ -128,19 +128,19 @@ public interface CommonConstant {
     /**
      * 租户id参数
      */
-    String TENANT_ID_PARAM = "tenantId";
+    String TENANT_ID_PARAM = "t-tenantId";
     /**
      * 日志链路追踪id信息头
      */
-    String TRACE_ID_HEADER = "x-traceId-header";
+    String TRACE_ID_HEADER = "t-traceId-header";
     /**
      * 日志链路追踪id日志标志
      */
-    String LOG_TRACE_ID = "traceId";
+    String LOG_TRACE_ID = "t-traceId";
     /**
      * 负载均衡策略-版本号 信息头
      */
-    String T_T_VERSION = "t-t-version";
+    String T_T_VERSION = "t-version";
     /**
      * 注册中心元数据 版本号
      */

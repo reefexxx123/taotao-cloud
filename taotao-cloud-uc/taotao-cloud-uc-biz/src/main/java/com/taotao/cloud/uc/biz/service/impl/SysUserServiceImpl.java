@@ -64,7 +64,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 //        Result<String> orderInfoResult = remoteOrderService.getOrderInfoById("1234566");
 //        log.info(orderInfoResult.getData());
         Page<SysUser> page = new Page<>(userQuery.getCurrent(), userQuery.getSize());
-        String traceId = MDC.get("traceId");
+        String traceId = MDC.get("t-traceId");
         LogUtil.info(traceId);
         LogUtil.info("***************");
         LogUtil.debug("naslkdfj;lasdf;lsd;flslfd");

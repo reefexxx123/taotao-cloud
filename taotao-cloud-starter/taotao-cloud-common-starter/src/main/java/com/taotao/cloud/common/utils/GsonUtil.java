@@ -1,8 +1,11 @@
 package com.taotao.cloud.common.utils;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
 import lombok.experimental.UtilityClass;
+
+import java.lang.reflect.Type;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * GsonUtil
@@ -19,7 +22,22 @@ public class GsonUtil {
     }
 
     public Gson gson() {
-        return new GsonBuilder().serializeNulls().create();
+        return new GsonBuilder()
+                .disableHtmlEscaping()
+                .setPrettyPrinting()
+                .serializeNulls()
+                .setLongSerializationPolicy(LongSerializationPolicy.STRING)
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateAdapter())
+                .serializeNulls()
+                .create();
+
+    }
+
+    public static class LocalDateAdapter implements JsonSerializer<LocalDateTime> {
+        @Override
+        public JsonElement serialize(LocalDateTime localDateTime, Type type, JsonSerializationContext jsonSerializationContext) {
+            return new JsonPrimitive(localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        }
     }
 
 }

@@ -39,17 +39,19 @@ public class KafkaSysLogServiceImpl implements ISysLogService {
     public void save(SysLog sysLog) {
         String obj = GsonUtil.toGson(sysLog);
         String format = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDateTime.now());
-        ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(SYS_LOG_TOPIC.concat(appName).concat("-").concat(format), obj);
+        String topic = SYS_LOG_TOPIC.concat(appName).concat("-").concat(format);
+        ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(topic, obj);
         future.addCallback(new ListenableFutureCallback<SendResult<String, Object>>() {
             @Override
             public void onFailure(Throwable throwable) {
-                log.error("kafka主题: {}, 远程日志记录失败：{}", SYS_LOG_TOPIC, throwable.getMessage());
+                log.error("kafka主题: {}, 远程日志记录失败：{}", topic, throwable.getMessage());
             }
 
             @Override
             public void onSuccess(SendResult<String, Object> stringObjectSendResult) {
-                log.info("kafka主题: {}, 远程日志记录成功：{}", SYS_LOG_TOPIC, sysLog);
+                log.info("kafka主题: {}, 远程日志记录成功：{}", topic, sysLog);
             }
         });
     }
 }
+
