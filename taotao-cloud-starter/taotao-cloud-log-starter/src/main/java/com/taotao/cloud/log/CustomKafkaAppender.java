@@ -27,7 +27,7 @@ public class CustomKafkaAppender<E> extends KafkaAppender<E> {
     public void doAppend(E e) {
         String format = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDateTime.now());
         if (!topic.endsWith(format)) {
-            this.topic = topic.concat("_").concat(format);
+            this.topic = topic.concat("-").concat(format);
         }
         super.doAppend(e);
     }

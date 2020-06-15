@@ -95,7 +95,7 @@ public class GiteeServiceImpl implements GiteeService {
                             .reposUrl(reposUrl).siteAdmin(siteAdmin).stared(stared).starredUrl(starredUrl).subscriptionsUrl(subscriptionsUrl)
                             .type(type).updatedAt(updatedAt).url(userUrl).watched(watched).weibo(weibo)
                             .build();
-                    log.info("Gitee userInfo : [{}]", userInfo);
+                        log.info("Gitee userInfo : [{}]", userInfo);
 
 //                    publisher.publishEvent(new GiteeEvent(userInfo));
                     return userInfo;

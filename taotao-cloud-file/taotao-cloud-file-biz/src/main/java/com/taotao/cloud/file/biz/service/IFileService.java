@@ -8,10 +8,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Map;
 
 /**
- * 文件service
  *
- * @author 作者 owen E-mail: 624191343@qq.com
-*/
+ * @author dengtao
+ * @date 2020/6/15 11:13
+ */
 public interface IFileService extends IService<FileInfo> {
 	FileInfo upload(MultipartFile file ) throws Exception;
 	

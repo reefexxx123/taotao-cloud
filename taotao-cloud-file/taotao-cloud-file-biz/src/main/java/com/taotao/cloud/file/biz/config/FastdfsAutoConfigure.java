@@ -14,12 +14,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * FastDFS配置
  *
- * @author zlt
+ * @author dengtao
+ * @date 2020/6/15 11:13
  */
 @Configuration
-@ConditionalOnProperty(name = "zlt.file-server.type", havingValue = "fastdfs")
+@ConditionalOnProperty(name = "taotao.cloud.file.server.type", havingValue = "fastdfs")
 public class FastdfsAutoConfigure {
     @Autowired
     private FileServerProperties fileProperties;

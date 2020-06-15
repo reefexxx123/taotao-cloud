@@ -7,11 +7,12 @@ import com.taotao.cloud.uc.api.entity.SysRole;
 import java.io.Serializable;
 import java.util.List;
 
+
 /**
  * 系统角色表 服务类
  *
- * @author dengtao
- * @date 2020/4/30 11:47
+ * @author taotao
+ * @date 2020-05-14 14:36:39
  */
 public interface ISysRoleService extends IService<SysRole> {
 

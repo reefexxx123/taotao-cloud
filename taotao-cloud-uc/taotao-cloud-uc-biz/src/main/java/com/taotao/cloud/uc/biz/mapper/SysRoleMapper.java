@@ -10,11 +10,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+
 /**
  * 系统角色表 Mapper 接口
  *
- * @author dengtao
- * @date 2020/4/30 11:48
+ * @author taotao
+ * @date 2020-05-14 14:36:39
  */
 @Repository
 public interface SysRoleMapper extends BaseMapper<SysRole> {

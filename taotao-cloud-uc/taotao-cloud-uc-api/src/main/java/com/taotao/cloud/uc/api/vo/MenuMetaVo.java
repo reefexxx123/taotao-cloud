@@ -6,11 +6,10 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @Classname MenuMetaVo
- * @Description
- * @Author 李号东 im.lihaodong@gmail.com
- * @Date 2019-05-05 16:39
- * @Version 1.0
+ * 菜单DTO
+ *
+ * @author dengtao
+ * @date 2020/5/14 10:44
  */
 @Data
 @AllArgsConstructor

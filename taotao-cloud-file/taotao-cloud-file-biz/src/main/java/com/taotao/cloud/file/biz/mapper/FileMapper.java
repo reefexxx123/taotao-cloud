@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 上传存储db
  *
- * @author zlt
+ * @author dengtao
+ * @date 2020/6/15 11:13
  */
 @Mapper
 public interface FileMapper extends SuperMapper<FileInfo> {

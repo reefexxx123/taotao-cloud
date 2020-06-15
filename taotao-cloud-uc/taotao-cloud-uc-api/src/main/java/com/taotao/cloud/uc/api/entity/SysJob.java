@@ -12,12 +12,10 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * <p>
- * 岗位管理
- * </p>
+ * dengtao
  *
- * @author lihaodong
- * @since 2019-05-01
+ * @author dengtao
+ * @date 2020/6/15 11:00
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

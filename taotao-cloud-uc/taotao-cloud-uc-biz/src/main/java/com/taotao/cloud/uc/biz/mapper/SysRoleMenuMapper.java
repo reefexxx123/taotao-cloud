@@ -6,13 +6,12 @@ import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
+
 /**
- * <p>
  * 角色菜单表 Mapper 接口
- * </p>
  *
- * @author lihaodong
- * @since 2019-04-21
+ * @author taotao
+ * @date 2020-05-14 14:36:39
  */
 public interface SysRoleMenuMapper extends BaseMapper<SysRoleMenu> {
 

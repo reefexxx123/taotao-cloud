@@ -25,9 +25,9 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 /**
- * 代码生成器工具类
  *
- * @author zlt
+ * @author dengtao
+ * @date 2020/6/15 11:13
  */
 @Slf4j
 public class GenUtils {

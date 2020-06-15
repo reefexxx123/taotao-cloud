@@ -108,7 +108,6 @@ public class SysLogAspect {
             sysLog.setOperateType(LogUtil.getOperateType(name));
             sysLog.setDescription(LogUtil.getControllerMethodDescription(joinPoint));
         }
-
     }
 
     @AfterReturning(returning = "ret", pointcut = "sysLogAspect()")

@@ -15,12 +15,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * <p>
- * 用户表
- * </p>
+ * dengtao
  *
- * @author lihaodong
- * @since 2019-04-21
+ * @author dengtao
+ * @date 2020/6/15 11:00
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

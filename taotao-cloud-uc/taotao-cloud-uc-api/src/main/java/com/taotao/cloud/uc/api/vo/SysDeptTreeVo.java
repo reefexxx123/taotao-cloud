@@ -9,22 +9,25 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * @Classname SysDepartTreeVo
- * @Description TODO
- * @Author Created by Lihaodong (alias:小东啊) im.lihaodong@gmail.com
- * @Date 2019-08-30 08:57
- * @Version 1.0
+ * @author dengtao
+ * @date 2020/5/14 10:44
  */
 @Setter
 @Getter
 @ToString
 public class SysDeptTreeVo implements Serializable {
 
-    /** 对应SysDepart中的id字段,前端数据树中的key*/
+    /**
+     * 对应SysDepart中的id字段,前端数据树中的key
+     */
     private int key;
-    /** 对应SysDepart中的id字段,前端数据树中的value*/
+    /**
+     * 对应SysDepart中的id字段,前端数据树中的value
+     */
     private String value;
-    /** 对应depart_name字段,前端数据树中的title*/
+    /**
+     * 对应depart_name字段,前端数据树中的title
+     */
     private String title;
 
     /**

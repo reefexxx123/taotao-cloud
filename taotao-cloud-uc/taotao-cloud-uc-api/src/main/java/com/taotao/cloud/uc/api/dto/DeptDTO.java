@@ -4,12 +4,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Classname UserDTO
- * @Description 部门Dto
- * @Author 李号东 im.lihaodong@gmail.com
- * @Date 2019-04-23 21:26
- * @Version 1.0
- */
+ * dengtao
+ *
+ * @author dengtao
+ * @date 2020/6/15 11:00
+*/
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class DeptDTO {

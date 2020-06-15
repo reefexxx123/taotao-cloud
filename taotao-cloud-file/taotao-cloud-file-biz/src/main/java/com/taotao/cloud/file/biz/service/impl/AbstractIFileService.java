@@ -15,10 +15,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * AbstractIFileService 抽取类
- * 根据zlt.file-server.type 实例化具体对象
  *
- * @author 作者 owen E-mail: 624191343@qq.com
+ * @author dengtao
+ * @date 2020/6/15 11:13
  */
 @Slf4j
 public abstract class AbstractIFileService extends ServiceImpl<FileMapper, FileInfo> implements IFileService {

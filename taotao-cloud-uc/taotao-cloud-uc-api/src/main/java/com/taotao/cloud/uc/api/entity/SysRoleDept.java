@@ -7,14 +7,11 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
 /**
- * <p>
- * 角色与部门对应关系
- * </p>
+ * dengtao
  *
- * @author lihaodong
- * @since 2019-04-21
+ * @author dengtao
+ * @date 2020/6/15 11:00
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

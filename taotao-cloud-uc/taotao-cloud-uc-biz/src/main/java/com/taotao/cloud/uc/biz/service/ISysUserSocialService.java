@@ -3,13 +3,12 @@ package com.taotao.cloud.uc.biz.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.taotao.cloud.uc.api.entity.SysUserSocial;
 
+
 /**
- * <p>
  * 社交登录 服务类
- * </p>
  *
- * @author lihaodong
- * @since 2019-04-27
+ * @author dengtao
+ * @date 2020/4/30 13:20
  */
 public interface ISysUserSocialService extends IService<SysUserSocial> {
 

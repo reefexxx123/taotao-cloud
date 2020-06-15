@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author zlt
+ *
+ * @author dengtao
+ * @date 2020/6/15 11:13
  */
 @Service
 public interface SysGeneratorService extends IService{

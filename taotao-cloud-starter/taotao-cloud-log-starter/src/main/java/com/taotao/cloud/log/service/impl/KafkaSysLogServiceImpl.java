@@ -7,6 +7,7 @@ import com.taotao.cloud.log.service.ISysLogService;
 import com.taotao.cloud.uc.api.entity.SysLog;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
@@ -14,6 +15,8 @@ import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * 审计日志实现类-打印日志
@@ -24,7 +27,10 @@ import javax.annotation.Resource;
 @Slf4j
 public class KafkaSysLogServiceImpl implements ISysLogService {
 
-    public static final String SYS_LOG_TOPIC = "sys.log.topic";
+    @Value("${spring.application.name:----}")
+    private String appName;
+
+    public static final String SYS_LOG_TOPIC = "taotao-cloud-business-log-topic-";
 
     @Resource
     private KafkaTemplate<String, Object> kafkaTemplate;
@@ -32,12 +38,14 @@ public class KafkaSysLogServiceImpl implements ISysLogService {
     @Override
     public void save(SysLog sysLog) {
         String obj = GsonUtil.toGson(sysLog);
-        ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(SYS_LOG_TOPIC, obj);
+        String format = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDateTime.now());
+        ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(SYS_LOG_TOPIC.concat(appName).concat("-").concat(format), obj);
         future.addCallback(new ListenableFutureCallback<SendResult<String, Object>>() {
             @Override
             public void onFailure(Throwable throwable) {
                 log.error("kafka主题: {}, 远程日志记录失败：{}", SYS_LOG_TOPIC, throwable.getMessage());
             }
+
             @Override
             public void onSuccess(SendResult<String, Object> stringObjectSendResult) {
                 log.info("kafka主题: {}, 远程日志记录成功：{}", SYS_LOG_TOPIC, sysLog);

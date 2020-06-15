@@ -4,12 +4,12 @@ import lombok.Data;
 
 import java.util.List;
 
+
 /**
- * @Classname MenuTreeVo
- * @Description TODO
- * @Author Created by Lihaodong (alias:小东啊) im.lihaodong@gmail.com
- * @Date 2019-08-30 16:51
- * @Version 1.0
+ * 菜单树DTO
+ *
+ * @author dengtao
+ * @date 2020/5/14 10:44
  */
 @Data
 public class MenuTreeVo {

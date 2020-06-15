@@ -17,12 +17,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * 七牛云配置
  *
- * @author 作者 owen E-mail: 624191343@qq.com
+ * @author dengtao
+ * @date 2020/6/15 11:13
  */
 @Configuration
-@ConditionalOnProperty(name = "zlt.file-server.type", havingValue = "qiniu")
+@ConditionalOnProperty(name = "taotao.cloud.file.server.type", havingValue = "qiniu")
 public class QiniuOSSAutoConfigure {
     @Autowired
     private FileServerProperties fileProperties;

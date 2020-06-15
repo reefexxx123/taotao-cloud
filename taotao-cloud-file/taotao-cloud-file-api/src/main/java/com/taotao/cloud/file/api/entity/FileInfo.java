@@ -12,9 +12,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * file实体类
  *
- * @author 作者 owen E-mail: 624191343@qq.com
+ * @author dengtao
+ * @date 2020/6/15 11:13
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

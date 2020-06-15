@@ -9,12 +9,10 @@ import org.springframework.stereotype.Service;
 
 
 /**
- * <p>
  * 社交登录 服务实现类
- * </p>
  *
- * @author lihaodong
- * @since 2019-04-27
+ * @author dengtao
+ * @date 2020/4/30 13:22
  */
 @Service
 public class SysUserSocialServiceImpl extends ServiceImpl<SysUserSocialMapper, SysUserSocial> implements ISysUserSocialService {

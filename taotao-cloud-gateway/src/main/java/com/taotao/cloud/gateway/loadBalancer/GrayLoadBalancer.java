@@ -8,6 +8,7 @@ package com.taotao.cloud.gateway.loadBalancer;
 
 import com.taotao.cloud.gateway.utils.WeightMeta;
 import com.taotao.cloud.gateway.utils.WeightRandomUtils;
+import com.taotao.cloud.log.utils.LogUtil;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -34,7 +35,6 @@ import java.util.*;
  * @create 2020/4/27 13:59
  */
 public class GrayLoadBalancer implements ReactorServiceInstanceLoadBalancer {
-    private static final Log log = LogFactory.getLog(GrayLoadBalancer.class);
     private final ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider;
     private final String serviceId;
 
@@ -116,7 +116,7 @@ public class GrayLoadBalancer implements ReactorServiceInstanceLoadBalancer {
     }
 
     private Response<ServiceInstance> getServiceInstanceEmptyResponse() {
-        log.warn("No servers available for service: " + this.serviceId);
+        LogUtil.warn("No servers available for service: " + this.serviceId);
         return new EmptyResponse();
     }
 }

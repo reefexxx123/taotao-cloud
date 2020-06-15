@@ -12,9 +12,9 @@ import java.io.InputStream;
 import java.util.Date;
 
 /**
- * 文件工具类
  *
- * @author 作者 owen E-mail: 624191343@qq.com
+ * @author dengtao
+ * @date 2020/6/15 11:13
  */
 @Slf4j
 public class FileUtil {
