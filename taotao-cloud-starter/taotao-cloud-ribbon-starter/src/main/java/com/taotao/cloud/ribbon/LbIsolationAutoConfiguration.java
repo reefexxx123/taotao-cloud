@@ -8,8 +8,8 @@ import org.springframework.cloud.netflix.ribbon.RibbonClients;
  * Ribbon扩展配置类
  *
  * @author dengtao
- * @date 2018/11/17 9:24
- */
+ * @date 2020/6/15 11:31
+*/
 @ConditionalOnProperty(value = "taotao.cloud.ribbon.isolation.enabled", havingValue = "true")
 @RibbonClients(defaultConfiguration = {RuleConfigure.class})
 public class LbIsolationAutoConfiguration {

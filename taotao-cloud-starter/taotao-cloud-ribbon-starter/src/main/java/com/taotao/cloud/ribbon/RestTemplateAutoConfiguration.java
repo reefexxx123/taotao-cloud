@@ -17,9 +17,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 
 /**
+ * RestTemplateAutoConfiguration
+ *
  * @author dengtao
- * @date 2018/11/17
- */
+ * @date 2020/6/15 11:31
+*/
 @EnableConfigurationProperties(RestTemplateProperties.class)
 public class RestTemplateAutoConfiguration {
 

@@ -12,7 +12,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
  */
 @Setter
 @Getter
-@ConfigurationProperties(prefix = "zlt.file-server")
+@ConfigurationProperties(prefix = "taotao.cloud.file.server")
 @RefreshScope
 public class FileServerProperties {
     /**

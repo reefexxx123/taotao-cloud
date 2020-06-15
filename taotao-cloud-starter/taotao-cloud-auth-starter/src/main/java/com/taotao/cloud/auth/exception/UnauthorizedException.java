@@ -6,12 +6,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 
 /**
- * @Classname UnauthorizedException
- * @Description
- * @Author Created by Lihaodong (alias:小东啊) im.lihaodong@gmail.com
- * @Date 2019-09-17 20:48
- * @Version 1.0
- */
+ * UnauthorizedException
+ *
+ * @author dengtao
+ * @date 2020/6/15 11:21
+*/
 @JsonSerialize(using = OauthExceptionSerializer.class)
 public class UnauthorizedException extends OAuth2Exception {
 

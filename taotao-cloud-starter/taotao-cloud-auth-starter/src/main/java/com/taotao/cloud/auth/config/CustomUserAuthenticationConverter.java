@@ -37,10 +37,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * @author lengleng
- * @date 2019-03-07
- * <p>
  * 根据checktoken 的结果转化用户信息
+ *
+ * @author dengtao
+ * @date 2020/5/3 07:47
  */
 public class CustomUserAuthenticationConverter implements UserAuthenticationConverter {
     private static final String N_A = "N/A";

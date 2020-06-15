@@ -5,12 +5,12 @@ import com.taotao.cloud.auth.serializer.OauthExceptionSerializer;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 
+
 /**
- * @Classname MethodNotAllowed
- * @Description
- * @Author Created by Lihaodong (alias:小东啊) im.lihaodong@gmail.com
- * @Date 2019-09-17 20:51
- * @Version 1.0
+ * MethodNotAllowed
+ *
+ * @author dengtao
+ * @date 2020/6/2 15:34
  */
 @JsonSerialize(using = OauthExceptionSerializer.class)
 public class MethodNotAllowed extends OAuth2Exception {

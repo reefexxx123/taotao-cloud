@@ -21,9 +21,9 @@ import java.util.Objects;
 /**
  * 租户过滤器
  *
- * @author zlt
- * @date 2019/9/15
- */
+ * @author dengtao
+ * @date 2020/6/15 11:30
+*/
 @ConditionalOnClass(Filter.class)
 public class TenantFilter extends OncePerRequestFilter {
 

@@ -16,9 +16,9 @@ import java.util.Map;
 /**
  * 搜索客户端Service
  *
- * @author zlt
- * @date 2019/4/24
- */
+ * @author dengtao
+ * @date 2020/6/15 11:27
+*/
 public class QueryServiceImpl implements IQueryService {
     @Resource
     private ISearchService searchService;

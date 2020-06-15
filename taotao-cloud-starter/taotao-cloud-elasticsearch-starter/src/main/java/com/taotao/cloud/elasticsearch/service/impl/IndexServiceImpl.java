@@ -35,9 +35,9 @@ import java.util.Map;
 /**
  * 索引
  *
- * @author zlt
- * @date 2019/4/23
- */
+ * @author dengtao
+ * @date 2020/6/15 11:27
+*/
 public class IndexServiceImpl implements IIndexService {
     @Autowired
     private ElasticsearchRestTemplate elasticsearchRestTemplate;

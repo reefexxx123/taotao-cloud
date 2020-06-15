@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
  * 自定义隔离随机规则
  *
  * @author dengtao
- * @date 2019/9/3
- */
+ * @date 2020/6/15 11:31
+*/
 public class CustomIsolationRule extends RoundRobinRule {
 
     private final static String KEY_DEFAULT = "default";

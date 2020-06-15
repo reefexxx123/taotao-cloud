@@ -11,9 +11,9 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * 错误日志统计拦截器
  *
- * @author Robin.Wang
- * @date 2010-10-22
- */
+ * @author dengtao
+ * @date 2020/6/15 11:28
+*/
 public class LogStatisticsFilter extends AbstractMatcherFilter<ILoggingEvent> {
 
     private static long lastCollectTime = System.currentTimeMillis() / 60000;

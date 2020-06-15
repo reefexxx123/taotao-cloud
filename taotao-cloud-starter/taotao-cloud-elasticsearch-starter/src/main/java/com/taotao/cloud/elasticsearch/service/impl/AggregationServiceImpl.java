@@ -36,9 +36,9 @@ import java.util.Map;
 /**
  * 聚合分析服务
  *
- * @author zlt
- * @date 2019/5/7
- */
+ * @author dengtao
+ * @date 2020/6/15 11:27
+*/
 public class AggregationServiceImpl implements IAggregationService {
 
     private final ElasticsearchRestTemplate elasticsearchRestTemplate;

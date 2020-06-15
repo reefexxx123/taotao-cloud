@@ -20,7 +20,7 @@
 //
 //@Configuration
 //@EnableConfigurationProperties({ShardingJdbcProperties.class, SpringBootShardingRuleConfigurationProperties.class, SpringBootMasterSlaveRuleConfigurationProperties.class, SpringBootEncryptRuleConfigurationProperties.class, SpringBootPropertiesConfigurationProperties.class})
-//@ConditionalOnProperty(name = "bsf.shardingjdbc.enabled", havingValue = "false")
+//@ConditionalOnProperty(name = "taotao.cloud.shardingjdbc.enabled", havingValue = "false")
 //public class ShardingJdbcConfiguration extends SpringBootConfiguration implements ApplicationContextAware {
 //
 //    @Override

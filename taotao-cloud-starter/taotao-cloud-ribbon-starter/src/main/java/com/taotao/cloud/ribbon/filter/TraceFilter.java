@@ -16,9 +16,9 @@ import java.io.IOException;
 /**
  * 日志链路追踪过滤器
  *
- * @author zlt
- * @date 2019/9/15
- */
+ * @author dengtao
+ * @date 2020/6/15 11:30
+*/
 @ConditionalOnClass(Filter.class)
 public class TraceFilter extends OncePerRequestFilter {
 

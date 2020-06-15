@@ -22,8 +22,8 @@ import org.springframework.web.client.RestTemplate;
  * Ribbon扩展配置类
  *
  * @author dengtao
- * @date 2018/11/17 9:24
- */
+ * @date 2020/6/15 11:31
+*/
 @Slf4j
 @EnableConfigurationProperties(RibbonIsolationProperties.class)
 public class RibbonAutoConfiguration implements InitializingBean {

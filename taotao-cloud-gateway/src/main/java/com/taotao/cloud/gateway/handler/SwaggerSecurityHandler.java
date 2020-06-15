@@ -34,9 +34,9 @@ import springfox.documentation.swagger.web.SecurityConfigurationBuilder;
 import java.util.Optional;
 
 /**
- * @author lengleng
- * @date 2018-07-19
- * SwaggerSecurityHandler
+ *
+ * @author dengtao
+ * @date 2020/4/29 22:10
  */
 @Slf4j
 @Component
