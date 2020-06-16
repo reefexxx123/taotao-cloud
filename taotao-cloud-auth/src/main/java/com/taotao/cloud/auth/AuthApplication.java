@@ -44,16 +44,6 @@ public class AuthApplication {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean(name = "zipkinReporter")
-    public Reporter<Span> spanReporter() {
-        return new Reporter<Span>() {
-            @Override
-            public void report(Span span) {
-                LogUtil.info("customer report:" + span);
-            }
-        };
-    }
-
     @Bean
     MeterRegistryCustomizer<MeterRegistry> configurer(@Value("${spring.application.name}") String applicationName) {
         return (registry) -> registry.config().commonTags("application", applicationName);

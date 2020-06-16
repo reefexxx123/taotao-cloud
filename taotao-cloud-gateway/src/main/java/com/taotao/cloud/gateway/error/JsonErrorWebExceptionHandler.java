@@ -31,7 +31,7 @@ public class JsonErrorWebExceptionHandler extends DefaultErrorWebExceptionHandle
     @Override
     protected Map<String, Object> getErrorAttributes(ServerRequest request, boolean includeStackTrace) {
         Throwable error = super.getError(request);
-        log.error(error.getMessage(), error);
+        log.error(error.getMessage());
         return responseError(error.getMessage());
     }
 

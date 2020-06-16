@@ -32,15 +32,15 @@ public class OrderBizApplication {
         SpringApplication.run(OrderBizApplication.class, args);
     }
 
-    @Bean(name = "zipkinReporter")
-    public Reporter<Span> spanReporter() {
-        return new Reporter<Span>() {
-            @Override
-            public void report(Span span) {
-                LogUtil.info("customer report:" + span);
-            }
-        };
-    }
+//    @Bean(name = "zipkinReporter")
+//    public Reporter<Span> spanReporter() {
+//        return new Reporter<Span>() {
+//            @Override
+//            public void report(Span span) {
+//                LogUtil.info("customer report:" + span);
+//            }
+//        };
+//    }
 
     @Bean
     MeterRegistryCustomizer<MeterRegistry> configurer(@Value("${spring.application.name}") String applicationName) {

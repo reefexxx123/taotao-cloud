@@ -51,7 +51,8 @@ spring:
         max-idle: 8
         min-idle: 0
   kafka:
-    bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:127.0.0.1}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
+#    bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:127.0.0.1}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
+    bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:172.16.10.221}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
     producer:
       # 发生错误后，消息重发的次数。
       retries: 0
@@ -91,12 +92,13 @@ spring:
   sleuth:
     web:
       client:
-        enabled: false
+        enabled: true
     sampler:
       probability: 1.0 # 将采样比例设置为 1.0，也就是全部都需要。默认是 0.1
   zipkin:
     sender:
       type: kafka
+
 mybatis-plus:
   mapper-locations: classpath:/mapper/*Mapper.xml
   #实体扫描，多个package用逗号或者分号分隔

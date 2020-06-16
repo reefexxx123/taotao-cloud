@@ -60,7 +60,8 @@ spring:
           username: elastic
           password: elastic
   kafka:
-    bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:127.0.0.1}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
+#    bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:127.0.0.1}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
+    bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:172.16.10.221}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
     producer:
       # 发生错误后，消息重发的次数。
       retries: 0
@@ -100,7 +101,7 @@ spring:
   sleuth:
     web:
       client:
-        enabled: false
+        enabled: true
     sampler:
       probability: 1.0 # 将采样比例设置为 1.0，也就是全部都需要。默认是 0.1
   zipkin:
@@ -315,7 +316,6 @@ ribbon:
   OkToRetryOnAllOperations: true
   MaxAutoRetries: 1
   MaxAutoRetriesNextServer: 1
-
 
 management:
   endpoints:
