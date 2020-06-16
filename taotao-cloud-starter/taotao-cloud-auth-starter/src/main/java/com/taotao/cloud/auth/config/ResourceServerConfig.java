@@ -4,6 +4,7 @@ import com.taotao.cloud.auth.properties.SecurityProperties;
 import com.taotao.cloud.common.constant.StarterNameConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
@@ -54,6 +55,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter implem
     public void configure(HttpSecurity http) throws Exception {
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.AuthorizedUrl authorizedUrl = setHttp(http)
                 .authorizeRequests()
+                .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
                 .antMatchers(securityProperties.getIgnore().getUrls()).permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest();

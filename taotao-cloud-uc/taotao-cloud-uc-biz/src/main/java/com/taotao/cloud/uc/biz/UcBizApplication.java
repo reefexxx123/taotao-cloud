@@ -6,8 +6,11 @@ import com.taotao.cloud.elasticsearch.annotation.EnableTaoTaoSearchClient;
 import com.taotao.cloud.elk.annotation.EnableTaoTaoELKAutoConfigure;
 import com.taotao.cloud.log.utils.LogUtil;
 import com.taotao.cloud.ribbon.annotation.EnableTaoTaoFeignInterceptor;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -40,6 +43,11 @@ public class UcBizApplication {
                 LogUtil.info("customer report:" + span);
             }
         };
+    }
+
+    @Bean
+    MeterRegistryCustomizer<MeterRegistry> configurer(@Value("${spring.application.name}") String applicationName) {
+        return (registry) -> registry.config().commonTags("application", applicationName);
     }
 
 }

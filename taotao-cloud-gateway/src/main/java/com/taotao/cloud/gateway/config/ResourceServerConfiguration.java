@@ -9,6 +9,7 @@ import com.taotao.cloud.gateway.handler.JsonAccessDeniedHandler;
 import com.taotao.cloud.gateway.handler.Oauth2AuthSuccessHandler;
 import com.taotao.cloud.gateway.properties.CustomGatewayProperties;
 import lombok.AllArgsConstructor;
+import org.springframework.boot.actuate.autoconfigure.security.reactive.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -62,6 +63,7 @@ public class ResourceServerConfiguration {
         if (ignore.getUrls().length > 0) {
             authorizeExchange.pathMatchers(securityProperties.getIgnore().getUrls()).permitAll();
         }
+        authorizeExchange.matchers(EndpointRequest.toAnyEndpoint()).permitAll();
 
         authorizeExchange
                 .pathMatchers(HttpMethod.OPTIONS).permitAll()

@@ -6,6 +6,9 @@ import com.taotao.cloud.gateway.properties.TraceProperties;
 import com.taotao.cloud.gateway.swagger.SwaggerAggProperties;
 import com.taotao.cloud.gateway.swagger.SwaggerProvider;
 import com.taotao.cloud.log.utils.LogUtil;
+import io.micrometer.core.instrument.MeterRegistry;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.context.annotation.Bean;
@@ -32,7 +35,6 @@ import java.util.Objects;
 @EnableConfigurationProperties({TraceProperties.class, DynamicRouteProperties.class,
         CustomGatewayProperties.class, SwaggerAggProperties.class})
 @Import(SwaggerProvider.class)
-@Order
 public class WebConfiguration {
 
     @Bean(name = "remoteAddrKeyResolver")
@@ -58,6 +60,11 @@ public class WebConfiguration {
                 LogUtil.info("customer report:" + span);
             }
         };
+    }
+
+    @Bean
+    MeterRegistryCustomizer<MeterRegistry> configurer(@Value("${spring.application.name}") String applicationName) {
+        return (registry) -> registry.config().commonTags("application", applicationName);
     }
 }
 
