@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.taotao.cloud.job.XxlJobAutoConfiguration
+com.taotao.cloud.job.XxlJobAutoConfiguration, \
+com.taotao.cloud.job.XxlPropertiesConfig

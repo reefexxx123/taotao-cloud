@@ -61,10 +61,10 @@ public class LogAutoConfiguration implements InitializingBean {
             return new DbSysLogServiceImpl();
         }
 
-        @Bean
-        public RemoteLogFallbackImpl remoteLogFallback() {
-            return new RemoteLogFallbackImpl();
-        }
+//        @Bean
+//        public RemoteLogFallbackImpl remoteLogFallback() {
+//            return new RemoteLogFallbackImpl();
+//        }
     }
 
     @Bean

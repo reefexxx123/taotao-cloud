@@ -16,7 +16,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:8848}
+        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:172.16.10.221}:${TAOTAO-CLOUD-NACOS-PORT:8848}
         metadata:
           version: 5
   #      config:
@@ -25,7 +25,7 @@ spring:
   #        file-extension: yml
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:3306}/taotao-cloud-uc-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:172.16.10.221}:${TAOTAO-CLOUD-NACOS-PORT:3306}/taotao-cloud-uc-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
     username: ${TAOTAO-CLOUD-MYSQL-USERNAME:root}
     password: ${TAOTAO-CLOUD-MYSQL-PASSWORD:123456}
     driver-class-name: com.mysql.jdbc.Driver
@@ -39,7 +39,7 @@ spring:
       auto-commit: true
       pool-name: DatebookHikariCP
   redis:
-    host: 127.0.0.1
+    host: 172.16.10.221
     port: 6379
     password: 123456
     lettuce:
@@ -55,7 +55,7 @@ spring:
       client:
         reactive:
           endpoints:
-            - ${TAOTAO-CLOUD-ELASTICSEARCH-HOST:127.0.0.1}:${TAOTAO-CLOUD-ELASTICSEARCH-PASSWORD:9200}
+            - ${TAOTAO-CLOUD-ELASTICSEARCH-HOST:172.16.10.221}:${TAOTAO-CLOUD-ELASTICSEARCH-PASSWORD:9200}
           connection-timeout: 5
           username: elastic
           password: elastic
@@ -249,6 +249,13 @@ taotao:
           - sys_user
         ignore-sqls:
           - com.central.user.mapper.SysRoleMapper.findAll
+    xxl:
+      job:
+        enabled: true
+        adminAddresses: http://172.16.10.221:8080/xxl-job-admin
+        appName: taotao-cloud-uc-center-job
+        logPath: ../logs/application/taotao-cloud-uc-center
+
 feign:
   sentinel:
     enabled: false

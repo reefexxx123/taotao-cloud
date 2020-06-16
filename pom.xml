@@ -346,6 +346,11 @@
             </dependency>
             <dependency>
                 <groupId>com.taotao.cloud</groupId>
+                <artifactId>taotao-cloud-job-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taotao.cloud</groupId>
                 <artifactId>taotao-cloud-social-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>

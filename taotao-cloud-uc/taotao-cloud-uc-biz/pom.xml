@@ -16,10 +16,10 @@
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-uc-api</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.taotao.cloud</groupId>
-            <artifactId>taotao-cloud-file-api</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.taotao.cloud</groupId>-->
+<!--            <artifactId>taotao-cloud-file-api</artifactId>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-order-api</artifactId>
@@ -27,6 +27,10 @@
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-redis-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.taotao.cloud</groupId>
+            <artifactId>taotao-cloud-job-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>

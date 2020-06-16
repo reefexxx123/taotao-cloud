@@ -21,14 +21,13 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Configuration
-@EnableConfigurationProperties(XxlProperties.class)
 @ConditionalOnProperty(name = "taotao.cloud.xxl.job.enabled", havingValue = "true")
 public class XxlJobAutoConfiguration {
 
     @Resource
     XxlProperties xxlProperties;
 
-    @Bean(initMethod = "start", destroyMethod = "destroy")
+    @Bean
     public XxlJobSpringExecutor xxlJobExecutor() {
         String appName = xxlProperties.getAppName().length() == 0 ? xxlProperties.getSpringAppName()
                 : xxlProperties.getAppName();
@@ -43,12 +42,14 @@ public class XxlJobAutoConfiguration {
         XxlJobSpringExecutor executor = new XxlJobSpringExecutor();
         executor.setAdminAddresses(adminAddresses);
         executor.setAppname(appName);
+        executor.setAddress(xxlProperties.getAddress());
         executor.setIp(xxlProperties.getIp());
 
         if (StrUtil.isEmpty(xxlProperties.getIp())) {
             executor.setIp(AddrUtil.getLocalAddr());
         }
         executor.setPort(xxlProperties.getPort());
+        executor.setLogPath(xxlProperties.getLogPath());
         executor.setAccessToken(xxlProperties.getAccessToken());
         executor.setLogPath(xxlProperties.getLogPath());
         executor.setLogRetentionDays(xxlProperties.getLogRetentionDays());

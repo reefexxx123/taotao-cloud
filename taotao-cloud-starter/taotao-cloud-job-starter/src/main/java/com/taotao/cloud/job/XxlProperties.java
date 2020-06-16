@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @date 2020/6/16 11:36
  */
 @Data
-@ConfigurationProperties(prefix = "taotoa.cloud.xxl.job")
+@ConfigurationProperties(prefix = "taotao.cloud.xxl.job")
 public class XxlProperties {
     /**
      * job开关,默认为false，非必填
@@ -25,9 +25,14 @@ public class XxlProperties {
     private String springAppName;
 
     /**
-     * xxljob地址，非必填
+     * xxljob地址，必填
      */
     private String adminAddresses;
+
+    /**
+     * xxljob地址，必填
+     */
+    private String address;
 
     /**
      * 执行器名称，非必填，默认等于spring.application.name
