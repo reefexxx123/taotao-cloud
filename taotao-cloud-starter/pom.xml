@@ -28,6 +28,7 @@
         <module>taotao-cloud-elk-starter</module>
         <module>taotao-cloud-shardingjdbc-starter</module>
         <module>taotao-cloud-rabbitmq-starter</module>
+        <module>taotao-cloud-job-starter</module>
     </modules>
 
     <dependencies>

@@ -55,4 +55,8 @@ public interface StarterNameConstant {
      * elasticsearch模块
      */
     String TAOTAO_CLOUD_ELASTICSEARCH_STARTER = "taotao-cloud-elasticsearch-starter";
+    /**
+     * job模块
+     */
+    String TAOTAO_CLOUD_JOB_STARTER = "taotao-cloud-job-starter";
 }
