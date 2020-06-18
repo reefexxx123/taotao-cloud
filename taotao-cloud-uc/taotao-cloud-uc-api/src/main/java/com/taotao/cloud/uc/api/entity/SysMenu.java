@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * dengtao
+ * 菜单表
  *
  * @author dengtao
  * @date 2020/6/15 11:00
@@ -29,8 +29,8 @@ public class SysMenu extends Model<SysMenu> {
     /**
      * 菜单ID
      */
-    @TableId(value = "menu_id", type = IdType.AUTO)
-    private Integer menuId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
     /**
      * 菜单名称
@@ -98,6 +98,11 @@ public class SysMenu extends Model<SysMenu> {
     private Integer type;
 
     /**
+     * 逻辑删除标记(0--正常 1--删除)
+     */
+    private Integer delFlag;
+
+    /**
      * 创建时间
      */
     private LocalDateTime createTime;
@@ -107,33 +112,29 @@ public class SysMenu extends Model<SysMenu> {
      */
     private LocalDateTime updateTime;
 
-    /**
-     * 逻辑删除标记(0--正常 1--删除)
-     */
-    private String delFlag;
 
-    /**
-     * 非数据库字段
-     * 父菜单名称
-     */
-    @TableField(exist = false)
-    private String parentName;
-
-    /**
-     * 非数据库字段
-     * 菜单等级
-     */
-    @TableField(exist = false)
-    private Integer level;
-
-    /**
-     * 非数据库字段
-     * 子菜单
-     */
-    @TableField(exist = false)
-    private List<SysMenu> children;
-
-    @TableField(exist = false)
-    private Integer key;
+//    /**
+//     * 非数据库字段
+//     * 父菜单名称
+//     */
+//    @TableField(exist = false)
+//    private String parentName;
+//
+//    /**
+//     * 非数据库字段
+//     * 菜单等级
+//     */
+//    @TableField(exist = false)
+//    private Integer level;
+//
+//    /**
+//     * 非数据库字段
+//     * 子菜单
+//     */
+//    @TableField(exist = false)
+//    private List<SysMenu> children;
+//
+//    @TableField(exist = false)
+//    private Integer key;
 
 }

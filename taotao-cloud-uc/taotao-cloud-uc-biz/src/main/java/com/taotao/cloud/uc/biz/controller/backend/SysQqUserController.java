@@ -1,11 +1,11 @@
-package com.taotao.cloud.uc.biz.controller;
+package com.taotao.cloud.uc.biz.controller.backend;
 
 import java.util.Map;
 
 import com.taotao.cloud.common.model.PageResult;
 import com.taotao.cloud.common.model.Result;
-import com.taotao.cloud.uc.api.entity.SysGiteeUser;
-import com.taotao.cloud.uc.biz.service.ISysGiteeUserService;
+import com.taotao.cloud.uc.api.entity.SysQqUser;
+import com.taotao.cloud.uc.biz.service.ISysQqUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.Api;
@@ -14,19 +14,20 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
+
 /**
- * gitee用户表
+ * qq用户表
  *
  * @author taotao
  * @date 2020-05-14 14:36:39
  */
 @Slf4j
 @RestController
-@RequestMapping("/gitee")
-@Api(tags = "gitee用户API")
-public class SysGiteeUserController {
+@RequestMapping("/qq")
+@Api(tags = "qq用户API")
+public class SysQqUserController {
     @Autowired
-    private ISysGiteeUserService sysGiteeUserService;
+    private ISysQqUserService sysQqUserService;
 
     /**
      * 列表
@@ -37,8 +38,8 @@ public class SysGiteeUserController {
             @ApiImplicitParam(name = "limit", value = "分页结束位置", required = true, dataType = "Integer")
     })
     @GetMapping
-    public PageResult<SysGiteeUser> list(@RequestParam Map<String, Object> params) {
-        return sysGiteeUserService.findList(params);
+    public PageResult<SysQqUser> list(@RequestParam Map<String, Object> params) {
+        return sysQqUserService.findList(params);
     }
 
     /**
@@ -46,8 +47,8 @@ public class SysGiteeUserController {
      */
     @ApiOperation(value = "查询")
     @GetMapping("/{id}")
-    public Result<SysGiteeUser> findUserById(@PathVariable Long id) {
-        SysGiteeUser model = sysGiteeUserService.getById(id);
+    public Result<SysQqUser> findUserById(@PathVariable Long id) {
+        SysQqUser model = sysQqUserService.getById(id);
         return Result.succeed(model, "查询成功");
     }
 
@@ -56,9 +57,9 @@ public class SysGiteeUserController {
      */
     @ApiOperation(value = "保存")
     @PostMapping
-    public Result<Boolean> save(@RequestBody SysGiteeUser sysGiteeUser) {
-        Boolean result = sysGiteeUserService.add(sysGiteeUser);
-        return Result.succeed(result);
+    public Result<Boolean> save(@RequestBody SysQqUser sysQqUser) {
+        sysQqUserService.saveOrUpdate(sysQqUser);
+        return Result.succeed(true);
     }
 
     /**
@@ -67,7 +68,7 @@ public class SysGiteeUserController {
     @ApiOperation(value = "删除")
     @DeleteMapping("/{id}")
     public Result<Boolean> delete(@PathVariable Long id) {
-        sysGiteeUserService.removeById(id);
+        sysQqUserService.removeById(id);
         return Result.succeed(true);
     }
 }

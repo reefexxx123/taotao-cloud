@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * dengtao
+ * 日志表
  *
  * @author dengtao
  * @date 2020/6/15 11:00
@@ -37,7 +37,7 @@ public class SysLog implements Serializable {
 
     /**
      * 服务名称
-    */
+     */
     private String applicationName;
 
     /**

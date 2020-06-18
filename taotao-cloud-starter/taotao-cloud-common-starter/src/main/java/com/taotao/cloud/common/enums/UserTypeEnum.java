@@ -1,8 +1,7 @@
 package com.taotao.cloud.common.enums;
 
-
 /**
- * 用户类型 1app用户 2商户用户 3后台管理用户
+ * 用户类型
  *
  * @author dengtao
  * @date 2020/4/30 10:25
@@ -11,7 +10,7 @@ public enum UserTypeEnum {
     /**
      * 前端app用户
      */
-    APP(1, "app用户"),
+    APP(1, "前端用户"),
     /**
      * 商户用户
      */

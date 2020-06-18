@@ -5,14 +5,19 @@ import com.taotao.cloud.common.exception.*;
 import com.taotao.cloud.common.model.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.NativeWebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * 异常通用处理
@@ -73,6 +78,14 @@ public class DefaultExceptionAdvice {
 //        return Result.of(e.getMessage(), HttpStatus.FORBIDDEN.value(), "没有权限请求当前方法");
 //    }
 
+    @ExceptionHandler(value = BindException.class)
+    public Result<String> handleBindException(BindException ex) {
+        String msg = ex.getBindingResult().getAllErrors()
+                .stream()
+                .map(ObjectError::getDefaultMessage)
+                .collect(Collectors.joining(","));
+        return Result.of(msg, HttpStatus.FORBIDDEN.value(), "参数校验错误");
+    }
 
     /**
      * AccessDeniedException异常处理返回json

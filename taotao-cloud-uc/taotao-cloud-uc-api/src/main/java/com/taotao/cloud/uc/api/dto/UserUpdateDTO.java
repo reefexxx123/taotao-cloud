@@ -11,10 +11,11 @@ import java.util.List;
  * @date 2020/5/14 10:44
  */
 @Data
-public class UserDTO{
+public class UserUpdateDTO {
     private Integer userId;
-    private String username;
+    private String nickname;
     private String password;
+    private String username;
     private Integer deptId;
     private Integer jobId;
     private String phone;

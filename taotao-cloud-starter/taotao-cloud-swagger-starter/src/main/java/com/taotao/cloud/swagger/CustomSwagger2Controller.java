@@ -21,6 +21,7 @@ import springfox.documentation.spring.web.json.JsonSerializer;
 import springfox.documentation.swagger2.mappers.ServiceModelToSwagger2Mapper;
 import springfox.documentation.swagger2.web.Swagger2Controller;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -30,15 +31,14 @@ import javax.servlet.http.HttpServletRequest;
  * @version v1.0.0
  * @create 2020/5/18 11:28
  */
-@Controller
 public class CustomSwagger2Controller implements InitializingBean {
-    @Autowired
+    @Resource
     private Environment environment;
-    @Autowired
+    @Resource
     private DocumentationCache documentationCache;
-    @Autowired
+    @Resource
     private ServiceModelToSwagger2Mapper mapper;
-    @Autowired
+    @Resource
     private JsonSerializer jsonSerializer;
 
     private Swagger2Controller swagger2Controller;

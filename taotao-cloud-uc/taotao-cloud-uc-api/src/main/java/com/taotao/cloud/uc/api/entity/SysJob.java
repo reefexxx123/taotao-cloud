@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * dengtao
+ * 岗位表
  *
  * @author dengtao
  * @date 2020/6/15 11:00
@@ -56,10 +56,10 @@ public class SysJob implements Serializable {
      */
     private LocalDateTime updateTime;
 
-    /**
-     * 非数据库字段
-     * 所属部门
-     */
-    @TableField(exist = false)
-    private String deptName;
+//    /**
+//     * 非数据库字段
+//     * 所属部门
+//     */
+//    @TableField(exist = false)
+//    private String deptName;
 }

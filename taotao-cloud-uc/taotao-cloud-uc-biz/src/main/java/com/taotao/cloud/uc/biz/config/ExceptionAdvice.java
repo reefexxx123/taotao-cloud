@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * ExceptionAdvice
@@ -15,8 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author dengtao
  * @date 2020/5/2 11:17
 */
-@ControllerAdvice
-@ResponseBody
+@RestControllerAdvice
 public class ExceptionAdvice extends DefaultExceptionAdvice {
     /**
      * AccessDeniedException异常处理返回json

@@ -1,4 +1,4 @@
-package com.taotao.cloud.uc.biz.controller;
+package com.taotao.cloud.uc.biz.controller.pc;
 
 
 import cn.hutool.core.bean.BeanUtil;
@@ -11,9 +11,10 @@ import com.taotao.cloud.common.model.PageResult;
 import com.taotao.cloud.common.model.Result;
 import com.taotao.cloud.common.model.SecurityUser;
 import com.taotao.cloud.log.annotation.SysOperateLog;
-import com.taotao.cloud.uc.api.dto.UserDTO;
+import com.taotao.cloud.uc.api.dto.UserAddDTO;
+import com.taotao.cloud.uc.api.dto.UserRestPasswordDTO;
 import com.taotao.cloud.uc.api.entity.SysUser;
-import com.taotao.cloud.uc.api.query.UserQuery;
+import com.taotao.cloud.uc.api.query.UserListQuery;
 import com.taotao.cloud.uc.biz.service.ISysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,9 +30,9 @@ import org.springframework.web.bind.annotation.*;
  * @date 2020/4/30 13:12
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/pc/user")
 @Api(value = "用户管理API", tags = {"用户管理API"})
-public class SysUserController {
+public class PcUserController {
 
     @Autowired
     private ISysUserService userService;
@@ -40,16 +41,17 @@ public class SysUserController {
     @SysOperateLog(description = "保存用户包括角色和部门")
     @PostMapping(value = "/add")
     @PreAuthorize("hasAuthority('sys:user:add')")
-    public Result<Boolean> addUser(@RequestBody UserDTO userDto) {
-        return Result.succeed(userService.insertUser(userDto));
+    public Result<Boolean> addUser(@RequestBody UserAddDTO userAddDto) {
+//        return Result.succeed(userService.insertUser(userAddDto));
+        return null;
     }
 
     @ApiOperation("查询用户集合")
     @SysOperateLog(description = "查询用户集合")
     @PreAuthorize("hasAuthority('sys:user:view')")
     @PostMapping(value = "/list")
-    public PageResult<SysUser> getUserList(@RequestBody UserQuery userQuery) {
-        IPage<SysUser> pageResult = userService.getUsersWithRolePage(userQuery);
+    public PageResult<SysUser> getUserList(@RequestBody UserListQuery userListQuery) {
+        IPage<SysUser> pageResult = userService.getUsersWithRolePage(userListQuery);
         return PageResult.succeed(pageResult);
     }
 
@@ -57,8 +59,8 @@ public class SysUserController {
     @SysOperateLog(description = "更新用户包括角色和部门")
     @PreAuthorize("hasAuthority('sys:user:update')")
     @PostMapping(value = "/update")
-    public Result<Boolean> updateUser(@RequestBody UserDTO userDto) {
-        return Result.succeed(userService.updateUser(userDto));
+    public Result<Boolean> updateUser(@RequestBody UserAddDTO userAddDto) {
+        return Result.succeed(userService.updateUser(userAddDto));
     }
 
     @ApiOperation("根据用户id删除用户包括角色和部门")
@@ -73,8 +75,8 @@ public class SysUserController {
     @SysOperateLog(description = "重置密码")
     @PreAuthorize("hasAuthority('sys:user:rest:password')")
     @PutMapping("/rest/password")
-    public Result<Boolean> restPass(@RequestBody UserDTO userDTO) {
-        return Result.succeed(userService.restPass(userDTO.getUserId(), userDTO.getPassword()));
+    public Result<Boolean> restPass(@RequestBody UserRestPasswordDTO restPasswordDTO) {
+        return Result.succeed(userService.restPass(restPasswordDTO.getUserId(), restPasswordDTO.getNewPassword()));
     }
 
     @ApiOperation("获取个人信息")

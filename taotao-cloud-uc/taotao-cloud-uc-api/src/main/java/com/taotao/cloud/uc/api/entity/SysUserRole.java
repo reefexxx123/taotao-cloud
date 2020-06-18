@@ -39,12 +39,13 @@ public class SysUserRole extends Model<SysUserRole> {
      */
     private Integer roleId;
 
-    /**
-     * 非数据库字段
-     * 角色名称
-     */
-    @TableField(exist = false)
-    private String roleName;
+//
+//    /**
+//     * 非数据库字段
+//     * 角色名称
+//     */
+//    @TableField(exist = false)
+//    private String roleName;
 
 
 }

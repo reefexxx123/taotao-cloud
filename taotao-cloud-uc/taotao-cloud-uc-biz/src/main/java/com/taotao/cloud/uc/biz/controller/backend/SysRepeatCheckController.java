@@ -1,4 +1,4 @@
-package com.taotao.cloud.uc.biz.controller;
+package com.taotao.cloud.uc.biz.controller.backend;
 
 import com.taotao.cloud.common.model.Result;
 import com.taotao.cloud.uc.api.dto.RepeatCheckDTO;

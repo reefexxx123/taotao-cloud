@@ -46,10 +46,6 @@
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
-            <artifactId>taotao-cloud-swagger-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-data-starter</artifactId>
         </dependency>
         <dependency>

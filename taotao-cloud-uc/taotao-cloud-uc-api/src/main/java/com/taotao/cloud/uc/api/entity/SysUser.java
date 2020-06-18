@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * dengtao
+ * 用户表
  *
  * @author dengtao
  * @date 2020/6/15 11:00
@@ -45,13 +45,15 @@ public class SysUser extends Model<SysUser> {
     private String username;
 
     /**
-     * 用户类型 1app用户 2商户用户 3后台管理用户
+     * 用户类型 1前端用户 2商户用户 3后台管理用户
+     *
      * @see UserTypeEnum
      */
     private Integer type;
 
     /**
      * 性别 1男 2女 0未知
+     *
      * @see UserSexTypeEnum
      */
     private Integer sex;
@@ -106,24 +108,25 @@ public class SysUser extends Model<SysUser> {
      */
     private int delFlag;
 
-    /**
-     * 角色列表
-     */
-    @TableField(exist = false)
-    private List<SysRole> roleList;
-
-    /**
-     * 非数据库字段
-     * 部门名称
-     */
-    @TableField(exist = false)
-    private String deptName;
-
-    /**
-     * 非数据库字段
-     * 岗位名称
-     */
-    @TableField(exist = false)
-    private String jobName;
+//    /**
+//     * 非数据库字段
+//     * 角色列表
+//     */
+//    @TableField(exist = false)
+//    private List<SysRole> roleList;
+//
+//    /**
+//     * 非数据库字段
+//     * 部门名称
+//     */
+//    @TableField(exist = false)
+//    private String deptName;
+//
+//    /**
+//     * 非数据库字段
+//     * 岗位名称
+//     */
+//    @TableField(exist = false)
+//    private String jobName;
 
 }

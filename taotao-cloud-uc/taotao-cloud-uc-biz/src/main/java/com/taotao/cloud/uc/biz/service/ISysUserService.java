@@ -4,9 +4,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.taotao.cloud.common.model.SecurityUser;
 import com.taotao.cloud.uc.api.dto.RepeatCheckDTO;
-import com.taotao.cloud.uc.api.dto.UserDTO;
+import com.taotao.cloud.uc.api.dto.UserAddDTO;
 import com.taotao.cloud.uc.api.entity.SysUser;
-import com.taotao.cloud.uc.api.query.UserQuery;
+import com.taotao.cloud.uc.api.query.UserListQuery;
+import com.taotao.cloud.uc.api.vo.UserAddVO;
 
 import java.util.Set;
 
@@ -21,32 +22,32 @@ public interface ISysUserService extends IService<SysUser> {
     /**
      * 分页查询用户信息（含有角色信息）
      *
-     * @param userQuery
+     * @param userListQuery
      * @return com.baomidou.mybatisplus.core.metadata.IPage<com.taotao.cloud.uc.api.entity.SysUser>
      * @author dengtao
      * @date 2020/4/30 13:20
      */
-    IPage<SysUser> getUsersWithRolePage(UserQuery userQuery);
+    IPage<SysUser> getUsersWithRolePage(UserListQuery userListQuery);
 
     /**
      * 保存用户以及角色部门等信息
      *
-     * @param userDto
+     * @param userAddDto userAddDto
      * @return boolean
      * @author dengtao
      * @date 2020/4/30 13:20
      */
-    boolean insertUser(UserDTO userDto);
+    UserAddVO insertUser(UserAddDTO userAddDto);
 
     /**
      * 更新用户以及角色部门等信息
      *
-     * @param userDto
+     * @param userAddDto
      * @return boolean
      * @author dengtao
      * @date 2020/4/30 13:20
      */
-    boolean updateUser(UserDTO userDto);
+    boolean updateUser(UserAddDTO userAddDto);
 
     /**
      * 删除用户信息
@@ -112,12 +113,12 @@ public interface ISysUserService extends IService<SysUser> {
     /**
      * 注册用户
      *
-     * @param userDTO
+     * @param userAddDTO
      * @return boolean
      * @author dengtao
      * @date 2020/4/30 13:21
      */
-    boolean register(UserDTO userDTO);
+    boolean register(UserAddDTO userAddDTO);
 
     /**
      * 修改用户信息

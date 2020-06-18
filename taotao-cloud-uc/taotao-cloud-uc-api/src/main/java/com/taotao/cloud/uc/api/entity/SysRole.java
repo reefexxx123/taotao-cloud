@@ -72,11 +72,11 @@ public class SysRole extends Model<SysRole> {
      */
     private String delFlag;
 
-    /**
-     * 非数据库字段
-     * 部门ids
-     */
-    @TableField(exist = false)
-    private List<Integer> roleDepts;
+//    /**
+//     * 非数据库字段
+//     * 部门ids
+//     */
+//    @TableField(exist = false)
+//    private List<Integer> roleDepts;
 
 }

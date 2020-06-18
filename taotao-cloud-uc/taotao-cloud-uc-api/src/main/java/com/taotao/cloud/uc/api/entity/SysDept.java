@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * dengtao
+ * 部门表
  *
  * @author dengtao
  * @date 2020/6/15 11:00
@@ -29,13 +29,14 @@ public class SysDept extends Model<SysDept> {
     /**
      * 部门主键ID
      */
-    @TableId(value = "dept_id", type = IdType.AUTO)
-    private Integer deptId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
     /**
      * 部门名称
      */
     private String name;
+
     /**
      * 排序
      */
@@ -46,11 +47,15 @@ public class SysDept extends Model<SysDept> {
      */
     private String remark;
 
-
     /**
      * 上级部门
      */
     private Integer parentId;
+
+    /**
+     * 是否删除  -1：已删除  0：正常
+     */
+    private Integer delFlag;
 
     /**
      * 创建时间
@@ -62,30 +67,26 @@ public class SysDept extends Model<SysDept> {
      */
     private LocalDateTime updateTime;
 
-    /**
-     * 是否删除  -1：已删除  0：正常
-     */
-    private String delFlag;
 
-    /**
-     * 非数据库字段
-     * 上级部门
-     */
-    @TableField(exist = false)
-    private String parentName;
-
-    /**
-     * 非数据库字段
-     * 等级
-     */
-    @TableField(exist = false)
-    private Integer level;
-
-    /**
-     * 非数据库字段
-     * 子部门
-     */
-    @TableField(exist = false)
-    private List<SysDept> children;
+//    /**
+//     * 非数据库字段
+//     * 上级部门
+//     */
+//    @TableField(exist = false)
+//    private String parentName;
+//
+//    /**
+//     * 非数据库字段
+//     * 等级
+//     */
+//    @TableField(exist = false)
+//    private Integer level;
+//
+//    /**
+//     * 非数据库字段
+//     * 子部门
+//     */
+//    @TableField(exist = false)
+//    private List<SysDept> children;
 
 }

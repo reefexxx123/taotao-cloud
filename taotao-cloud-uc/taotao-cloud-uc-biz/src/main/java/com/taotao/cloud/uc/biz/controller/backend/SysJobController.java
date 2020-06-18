@@ -1,4 +1,4 @@
-package com.taotao.cloud.uc.biz.controller;
+package com.taotao.cloud.uc.biz.controller.backend;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
