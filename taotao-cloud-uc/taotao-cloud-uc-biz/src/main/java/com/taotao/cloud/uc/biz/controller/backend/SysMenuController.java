@@ -55,7 +55,7 @@ public class SysMenuController {
     @ApiOperation("修改菜单")
     @PreAuthorize("hasAuthority('sys:menu:update')")
     @SysOperateLog(description = "修改菜单")
-    @PutMapping
+    @PostMapping("/update")
     public Result<Boolean> updateMenu(@RequestBody MenuDTO menuDto) {
         return Result.succeed(menuService.updateMenuById(menuDto));
     }

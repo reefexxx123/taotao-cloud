@@ -53,7 +53,9 @@ public class SysJobServiceImpl extends ServiceImpl<SysJobMapper, SysJob> impleme
         }
         IPage<SysJob> sysJobIPage = baseMapper.selectPage(new Page<>(page, pageSize), jobLambdaQueryWrapper);
         List<SysJob> sysJobList = sysJobIPage.getRecords();
-        List<SysJob> collect = sysJobList.stream().peek(sysJob -> sysJob.setDeptName(deptService.selectDeptNameByDeptId(sysJob.getDeptId()))).sorted(Comparator.comparingInt(SysJob::getSort)).collect(Collectors.toList());
+        List<SysJob> collect = sysJobList.stream()
+//                .peek(sysJob -> sysJob.setDeptName(deptService.selectDeptNameByDeptId(sysJob.getDeptId())))
+                .sorted(Comparator.comparingInt(SysJob::getSort)).collect(Collectors.toList());
         return sysJobIPage.setRecords(collect);
     }
 

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.taotao.cloud.common.model.SecurityUser;
 import com.taotao.cloud.uc.api.dto.RepeatCheckDTO;
 import com.taotao.cloud.uc.api.dto.UserAddDTO;
+import com.taotao.cloud.uc.api.dto.UserUpdateDTO;
 import com.taotao.cloud.uc.api.entity.SysUser;
 import com.taotao.cloud.uc.api.query.UserListQuery;
 import com.taotao.cloud.uc.api.vo.UserAddVO;
@@ -42,12 +43,12 @@ public interface ISysUserService extends IService<SysUser> {
     /**
      * 更新用户以及角色部门等信息
      *
-     * @param userAddDto
+     * @param updateDTO updateDTO
      * @return boolean
      * @author dengtao
      * @date 2020/4/30 13:20
      */
-    boolean updateUser(UserAddDTO userAddDto);
+    boolean updateUser(UserUpdateDTO updateDTO);
 
     /**
      * 删除用户信息

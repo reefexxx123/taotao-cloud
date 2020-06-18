@@ -21,29 +21,25 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SysUserMapper extends BaseMapper<SysUser> {
 
-    @Insert("insert into sys_user (username,password,dept_id,job_id,phone,email,avatar,lock_flag) values (#{username},#{password},#{deptId},#{jobId},#{phone},#{email},#{avatar},#{lockFlag})")
-    @Options(useGeneratedKeys = true, keyProperty = "userId", keyColumn = "user_id")
-    boolean insertUser(SysUser sysUser);
-
     @Select("SELECT " +
-            "  user.user_id, " +
-            "  user.username, " +
-            "  user.mobile, " +
-            "  user.email, " +
-            "  user.avatar, " +
-            "  user.dept_id, " +
-            "  user.create_time, " +
-            "  user.update_time, " +
-            "  user.del_flag, " +
-            "  user.lock_flag, " +
-            "  dept.name AS deptName, " +
-            "  job.id AS job_id, " +
-            "  job.job_name as jobName " +
-            "  FROM " +
-            "  sys_user AS user " +
-            "  LEFT JOIN sys_dept AS dept ON dept.dept_id = user.dept_id " +
-            "  LEFT JOIN sys_job AS job ON job.id = user.job_id " +
-            "  ${ew.customSqlSegment}")
+            "   user.user_id, " +
+            "   user.username, " +
+            "   user.mobile, " +
+            "   user.email, " +
+            "   user.avatar, " +
+            "   user.dept_id, " +
+            "   user.create_time, " +
+            "   user.update_time, " +
+            "   user.del_flag, " +
+            "   user.lock_flag, " +
+            "   dept.name AS deptName, " +
+            "   job.id AS job_id, " +
+            "   job.job_name as jobName " +
+            " FROM " +
+            "   sys_user AS user " +
+            " LEFT JOIN sys_dept AS dept ON dept.dept_id = user.dept_id " +
+            " LEFT JOIN sys_job AS job ON job.id = user.job_id " +
+            "   ${ew.customSqlSegment}")
     IPage<SysUser> getUserVoListPage(Page<SysUser> page, @Param(Constants.WRAPPER) Wrapper<SysUser> wrapper, DataScope dataScope);
 
 

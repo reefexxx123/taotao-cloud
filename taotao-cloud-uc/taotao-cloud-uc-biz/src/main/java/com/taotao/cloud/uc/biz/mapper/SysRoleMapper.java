@@ -20,13 +20,22 @@ import java.util.List;
 @Repository
 public interface SysRoleMapper extends BaseMapper<SysRole> {
 
-    @Insert("insert into sys_role (role_name,role_code,role_desc,ds_type,ds_scope) values (#{roleName}, #{roleCode},#{roleDesc},#{dsType},#{dsScope})")
+    @Insert("INSERT into sys_role (role_name,role_code,role_desc,ds_type,ds_scope) " +
+            "VALUES (#{roleName}, #{roleCode},#{roleDesc},#{dsType},#{dsScope})")
     @Options(useGeneratedKeys = true, keyProperty = "roleId", keyColumn = "role_id")
     Boolean insertRole(SysRole sysRole);
 
-    @Select("select m.menu_id,m.name,m.type,m.parent_id,m.sort,m.perms from sys_menu m, sys_role_menu rm where rm.role_id = #{roleId} and m.menu_id = rm.menu_id")
+    @Select("SELECT m.menu_id," +
+            "       m.name,m.type," +
+            "       m.parent_id," +
+            "       m.sort," +
+            "       m.perms " +
+            "FROM sys_menu m, sys_role_menu rm " +
+            "WHERE rm.role_id = #{roleId} and m.menu_id = rm.menu_id")
     List<SysMenu> findMenuListByRoleId(int roleId);
 
-    @Select("SELECT r.* FROM sys_role r, sys_user_role ur WHERE r.role_id = ur.role_id AND r.del_flag = 0 and  ur.user_id IN (#{userId})")
+    @Select("SELECT r.* " +
+            "FROM sys_role r, sys_user_role ur " +
+            "WHERE r.role_id = ur.role_id AND r.del_flag = 0 and  ur.user_id IN (#{userId})")
     List<SysRole> listRolesByUserId(Integer userId);
 }

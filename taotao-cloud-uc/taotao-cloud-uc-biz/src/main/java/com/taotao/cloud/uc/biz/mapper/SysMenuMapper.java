@@ -2,6 +2,7 @@ package com.taotao.cloud.uc.biz.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.taotao.cloud.uc.api.entity.SysMenu;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -14,10 +15,9 @@ import java.util.List;
  */
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
-
-    @Select("select m.perms from sys_menu m, sys_user u, sys_user_role ur, sys_role_menu rm\n" +
-            "        where u.user_id = #{user_id} and u.user_id = ur.user_id\n" +
-            "          and ur.role_id = rm.role_id and rm.menu_id = m.menu_id")
-    List<String> findPermsByUserId(Integer userId);
+    @Select("SELECT m.perms " +
+            "FROM sys_menu m, sys_user u, sys_user_role ur, sys_role_menu rm " +
+            "WHERE u.user_id = #{user_id} and u.user_id = ur.user_id and ur.role_id = rm.role_id and rm.menu_id = m.menu_id")
+    List<String> findPermsByUserId(@Param(value = "userId") Integer userId);
 
 }

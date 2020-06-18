@@ -12,6 +12,7 @@ import com.taotao.cloud.common.model.Result;
 import com.taotao.cloud.common.model.SecurityUser;
 import com.taotao.cloud.log.annotation.SysOperateLog;
 import com.taotao.cloud.uc.api.dto.UserAddDTO;
+import com.taotao.cloud.uc.api.dto.UserRestPasswordDTO;
 import com.taotao.cloud.uc.api.dto.UserUpdateDTO;
 import com.taotao.cloud.uc.api.entity.SysUser;
 import com.taotao.cloud.uc.api.query.UserListQuery;
@@ -59,8 +60,8 @@ public class SysUserController {
     @SysOperateLog(description = "更新用户包括角色和部门")
     @PreAuthorize("hasAuthority('sys:user:update')")
     @PostMapping(value = "/update")
-    public Result<Boolean> updateUser(@RequestBody UserAddDTO userAddDto) {
-        return Result.succeed(userService.updateUser(userAddDto));
+    public Result<Boolean> updateUser(@RequestBody UserUpdateDTO updateDTO) {
+        return Result.succeed(userService.updateUser(updateDTO));
     }
 
     @ApiOperation("根据用户id删除用户包括角色和部门")
@@ -75,11 +76,11 @@ public class SysUserController {
     @SysOperateLog(description = "重置密码")
     @PreAuthorize("hasAuthority('sys:user:rest:password')")
     @PutMapping("/rest/password")
-    public Result<Boolean> restPass(@RequestBody UserUpdateDTO userUpdateDTO) {
-        return Result.succeed(userService.restPass(userUpdateDTO.getUserId(), userUpdateDTO.getPassword()));
+    public Result<Boolean> restPass(@RequestBody UserRestPasswordDTO restPasswordDTO) {
+        return Result.succeed(userService.restPass(restPasswordDTO.getUserId(), restPasswordDTO.getNewPassword()));
     }
 
-    @ApiOperation("获取个人信息")
+    @ApiOperation("获取当前登录人信息")
     @GetMapping("/info")
     public Result<SysUser> getUserInfo() {
         return Result.succeed(userService.findUserInByName(SecurityUtil.getUser().getUsername()));

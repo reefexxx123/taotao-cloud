@@ -42,7 +42,7 @@ public class MenuTreeVo {
     /**
      * 父菜单ID
      */
-    private Integer parentId;
+    private Integer parentMenuId;
 
     /**
      * 菜单类型 （类型   0：目录   1：菜单   2：按钮）

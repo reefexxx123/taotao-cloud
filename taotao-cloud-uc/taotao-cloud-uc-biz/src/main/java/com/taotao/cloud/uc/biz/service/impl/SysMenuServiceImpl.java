@@ -56,11 +56,11 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     public List<SysMenu> selectMenuTree(Integer uid) {
         LambdaQueryWrapper<SysMenu> sysMenuLambdaQueryWrapper = Wrappers.<SysMenu>query().lambda();
         sysMenuLambdaQueryWrapper.
-                select(SysMenu::getMenuId, SysMenu::getName, SysMenu::getPerms, SysMenu::getPath, SysMenu::getParentId, SysMenu::getComponent, SysMenu::getIsFrame, SysMenu::getIcon, SysMenu::getSort, SysMenu::getType, SysMenu::getDelFlag, SysMenu::getAlwaysShow, SysMenu::getHidden, SysMenu::getRedirect, SysMenu::getKeepAlive, SysMenu::getRedirect);
+                select(SysMenu::getId, SysMenu::getName, SysMenu::getPerms, SysMenu::getPath, SysMenu::getParentId, SysMenu::getComponent, SysMenu::getIsFrame, SysMenu::getIcon, SysMenu::getSort, SysMenu::getType, SysMenu::getDelFlag, SysMenu::getAlwaysShow, SysMenu::getHidden, SysMenu::getRedirect, SysMenu::getKeepAlive, SysMenu::getRedirect);
         // 所有人有权限看到 只是没有权限操作而已 暂定这样
         if (uid != 0) {
             List<Integer> menuIdList = roleMenuService.getMenuIdByUserId(uid);
-            sysMenuLambdaQueryWrapper.in(SysMenu::getMenuId, menuIdList);
+            sysMenuLambdaQueryWrapper.in(SysMenu::getId, menuIdList);
         }
 
         List<SysMenu> sysMenus = new ArrayList<>();
@@ -68,21 +68,21 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
         menus.forEach(menu -> {
             if (menu.getParentId() == null || menu.getParentId() == 0) {
-                menu.setLevel(0);
-                menu.setKey(menu.getMenuId());
+//                menu.setLevel(0);
+//                menu.setKey(menu.getMenuId());
                 if (UcUtil.exists(sysMenus, menu)) {
                     sysMenus.add(menu);
                 }
             }
         });
-        sysMenus.sort((o1, o2) -> o1.getSort().compareTo(o2.getSort()));
+        sysMenus.sort(Comparator.comparing(SysMenu::getSort));
         UcUtil.findChildren(sysMenus, menus, 0);
         return sysMenus;
     }
 
     @Override
     public SysMenu getMenuById(Integer parentId) {
-        return baseMapper.selectOne(Wrappers.<SysMenu>lambdaQuery().select(SysMenu::getType).eq(SysMenu::getMenuId, parentId));
+        return baseMapper.selectOne(Wrappers.<SysMenu>lambdaQuery().select(SysMenu::getType).eq(SysMenu::getId, parentId));
     }
 
     @Override
@@ -92,12 +92,14 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Override
     public Boolean removeMenuById(Serializable id) {
-        List<Integer> idList =
-                this.list(Wrappers.<SysMenu>query().lambda().eq(SysMenu::getParentId, id)).stream().map(SysMenu::getMenuId).collect(Collectors.toList());
+        List<Integer> idList = this.list(Wrappers.<SysMenu>query().lambda().eq(SysMenu::getParentId, id))
+                .stream().map(SysMenu::getId).collect(Collectors.toList());
         if (CollUtil.isNotEmpty(idList)) {
             return false;
         }
-        return this.updateById(new SysMenu().setMenuId((int) id).setDelFlag("1"));
+        SysMenu sysMenu = new SysMenu().setId((int) id).setDelFlag(1);
+
+        return this.updateById(sysMenu);
     }
 
     /**
@@ -134,11 +136,11 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     // TODO 优化
     @Override
     public List<MenuTreeVo> menuTree() {
-        LambdaQueryWrapper<SysMenu> sysMenuLambdaQueryWrapper = Wrappers.<SysMenu>query().lambda();
-        sysMenuLambdaQueryWrapper.select(SysMenu::getMenuId, SysMenu::getName, SysMenu::getParentId, SysMenu::getType, SysMenu::getSort);
+        LambdaQueryWrapper<SysMenu> queryWrapper = Wrappers.<SysMenu>query().lambda();
+//        queryWrapper.select(SysMenu::getMenuId, SysMenu::getName, SysMenu::getParentId, SysMenu::getType, SysMenu::getSort);
         List<SysMenu> sysMenus = new ArrayList<>();
         List<MenuTreeVo> menuTreeVoList = new ArrayList<>();
-        List<SysMenu> menus = baseMapper.selectList(sysMenuLambdaQueryWrapper);
+        List<SysMenu> menus = baseMapper.selectList(queryWrapper);
 
         menus.forEach(menu -> {
             MenuTreeVo menuTreeVo = new MenuTreeVo();
@@ -147,8 +149,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
             if (menu.getParentId() == null || menu.getParentId() == 0) {
                 menuTreeVo.setLevel(0);
                 menuTreeVo.setTitle(menu.getName());
-                menuTreeVo.setKey(menu.getMenuId());
-                menuTreeVo.setValue(String.valueOf(menu.getMenuId()));
+//                menuTreeVo.setKey(menu.getMenuId());
+//                menuTreeVo.setValue(String.valueOf(menu.getMenuId()));
                 if (UcUtil.exists(sysMenus, menu)) {
                     sysMenus.add(menu);
                     menuTreeVoList.add(menuTreeVo);

@@ -19,6 +19,7 @@ import com.taotao.cloud.log.utils.LogUtil;
 import com.taotao.cloud.order.api.feign.RemoteOrderService;
 import com.taotao.cloud.uc.api.dto.RepeatCheckDTO;
 import com.taotao.cloud.uc.api.dto.UserAddDTO;
+import com.taotao.cloud.uc.api.dto.UserUpdateDTO;
 import com.taotao.cloud.uc.api.entity.SysUser;
 import com.taotao.cloud.uc.api.entity.SysUserRole;
 import com.taotao.cloud.uc.api.feign.RemoteUserService;
@@ -85,7 +86,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                 .ifPresent(mobile -> query.eq("user.mobile", mobile));
 
         IPage<SysUser> userList = baseMapper.getUserVoListPage(page, query, new DataScope());
-        userList.getRecords().forEach(user -> user.setRoleList(roleService.findRolesByUserId(user.getUserId())));
+//        userList.getRecords().forEach(user -> user.setRoleList(roleService.findRolesByUserId(user.getUserId())));
         return page;
     }
 
@@ -101,7 +102,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         BeanUtils.copyProperties(userAddDto, sysUser);
         sysUser.setPassword(passwordEncoder.encode("123456"));
-        baseMapper.insertUser(sysUser);
+        baseMapper.insert(sysUser);
 
         return UserAddVO.builder()
                 .username(userAddDto.getUsername())
@@ -119,9 +120,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean updateUser(UserAddDTO userAddDto) {
+    public boolean updateUser(UserUpdateDTO userUpdateDTO) {
         SysUser sysUser = new SysUser();
-        BeanUtils.copyProperties(userAddDto, sysUser);
+        BeanUtils.copyProperties(userUpdateDTO, sysUser);
         baseMapper.updateById(sysUser);
         userRoleService.remove(Wrappers.<SysUserRole>lambdaQuery().eq(SysUserRole::getUserId, sysUser.getUserId()));
 //        List<SysUserRole> userRoles = userAddDto.getRoleList().stream().map(item -> {
@@ -167,11 +168,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public Set<String> findRoleIdByUserId(Integer userId) {
-        return userRoleService
-                .selectUserRoleListByUserId(userId)
-                .stream()
-                .map(SysUserRole::getRoleName)
-                .collect(Collectors.toSet());
+//        return userRoleService
+//                .selectUserRoleListByUserId(userId)
+//                .stream()
+//                .map(SysUserRole::)
+//                .collect(Collectors.toSet());
+        return null;
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -194,7 +196,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         BeanUtil.copyProperties(userAddDTO, sysUser);
         // 加密后的密码
 //        sysUser.setPassword(UcUtil.encode(userDTO.getPassword()));
-        baseMapper.insertUser(sysUser);
+//        baseMapper.insertUser(sysUser);
         SysUserRole sysUserRole = new SysUserRole();
         sysUserRole.setRoleId(14);
         sysUserRole.setUserId(sysUser.getUserId());

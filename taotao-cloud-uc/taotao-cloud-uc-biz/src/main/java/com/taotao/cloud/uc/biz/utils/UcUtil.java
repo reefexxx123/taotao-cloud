@@ -36,23 +36,23 @@ public class UcUtil {
      */
     public void findChildren(List<SysMenu> menuList, List<SysMenu> menus, int menuType) {
         for (SysMenu sysMenu : menuList) {
-            sysMenu.setKey(sysMenu.getMenuId());
+//            sysMenu.setKey(sysMenu.getMenuId());
             List<SysMenu> children = new ArrayList<>();
             for (SysMenu menu : menus) {
                 if (menuType == 1 && menu.getType() == 2) {
                     // 如果是获取类型不需要按钮，且菜单类型是按钮的，直接过滤掉
                     continue;
                 }
-                if (sysMenu.getMenuId() != null && sysMenu.getMenuId().equals(menu.getParentId())) {
-                    menu.setParentName(sysMenu.getName());
-                    menu.setLevel(sysMenu.getLevel() + 1);
-                    menu.setKey(menu.getMenuId());
+                if (sysMenu.getId() != null && sysMenu.getId().equals(menu.getParentId())) {
+//                    menu.setParentName(sysMenu.getName());
+//                    menu.setLevel(sysMenu.getLevel() + 1);
+//                    menu.setKey(menu.getMenuId());
                     if (exists(children, menu)) {
                         children.add(menu);
                     }
                 }
             }
-            sysMenu.setChildren(children);
+//            sysMenu.setChildren(children);
             children.sort(Comparator.comparing(SysMenu::getSort));
             findChildren(children, menus, menuType);
         }
@@ -66,8 +66,8 @@ public class UcUtil {
                 MenuTreeVo menuTreeVo = new MenuTreeVo();
                 BeanUtil.copyProperties(menu, menuTreeVo);
                 menuTreeVo.setTitle(menu.getName());
-                menuTreeVo.setKey(menu.getMenuId());
-                menuTreeVo.setValue(String.valueOf(menu.getMenuId()));
+                menuTreeVo.setKey(menu.getId());
+                menuTreeVo.setValue(String.valueOf(menu.getId()));
                 if (menuType == 1 && menu.getType() == 2) {
                     // 如果是获取类型不需要按钮，且菜单类型是按钮的，直接过滤掉
                     continue;
@@ -76,8 +76,8 @@ public class UcUtil {
                     menuTreeVo.setParentName(sysMenu.getName());
                     menuTreeVo.setLevel(sysMenu.getLevel() + 1);
                     menuTreeVo.setTitle(menu.getName());
-                    menuTreeVo.setKey(menu.getMenuId());
-                    menuTreeVo.setValue(String.valueOf(menu.getMenuId()));
+                    menuTreeVo.setKey(menu.getId());
+                    menuTreeVo.setValue(String.valueOf(menu.getId()));
                     if (exists(children, menu)) {
                         children1.add(menuTreeVo);
                     }
@@ -102,24 +102,24 @@ public class UcUtil {
 
         for (SysDept sysDept : sysDepts) {
             DeptTreeVo deptTreeVo = new DeptTreeVo();
-            deptTreeVo.setKey(sysDept.getDeptId());
-            deptTreeVo.setValue(String.valueOf(sysDept.getDeptId()));
+            deptTreeVo.setKey(sysDept.getId());
+            deptTreeVo.setValue(String.valueOf(sysDept.getId()));
             deptTreeVo.setTitle(sysDept.getName());
             List<SysDept> children = new ArrayList<>();
             List<DeptTreeVo> children1 = new ArrayList<>();
             for (SysDept dept : depts) {
-                if (sysDept.getDeptId() != null && sysDept.getDeptId().equals(dept.getParentId())) {
-                    dept.setParentName(sysDept.getName());
-                    dept.setLevel(sysDept.getLevel() + 1);
+                if (sysDept.getId() != null && sysDept.getId().equals(dept.getParentId())) {
+//                    dept.setParentName(sysDept.getName());
+//                    dept.setLevel(sysDept.getLevel() + 1);
                     DeptTreeVo deptTreeVo1 = new DeptTreeVo();
                     deptTreeVo1.setTitle(dept.getName());
-                    deptTreeVo1.setKey(dept.getDeptId());
-                    deptTreeVo1.setValue(String.valueOf(dept.getDeptId()));
+                    deptTreeVo1.setKey(dept.getId());
+                    deptTreeVo1.setValue(String.valueOf(dept.getId()));
                     children.add(dept);
                     children1.add(deptTreeVo1);
                 }
             }
-            sysDept.setChildren(children);
+//            sysDept.setChildren(children);
             deptTreeVo.setChildren(children1);
             findChildren(children, depts);
         }
@@ -141,8 +141,8 @@ public class UcUtil {
 
                     DeptTreeVo deptTreeVo1 = new DeptTreeVo();
                     deptTreeVo1.setTitle(dept.getName());
-                    deptTreeVo1.setKey(dept.getDeptId());
-                    deptTreeVo1.setValue(String.valueOf(dept.getDeptId()));
+                    deptTreeVo1.setKey(dept.getId());
+                    deptTreeVo1.setValue(String.valueOf(dept.getId()));
                     children.add(sysDeptTreeVo);
                 }
             }
@@ -164,8 +164,9 @@ public class UcUtil {
     public boolean exists(List<SysMenu> sysMenus, SysMenu sysMenu) {
         boolean exist = false;
         for (SysMenu menu : sysMenus) {
-            if (menu.getMenuId().equals(sysMenu.getMenuId())) {
+            if (menu.getId().equals(sysMenu.getId())) {
                 exist = true;
+                break;
             }
         }
         return !exist;
@@ -219,7 +220,7 @@ public class UcUtil {
         if (permission.getType().equals(2)) {
             return null;
         } else if (permission.getType().equals(0) || permission.getType().equals(1)) {
-            json.put("id", permission.getMenuId());
+            json.put("id", permission.getId());
             if (isUrl(permission.getPath())) {
                 json.put("path", permission.getPath());
             } else {

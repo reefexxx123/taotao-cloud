@@ -26,9 +26,6 @@ import javax.annotation.Resource;
  */
 @Slf4j
 public class UserDetailsServiceImpl implements IUserDetailsService {
-    public UserDetailsServiceImpl(){
-        System.out.println("lsdkfs");
-    }
 
     @Resource
     private RemoteUserService remoteUserService;

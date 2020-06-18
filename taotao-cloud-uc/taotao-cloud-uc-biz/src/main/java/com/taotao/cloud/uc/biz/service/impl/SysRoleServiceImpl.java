@@ -13,7 +13,7 @@ import com.taotao.cloud.uc.biz.mapper.SysRoleMapper;
 import com.taotao.cloud.uc.biz.service.ISysRoleDeptService;
 import com.taotao.cloud.uc.biz.service.ISysRoleMenuService;
 import com.taotao.cloud.uc.biz.service.ISysRoleService;
-import com.taotao.cloud.uc.biz.strategy.DataScopeContext;
+//import com.taotao.cloud.uc.biz.strategy.DataScopeContext;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,8 +40,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Resource
     private ISysRoleDeptService roleDeptService;
 
-    @Autowired
-    private DataScopeContext dataScopeContext;
+//    @Autowired
+//    private DataScopeContext dataScopeContext;
 
 
     @Transactional(rollbackFor = Exception.class)
@@ -50,27 +50,27 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         SysRole sysRole = new SysRole();
         BeanUtils.copyProperties(roleDto, sysRole);
         // 根据数据权限范围查询部门ids
-        List<Integer> ids = dataScopeContext.getDeptIdsForDataScope(roleDto, roleDto.getDsType());
+//        List<Integer> ids = dataScopeContext.getDeptIdsForDataScope(roleDto, roleDto.getDsType());
         StringJoiner dsScope = new StringJoiner(",");
-        ids.forEach(integer -> {
-            dsScope.add(Integer.toString(integer));
-        });
+//        ids.forEach(integer -> {
+//            dsScope.add(Integer.toString(integer));
+//        });
         sysRole.setDsScope(dsScope.toString());
         baseMapper.insertRole(sysRole);
 
         Integer roleId = sysRole.getRoleId();
         // 维护角色部门权限
         // 根据数据权限范围查询部门ids
-        if (CollectionUtil.isNotEmpty(ids)) {
-            List<SysRoleDept> roleDepts = ids.stream().map(integer -> {
-                SysRoleDept sysRoleDept = new SysRoleDept();
-                sysRoleDept.setDeptId(integer);
-                sysRoleDept.setRoleId(roleId);
-                return sysRoleDept;
-            }).collect(Collectors.toList());
-
-            roleDeptService.saveBatch(roleDepts);
-        }
+//        if (CollectionUtil.isNotEmpty(ids)) {
+//            List<SysRoleDept> roleDepts = ids.stream().map(integer -> {
+//                SysRoleDept sysRoleDept = new SysRoleDept();
+//                sysRoleDept.setDeptId(integer);
+//                sysRoleDept.setRoleId(roleId);
+//                return sysRoleDept;
+//            }).collect(Collectors.toList());
+//
+//            roleDeptService.saveBatch(roleDepts);
+//        }
         return true;
     }
 
@@ -82,20 +82,20 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         updateById(sysRole);
         roleDeptService.remove(Wrappers.<SysRoleDept>query().lambda().eq(SysRoleDept::getRoleId, sysRole.getRoleId()));
         // 根据数据权限范围查询部门ids
-        List<Integer> ids = dataScopeContext.getDeptIdsForDataScope(roleDto, roleDto.getDsType());
+//        List<Integer> ids = dataScopeContext.getDeptIdsForDataScope(roleDto, roleDto.getDsType());
         StringJoiner dsScope = new StringJoiner(",");
-        ids.forEach(integer -> {
-            dsScope.add(Integer.toString(integer));
-        });
-        if (CollectionUtil.isNotEmpty(ids)) {
-            List<SysRoleDept> roleDepts = ids.stream().map(integer -> {
-                SysRoleDept sysRoleDept = new SysRoleDept();
-                sysRoleDept.setDeptId(integer);
-                sysRoleDept.setRoleId(roleDto.getRoleId());
-                return sysRoleDept;
-            }).collect(Collectors.toList());
-            roleDeptService.saveBatch(roleDepts);
-        }
+//        ids.forEach(integer -> {
+//            dsScope.add(Integer.toString(integer));
+//        });
+//        if (CollectionUtil.isNotEmpty(ids)) {
+//            List<SysRoleDept> roleDepts = ids.stream().map(integer -> {
+//                SysRoleDept sysRoleDept = new SysRoleDept();
+//                sysRoleDept.setDeptId(integer);
+//                sysRoleDept.setRoleId(roleDto.getRoleId());
+//                return sysRoleDept;
+//            }).collect(Collectors.toList());
+//            roleDeptService.saveBatch(roleDepts);
+//        }
         sysRole.setDsScope(dsScope.toString());
         baseMapper.updateById(sysRole);
         return true;
@@ -116,9 +116,10 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
             sysRoleLambdaQueryWrapper.like(SysRole::getRoleName, roleName);
         }
         List<SysRole> sysRoles = baseMapper.selectList(sysRoleLambdaQueryWrapper);
-        return sysRoles.stream().peek(sysRole ->
-                sysRole.setRoleDepts(roleDeptService.getRoleDeptIds(sysRole.getRoleId()).stream().map(SysRoleDept::getDeptId).collect(Collectors.toList()))
-        ).collect(Collectors.toList());
+//        return sysRoles.stream().peek(sysRole ->
+//                sysRole.setRoleDepts(roleDeptService.getRoleDeptIds(sysRole.getRoleId()).stream().map(SysRoleDept::getDeptId).collect(Collectors.toList()))
+//        ).collect(Collectors.toList());
+        return null;
     }
 
     @Override

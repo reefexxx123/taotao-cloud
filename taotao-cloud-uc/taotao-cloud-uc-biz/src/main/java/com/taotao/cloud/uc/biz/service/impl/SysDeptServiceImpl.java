@@ -45,10 +45,10 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 
     @Override
     public List<SysDept> selectDeptList() {
-        List<SysDept> depts = baseMapper.selectList(Wrappers.<SysDept>lambdaQuery().select(SysDept::getDeptId, SysDept::getName, SysDept::getParentId, SysDept::getSort, SysDept::getCreateTime));
+        List<SysDept> depts = baseMapper.selectList(Wrappers.<SysDept>lambdaQuery().select(SysDept::getId, SysDept::getName, SysDept::getParentId, SysDept::getSort, SysDept::getCreateTime));
         List<SysDept> sysDepts = depts.stream()
                 .filter(sysDept -> sysDept.getParentId() == 0 || ObjectUtil.isNull(sysDept.getParentId()))
-                .peek(sysDept -> sysDept.setLevel(0))
+//                .peek(sysDept -> sysDept.setLevel(0))
                 .collect(Collectors.toList());
 
         UcUtil.findChildren(sysDepts, depts);
@@ -77,7 +77,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
             throw new BaseException("部门下有用户无法删除");
         }
         idList.forEach(deptId -> {
-            this.update(Wrappers.<SysDept>lambdaUpdate().set(SysDept::getDelFlag, "1").eq(SysDept::getDeptId, deptId));
+            this.update(Wrappers.<SysDept>lambdaUpdate().set(SysDept::getDelFlag, 1).eq(SysDept::getId, deptId));
         });
         return true;
     }
@@ -96,14 +96,14 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
             throw new BaseException("部门下有用户无法删除");
         }
         idList.forEach(deptId -> {
-            this.update(Wrappers.<SysDept>lambdaUpdate().set(SysDept::getDelFlag, "1").eq(SysDept::getDeptId, deptId));
+            this.update(Wrappers.<SysDept>lambdaUpdate().set(SysDept::getDelFlag, "1").eq(SysDept::getId, deptId));
         });
         return true;
     }
 
     @Override
     public String selectDeptNameByDeptId(int deptId) {
-        return baseMapper.selectOne(Wrappers.<SysDept>query().lambda().select(SysDept::getName).eq(SysDept::getDeptId, deptId)).getName();
+        return baseMapper.selectOne(Wrappers.<SysDept>query().lambda().select(SysDept::getName).eq(SysDept::getId, deptId)).getName();
     }
 
     @Override
@@ -116,7 +116,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
         SysDept department = this.getDepartment(deptId);
         List<Integer> deptIdList = new ArrayList<>();
         if (department != null) {
-            deptIdList.add(department.getDeptId());
+//            deptIdList.add(department.getDeptId());
             addDeptIdList(deptIdList, department);
         }
         return deptIdList;
@@ -124,16 +124,16 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 
     @Override
     public List<SysDeptTreeVo> queryDepartTreeList() {
-        List<SysDept> depts = baseMapper.selectList(Wrappers.<SysDept>lambdaQuery().select(SysDept::getDeptId, SysDept::getName, SysDept::getParentId, SysDept::getSort, SysDept::getRemark, SysDept::getCreateTime));
+        List<SysDept> depts = baseMapper.selectList(Wrappers.<SysDept>lambdaQuery().select(SysDept::getId, SysDept::getName, SysDept::getParentId, SysDept::getSort, SysDept::getRemark, SysDept::getCreateTime));
 
         List<SysDeptTreeVo> collect = depts.stream()
                 .filter(sysDept -> sysDept.getParentId() == 0 || ObjectUtil.isNull(sysDept.getParentId()))
-                .peek(sysDept -> sysDept.setLevel(0))
+//                .peek(sysDept -> sysDept.setLevel(0))
                 .map(sysDept -> {
                     SysDeptTreeVo sysDeptTreeVo = new SysDeptTreeVo();
                     BeanUtil.copyProperties(sysDept, sysDeptTreeVo);
-                    sysDeptTreeVo.setKey(sysDept.getDeptId());
-                    sysDeptTreeVo.setValue(String.valueOf(sysDept.getDeptId()));
+                    sysDeptTreeVo.setKey(sysDept.getId());
+                    sysDeptTreeVo.setValue(String.valueOf(sysDept.getId()));
                     sysDeptTreeVo.setTitle(sysDept.getName());
                     return sysDeptTreeVo;
                 })
@@ -149,28 +149,28 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     private SysDept getDepartment(Integer deptId) {
         List<SysDept> departments = baseMapper.selectList(Wrappers.<SysDept>query().select("dept_id", "name", "parent_id", "sort", "create_time"));
         Map<Integer, SysDept> map = departments.stream().collect(
-                Collectors.toMap(SysDept::getDeptId, department -> department));
+                Collectors.toMap(SysDept::getId, department -> department));
 
         for (SysDept dept : map.values()) {
             SysDept parent = map.get(dept.getParentId());
             if (parent != null) {
-                List<SysDept> children = parent.getChildren() == null ? new ArrayList<>() : parent.getChildren();
-                children.add(dept);
-                parent.setChildren(children);
+//                List<SysDept> children = parent.getChildren() == null ? new ArrayList<>() : parent.getChildren();
+//                children.add(dept);
+//                parent.setChildren(children);
             }
         }
         return map.get(deptId);
     }
 
     private void addDeptIdList(List<Integer> deptIdList, SysDept department) {
-        List<SysDept> children = department.getChildren();
-
-        if (children != null) {
-            for (SysDept d : children) {
-                deptIdList.add(d.getDeptId());
-                addDeptIdList(deptIdList, d);
-            }
-        }
+//        List<SysDept> children = department.getChildren();
+//
+//        if (children != null) {
+//            for (SysDept dept : children) {
+//                deptIdList.add(dept.getId());
+//                addDeptIdList(deptIdList, dept);
+//            }
+//        }
     }
 
     /**
@@ -186,8 +186,8 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
         List<SysDept> deptList = this.list(Wrappers.<SysDept>query().lambda().eq(SysDept::getParentId, id));
         if (CollUtil.isNotEmpty(deptList)) {
             for (SysDept dept : deptList) {
-                idList.add(dept.getDeptId());
-                this.checkChildrenExists(dept.getDeptId(), idList);
+                idList.add(dept.getId());
+                this.checkChildrenExists(dept.getId(), idList);
             }
         }
     }

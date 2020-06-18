@@ -13,6 +13,7 @@ import com.taotao.cloud.common.model.SecurityUser;
 import com.taotao.cloud.log.annotation.SysOperateLog;
 import com.taotao.cloud.uc.api.dto.UserAddDTO;
 import com.taotao.cloud.uc.api.dto.UserRestPasswordDTO;
+import com.taotao.cloud.uc.api.dto.UserUpdateDTO;
 import com.taotao.cloud.uc.api.entity.SysUser;
 import com.taotao.cloud.uc.api.query.UserListQuery;
 import com.taotao.cloud.uc.biz.service.ISysUserService;
@@ -59,8 +60,8 @@ public class WechatUserController {
     @SysOperateLog(description = "更新用户包括角色和部门")
     @PreAuthorize("hasAuthority('sys:user:update')")
     @PostMapping(value = "/update")
-    public Result<Boolean> updateUser(@RequestBody UserAddDTO userAddDto) {
-        return Result.succeed(userService.updateUser(userAddDto));
+    public Result<Boolean> updateUser(@RequestBody UserUpdateDTO updateDTO) {
+        return Result.succeed(userService.updateUser(updateDTO));
     }
 
     @ApiOperation("根据用户id删除用户包括角色和部门")
