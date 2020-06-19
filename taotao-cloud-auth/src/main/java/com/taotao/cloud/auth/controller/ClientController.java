@@ -30,7 +30,7 @@ public class ClientController {
 
     @GetMapping("/list")
     @ApiOperation(value = "应用列表")
-    public Result<PageResult<Client>> list(@RequestParam Map<String, Object> params) {
+    public PageResult<Client> list(@RequestParam Map<String, Object> params) {
         return clientService.listClient(params, true);
     }
 
@@ -44,8 +44,8 @@ public class ClientController {
     @GetMapping("/all")
     @ApiOperation(value = "所有应用")
     public Result<List<Client>> allClient() {
-        Result<PageResult<Client>> pageResultResult = clientService.listClient(Maps.newHashMap(), false);
-        return Result.succeed(pageResultResult.getData().getData());
+        PageResult<Client> pageResultResult = clientService.listClient(Maps.newHashMap(), false);
+        return Result.succeed(pageResultResult.getData());
     }
 
     @DeleteMapping("/{id}")

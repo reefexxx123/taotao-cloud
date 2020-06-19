@@ -123,7 +123,7 @@ public class SysUserController {
         // 修改密码
         SysUser userForPass = new SysUser();
         userForPass.setUserId(user.getUserId());
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        BCryptPasswordEncoder passwordEncoder = AuthUtil.getPasswordEncoder();
         userForPass.setPassword(passwordEncoder.encode(sysUser.getPassword()));
         return Result.succeed(userService.updateUserInfo(userForPass));
     }

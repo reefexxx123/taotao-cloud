@@ -9,13 +9,11 @@ import com.taotao.cloud.auth.model.Client;
 import com.taotao.cloud.auth.service.IClientService;
 import com.taotao.cloud.common.constant.CommonConstant;
 import com.taotao.cloud.common.constant.SecurityConstant;
-import com.taotao.cloud.common.enums.ResultEnum;
 import com.taotao.cloud.common.lock.DistributedLock;
 import com.taotao.cloud.common.model.PageResult;
 import com.taotao.cloud.common.model.Result;
 import com.taotao.cloud.common.service.impl.SuperServiceImpl;
 import com.taotao.cloud.redis.repository.RedisRepository;
-import com.taotao.cloud.uc.api.entity.SysUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +59,7 @@ public class ClientServiceImpl extends SuperServiceImpl<ClientMapper, Client> im
     }
 
     @Override
-    public Result<PageResult<Client>> listClient(Map<String, Object> params, boolean isPage) {
+    public PageResult<Client> listClient(Map<String, Object> params, boolean isPage) {
         Page<Client> page;
         if (isPage) {
             page = new Page<>(MapUtils.getInteger(params, "page"), MapUtils.getInteger(params, "limit"));
@@ -86,9 +84,8 @@ public class ClientServiceImpl extends SuperServiceImpl<ClientMapper, Client> im
 
         List<Client> list = baseMapper.findList(page, query);
         page.setRecords(list);
-        PageResult<Client> pageResult = PageResult.<Client>builder().data(list).code(ResultEnum.SUCCESS.getCode()).total(page.getTotal())
-                .currentPage(page.getCurrent()).pageSize(page.getSize()).build();
-        return Result.succeed(pageResult);
+
+        return PageResult.succeed(page);
     }
 
     @Override

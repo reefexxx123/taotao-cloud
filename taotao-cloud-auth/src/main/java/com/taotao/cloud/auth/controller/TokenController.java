@@ -35,7 +35,7 @@ public class TokenController {
 
     @ApiOperation(value = "token列表")
     @GetMapping("/list")
-    public Result<PageResult<TokenVo>> list(@RequestParam Map<String, Object> params, String tenantId) {
+    public PageResult<TokenVo> list(@RequestParam Map<String, Object> params, String tenantId) {
         return tokensService.listTokens(params, tenantId);
     }
 

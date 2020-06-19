@@ -1,6 +1,7 @@
-package com.taotao.cloud.social.annotation;
+package com.taotao.cloud.data.annotation;
 
-import com.taotao.cloud.social.SocialAutoConfiguration;
+import com.taotao.cloud.data.config.TenantConfig;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.ElementType;
@@ -16,7 +17,7 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import({SocialAutoConfiguration.class})
-public @interface EnableSocialAutoConfiguration {
+@Import({TenantConfig.class})
+public @interface EnableTaoTaoTenantClient {
 
 }

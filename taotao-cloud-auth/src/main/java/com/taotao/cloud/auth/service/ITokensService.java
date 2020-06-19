@@ -26,11 +26,10 @@ public interface ITokensService {
      *
      * @param params   请求参数
      * @param clientId 应用id
-     * @return com.taotao.cloud.common.model.Result<com.taotao.cloud.common.model.PageResult < com.taotao.cloud.auth.model.TokenVo>>
      * @author dengtao
      * @date 2020/4/29 16:02
      */
-    Result<PageResult<TokenVo>> listTokens(Map<String, Object> params, String clientId);
+    PageResult<TokenVo> listTokens(Map<String, Object> params, String clientId);
 
     /**
      * 获取token
@@ -38,7 +37,6 @@ public interface ITokensService {
      * @param request  request
      * @param response response
      * @param token    token
-     * @return org.springframework.security.oauth2.common.OAuth2AccessToken
      * @author dengtao
      * @date 2020/4/29 17:07
      */

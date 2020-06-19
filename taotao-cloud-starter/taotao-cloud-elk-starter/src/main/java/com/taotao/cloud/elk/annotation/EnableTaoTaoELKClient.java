@@ -19,6 +19,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Import({ElkConfiguration.class, ElkWebConfiguration.class})
-public @interface EnableTaoTaoELKAutoConfigure {
+public @interface EnableTaoTaoELKClient {
 
 }

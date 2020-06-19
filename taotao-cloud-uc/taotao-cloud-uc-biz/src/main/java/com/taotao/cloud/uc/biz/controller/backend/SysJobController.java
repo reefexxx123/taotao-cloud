@@ -38,16 +38,10 @@ public class SysJobController {
     @GetMapping
     @SysOperateLog(description = "获取岗位列表")
 //    @PreAuthorize("hasAuthority('sys:job:view')")
-    public Result<IPage<SysJob>> getList(Integer page, Integer pageSize, @RequestParam(defaultValue = "") String jobName,
+    public PageResult<SysJob> getList(Integer page, Integer pageSize, @RequestParam(defaultValue = "") String jobName,
                                          HttpServletRequest request) {
-        IPage<SysJob> pageResult = jobService.selectJobList(page, pageSize, jobName);
-        List<SysJob> records = pageResult.getRecords();
-        PageResult result = PageResult.builder().currentPage(page).total(pageResult.getTotal())
-                .code(ResultEnum.SUCCESS.getCode())
-                .pageSize(pageResult.getSize())
-                .data(Collections.singletonList(records))
-                .build();
-        return Result.succeed(pageResult);
+        IPage<SysJob> result = jobService.selectJobList(page, pageSize, jobName);
+        return PageResult.succeed(result);
     }
 
     @ApiOperation("添加岗位")

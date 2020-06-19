@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/dict")
-@Api(value = "字典管理API", tags = { "字典管理API" })
+@Api(value = "字典管理API", tags = {"字典管理API"})
 public class SysDictController {
 
     @Autowired
@@ -42,12 +42,9 @@ public class SysDictController {
     @SysOperateLog(description = "查询字典集合")
     @GetMapping
     @PreAuthorize("hasAuthority('sys:dipt:view')")
-    public Result<PageResult<SysDict>> getList(Page page, SysDict sysDict) {
-        Page pageResult = dictService.page(page, Wrappers.query(sysDict));
-        PageResult<SysDict> result = PageResult.builder().currentPage(page.getCurrent()).total(pageResult.getTotal())
-                .code(ResultEnum.SUCCESS.getCode()).pageSize(page.getSize()).data(pageResult.getRecords())
-                .build();
-        return Result.succeed(result);
+    public PageResult<SysDict> getList(Page page, SysDict sysDict) {
+        Page<SysDict> result = dictService.page(page, Wrappers.lambdaQuery(sysDict));
+        return PageResult.succeed(result);
     }
 
     @ApiOperation("更新字典")

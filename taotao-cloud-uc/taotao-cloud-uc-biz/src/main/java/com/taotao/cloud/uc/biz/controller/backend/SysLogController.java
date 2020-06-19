@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/log")
 @Slf4j
-@Api(value = "系统日志管理API", tags = { "系统日志管理API" })
+@Api(value = "系统日志管理API", tags = {"系统日志管理API"})
 public class SysLogController {
 
     @Resource
@@ -35,12 +35,9 @@ public class SysLogController {
 
     @ApiOperation("分页查询日志列表")
     @GetMapping
-    public Result<PageResult<SysLog>> page(Page page, SysLog sysLog) {
-        Page pageResult = sysLogService.page(page, Wrappers.query(sysLog).lambda().orderByDesc(SysLog::getStartTime));
-        PageResult<SysLog> result = PageResult.builder().currentPage(page.getCurrent()).total(pageResult.getTotal())
-                .code(ResultEnum.SUCCESS.getCode()).pageSize(page.getSize()).data(pageResult.getRecords())
-                .build();
-        return Result.succeed(result);
+    public PageResult<SysLog> page(Page page, SysLog sysLog) {
+        Page result = sysLogService.page(page, Wrappers.query(sysLog).lambda().orderByDesc(SysLog::getStartTime));
+        return PageResult.succeed(result);
     }
 
     @ApiOperation("保存日志信息")

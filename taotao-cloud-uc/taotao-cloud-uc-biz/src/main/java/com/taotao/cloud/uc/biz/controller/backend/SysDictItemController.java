@@ -31,12 +31,9 @@ public class SysDictItemController {
     @ApiOperation("分页查询字典详情内容")
     @SysOperateLog(description = "分页查询字典详情内容")
     @GetMapping
-    public Result<PageResult<SysDictItem>> getDictItemPage(Page page, SysDictItem sysDictItem) {
-        Page pageResult = dictItemService.page(page, Wrappers.query(sysDictItem));
-        PageResult<SysDictItem> result = PageResult.builder().currentPage(page.getCurrent()).total(pageResult.getTotal())
-                .code(ResultEnum.SUCCESS.getCode()).pageSize(page.getSize()).data(pageResult.getRecords())
-                .build();
-        return Result.succeed(result);
+    public PageResult<SysDictItem> getDictItemPage(Page page, SysDictItem sysDictItem) {
+        Page result = dictItemService.page(page, Wrappers.query(sysDictItem));
+        return PageResult.succeed(result);
     }
 
     @ApiOperation("添加字典详情")

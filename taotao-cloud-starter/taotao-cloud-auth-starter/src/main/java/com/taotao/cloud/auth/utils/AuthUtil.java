@@ -2,6 +2,7 @@ package com.taotao.cloud.auth.utils;
 
 import com.taotao.cloud.common.constant.CommonConstant;
 import com.taotao.cloud.common.model.SecurityUser;
+import com.taotao.cloud.common.utils.ContextUtil;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Enumeration;
+import java.util.Objects;
 
 /**
  * 认证授权相关工具类
@@ -55,8 +57,21 @@ public class AuthUtil {
      * @date 2020/5/13 16:19
      */
     public boolean validatePass(String newPass, String passwordEncoderOldPass) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        return passwordEncoder.matches(newPass, passwordEncoderOldPass);
+        return getPasswordEncoder().matches(newPass, passwordEncoderOldPass);
+    }
+
+    /**
+     * 获取密码加密工具
+     *
+     * @author dengtao
+     * @date 2020/6/19 13:40
+    */
+    public BCryptPasswordEncoder getPasswordEncoder(){
+        BCryptPasswordEncoder passwordEncoder = ContextUtil.getBean(BCryptPasswordEncoder.class, true);
+        if (Objects.isNull(passwordEncoder)) {
+            passwordEncoder = new BCryptPasswordEncoder();
+        }
+        return passwordEncoder;
     }
 
     /**

@@ -34,7 +34,7 @@ public interface IClientService extends ISuperService<Client> {
      * @author dengtao
      * @date 2020/4/29 15:23
      */
-    Result<PageResult<Client>> listClient(Map<String, Object> params, boolean isPage);
+    PageResult<Client> listClient(Map<String, Object> params, boolean isPage);
 
     /**
      * 删除应用

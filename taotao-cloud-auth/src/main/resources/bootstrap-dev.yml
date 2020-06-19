@@ -89,6 +89,12 @@ spring:
       #listner负责ack，每调用一次，就立即commit
       ack-mode: manual_immediate
       missing-topics-fatal: false
+  gson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    disable-html-escaping: true
+    pretty-printing: true
+    serialize-nulls: true
+    long-serialization-policy: string
   sleuth:
     web:
       client:
@@ -98,6 +104,7 @@ spring:
   zipkin:
     sender:
       type: kafka
+
 
 mybatis-plus:
 #  mapper-locations: classpath:/mapper/*Mapper.xml

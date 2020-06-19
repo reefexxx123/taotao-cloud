@@ -63,7 +63,7 @@ public class RedisTokensServiceImpl implements ITokensService {
     private ClientDetailsService clientDetailsService;
 
     @Override
-    public Result<PageResult<TokenVo>> listTokens(Map<String, Object> params, String clientId) {
+    public PageResult<TokenVo> listTokens(Map<String, Object> params, String clientId) {
         Integer page = MapUtils.getInteger(params, "page");
         Integer limit = MapUtils.getInteger(params, "limit");
         int[] startEnds = PageUtil.transToStartEnd(page, limit);
@@ -94,9 +94,7 @@ public class RedisTokensServiceImpl implements ITokensService {
                 result.add(tokenVo);
             }
         }
-        PageResult<TokenVo> pageResult = PageResult.<TokenVo>builder().data(result).code(ResultEnum.SUCCESS.getCode())
-                .total(size).currentPage(page).build();
-        return Result.succeed(pageResult);
+        return PageResult.succeed(size, limit, page, result);
     }
 
     @Override

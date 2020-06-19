@@ -1,7 +1,7 @@
 package com.taotao.cloud.product.biz;
 
 import com.taotao.cloud.auth.annotation.EnableTaoTaoOauth2Client;
-import com.taotao.cloud.data.annotation.EnableTaoTaoTenantAutoConfigure;
+import com.taotao.cloud.data.annotation.EnableTaoTaoTenantClient;
 import com.taotao.cloud.ribbon.annotation.EnableTaoTaoFeignInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableDiscoveryClient
 @EnableTaoTaoFeignInterceptor
 @EnableTaoTaoOauth2Client
-@EnableTaoTaoTenantAutoConfigure
+@EnableTaoTaoTenantClient
 @EnableTransactionManagement
 @EnableFeignClients(basePackages = "com.taotao.cloud.*.api.feign")
 @MapperScan(value = "com.taotao.cloud.product.biz.mapper")
