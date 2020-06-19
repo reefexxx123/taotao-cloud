@@ -1,6 +1,5 @@
 package com.taotao.cloud.log.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.taotao.cloud.common.utils.GsonUtil;
 import com.taotao.cloud.log.feign.RemoteLogService;
 import com.taotao.cloud.log.service.ISysLogService;

@@ -7,7 +7,7 @@
 package com.taotao.cloud.message.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSONObject;
+import com.taotao.cloud.common.utils.GsonUtil;
 import com.taotao.cloud.message.domain.SmsResponse;
 import com.taotao.cloud.message.properties.MiaoDiYunSmsProperties;
 import com.taotao.cloud.message.properties.SmsProperties;
@@ -21,6 +21,7 @@ import org.springframework.web.client.RestTemplate;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * <br>
@@ -54,9 +55,9 @@ public class MiaoDiYunSmsMessageServiceImpl implements IMiaoDiYunSmsMessageServi
 
         String res = restTemplate.postForObject(miaoDiYunSmsProperties.getBaseUrl(), map, String.class);
 
-        JSONObject jsonObject = JSONObject.parseObject(res);
+        Map object = GsonUtil.gson().fromJson(res, Map.class);
         SmsResponse smsResponse = new SmsResponse();
-        String respCode = jsonObject.getString("respCode");
+        String respCode = (String) object.get("respCode");
 
         if (StrUtil.isNotEmpty(respCode) && "0000".equals(respCode)) {
             log.info(phone + ",发送短信成功");
@@ -65,7 +66,7 @@ public class MiaoDiYunSmsMessageServiceImpl implements IMiaoDiYunSmsMessageServi
             smsResponse.setSmsTime(System.nanoTime() + "");
             return smsResponse;
         } else {
-            log.error(phone + ",发送短信失败:{}", jsonObject.getString("respDesc"));
+            log.error(phone + ",发送短信失败:{}", object.get("respDesc"));
         }
         return null;
     }

@@ -1,6 +1,8 @@
 package com.taotao.cloud.auth.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.taotao.cloud.auth.mapper.ClientMapper;
 import com.taotao.cloud.auth.model.Client;
@@ -13,6 +15,7 @@ import com.taotao.cloud.common.model.PageResult;
 import com.taotao.cloud.common.model.Result;
 import com.taotao.cloud.common.service.impl.SuperServiceImpl;
 import com.taotao.cloud.redis.repository.RedisRepository;
+import com.taotao.cloud.uc.api.entity.SysUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * ClientServiceImpl
@@ -64,7 +68,23 @@ public class ClientServiceImpl extends SuperServiceImpl<ClientMapper, Client> im
         } else {
             page = new Page<>(1, -1);
         }
-        List<Client> list = baseMapper.findList(page, params);
+        LambdaQueryWrapper<Client> query = Wrappers.lambdaQuery();
+        Optional.ofNullable(params.get("clientId")).ifPresent(clientId -> query.eq(Client::getClientId, clientId));
+        Optional.ofNullable(params.get("resourceIds")).ifPresent(resourceIds -> query.eq(Client::getResourceIds, resourceIds));
+        Optional.ofNullable(params.get("clientSecret")).ifPresent(clientSecret -> query.eq(Client::getClientSecret, clientSecret));
+        Optional.ofNullable(params.get("scope")).ifPresent(scope -> query.eq(Client::getScope, scope));
+        Optional.ofNullable(params.get("authorizedGrantTypes")).ifPresent(authorizedGrantTypes -> query.eq(Client::getAuthorizedGrantTypes, authorizedGrantTypes));
+        Optional.ofNullable(params.get("webServerRedirectUri")).ifPresent(webServerRedirectUri -> query.eq(Client::getWebServerRedirectUri, webServerRedirectUri));
+        Optional.ofNullable(params.get("authorities")).ifPresent(authorities -> query.eq(Client::getAuthorities, authorities));
+        Optional.ofNullable(params.get("authorities")).ifPresent(authorities -> query.eq(Client::getAuthorities, authorities));
+        Optional.ofNullable(params.get("accessTokenValidity")).ifPresent(accessTokenValidity -> query.eq(Client::getAccessTokenValiditySeconds, accessTokenValidity));
+        Optional.ofNullable(params.get("refreshTokenValidity")).ifPresent(refreshTokenValidity -> query.eq(Client::getRefreshTokenValiditySeconds, refreshTokenValidity));
+        Optional.ofNullable(params.get("additionalInformation")).ifPresent(additionalInformation -> query.eq(Client::getAdditionalInformation, additionalInformation));
+        Optional.ofNullable(params.get("additionalInformation")).ifPresent(additionalInformation -> query.eq(Client::getAdditionalInformation, additionalInformation));
+        Optional.ofNullable(params.get("autoapprove")).ifPresent(autoapprove -> query.eq(Client::getAutoapprove, autoapprove));
+        Optional.ofNullable(params.get("searchKey")).ifPresent(searchKey -> query.like(Client::getClientId, searchKey));
+
+        List<Client> list = baseMapper.findList(page, query);
         page.setRecords(list);
         PageResult<Client> pageResult = PageResult.<Client>builder().data(list).code(ResultEnum.SUCCESS.getCode()).total(page.getTotal())
                 .currentPage(page.getCurrent()).pageSize(page.getSize()).build();

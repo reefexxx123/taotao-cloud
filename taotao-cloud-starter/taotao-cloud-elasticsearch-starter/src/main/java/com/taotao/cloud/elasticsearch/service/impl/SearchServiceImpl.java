@@ -1,6 +1,5 @@
 package com.taotao.cloud.elasticsearch.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.taotao.cloud.common.model.PageResult;
 import com.taotao.cloud.elasticsearch.model.SearchDto;
 import com.taotao.cloud.elasticsearch.service.ISearchService;
@@ -31,7 +30,7 @@ public class SearchServiceImpl implements ISearchService {
      * @return
      */
     @Override
-    public PageResult<JSONObject> strQuery(String indexName, SearchDto searchDto) throws IOException {
+    public PageResult<String> strQuery(String indexName, SearchDto searchDto) throws IOException {
         return SearchBuilder.builder(elasticsearchRestTemplate, indexName)
                 .setStringQuery(searchDto.getQueryStr())
                 .addSort(searchDto.getSortCol(), SortOrder.DESC)

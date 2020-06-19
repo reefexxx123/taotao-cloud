@@ -18,10 +18,12 @@ public class MenuTreeVo {
      * 对应SysDepart中的id字段,前端数据树中的key
      */
     private Integer key;
+
     /**
      * 对应SysDepart中的id字段,前端数据树中的value
      */
     private String value;
+
     /**
      * 对应depart_name字段,前端数据树中的title
      */

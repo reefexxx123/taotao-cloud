@@ -1,8 +1,8 @@
 package com.taotao.cloud.elasticsearch.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSONObject;
 import com.taotao.cloud.common.model.PageResult;
+import com.taotao.cloud.common.utils.GsonUtil;
 import com.taotao.cloud.elasticsearch.model.LogicDelDto;
 import com.taotao.cloud.elasticsearch.model.SearchDto;
 import com.taotao.cloud.elasticsearch.service.IAggregationService;
@@ -27,12 +27,12 @@ public class QueryServiceImpl implements IQueryService {
     private IAggregationService aggregationService;
 
     @Override
-    public PageResult<JSONObject> strQuery(String indexName, SearchDto searchDto) throws IOException {
+    public PageResult<String> strQuery(String indexName, SearchDto searchDto) throws IOException {
         return strQuery(indexName, searchDto, null);
     }
 
     @Override
-    public PageResult<JSONObject> strQuery(String indexName, SearchDto searchDto, LogicDelDto logicDelDto) throws IOException {
+    public PageResult<String> strQuery(String indexName, SearchDto searchDto, LogicDelDto logicDelDto) throws IOException {
         setLogicDelQueryStr(searchDto, logicDelDto);
         return searchService.strQuery(indexName, searchDto);
     }

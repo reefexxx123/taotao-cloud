@@ -1,7 +1,6 @@
 package com.taotao.cloud.auth.utils;
 
 import cn.hutool.core.util.CharsetUtil;
-import com.alibaba.fastjson.JSON;
 import com.taotao.cloud.common.model.Result;
 import com.taotao.cloud.common.model.SecurityUser;
 import com.taotao.cloud.common.utils.GsonUtil;
@@ -30,7 +29,7 @@ public class SecurityUtil {
         response.setCharacterEncoding(CharsetUtil.UTF_8);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         PrintWriter printWriter = response.getWriter();
-        printWriter.write(JSON.toJSONString(result));
+        printWriter.write(GsonUtil.toGson(result));
         printWriter.flush();
     }
 

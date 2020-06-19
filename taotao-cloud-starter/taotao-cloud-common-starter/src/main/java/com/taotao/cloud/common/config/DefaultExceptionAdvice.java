@@ -5,6 +5,8 @@ import com.taotao.cloud.common.exception.*;
 import com.taotao.cloud.common.model.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -58,25 +60,17 @@ public class DefaultExceptionAdvice {
         return Result.failed(ResultEnum.ERROR.getCode(), e.getMessage());
     }
 
-
-    // ----------------------------------------------------------------
-
-
     @ExceptionHandler({IllegalArgumentException.class})
     public Result<String> badRequestException(NativeWebRequest request, IllegalArgumentException e) {
         printException(request, e);
         return Result.of(e.getMessage(), HttpStatus.BAD_REQUEST.value(), "参数解析失败");
     }
 
-//    /**
-//     * AccessDeniedException异常处理返回json
-//     * 返回状态码:403
-//     */
-//    @ExceptionHandler({AccessDeniedException.class})
-//    public Result<String> badMethodExpressException(NativeWebRequest request, AccessDeniedException e) {
-//        printException(request, e);
-//        return Result.of(e.getMessage(), HttpStatus.FORBIDDEN.value(), "没有权限请求当前方法");
-//    }
+    @ExceptionHandler({AccessDeniedException.class})
+    public Result<String> badMethodExpressException(NativeWebRequest request, AccessDeniedException e) {
+        printException(request, e);
+        return Result.of(e.getMessage(), HttpStatus.FORBIDDEN.value(), "没有权限请求当前方法");
+    }
 
     @ExceptionHandler(value = BindException.class)
     public Result<String> handleBindException(BindException ex) {
@@ -87,55 +81,44 @@ public class DefaultExceptionAdvice {
         return Result.of(msg, HttpStatus.FORBIDDEN.value(), "参数校验错误");
     }
 
-    /**
-     * AccessDeniedException异常处理返回json
-     * 返回状态码:403
-     */
     @ExceptionHandler({MessageException.class})
     public Result<String> badMessageException(NativeWebRequest request, MessageException e) {
         printException(request, e);
         return Result.of(e.getMessage(), HttpStatus.FORBIDDEN.value(), "发送消息异常");
     }
 
-//    /**
-//     * AccessDeniedException异常处理返回json
-//     * 返回状态码:403
-//     */
-//    @ExceptionHandler({UsernameNotFoundException.class})
-//    public Result<String> badUsernameNotFoundException(NativeWebRequest request, UsernameNotFoundException e) {
-//        printException(request, e);
-//        return Result.of(e.getMessage(), HttpStatus.FORBIDDEN.value(), "错误");
-//    }
+    @ExceptionHandler({UsernameNotFoundException.class})
+    public Result<String> badUsernameNotFoundException(NativeWebRequest request, UsernameNotFoundException e) {
+        printException(request, e);
+        return Result.of(e.getMessage(), HttpStatus.FORBIDDEN.value(), "错误");
+    }
 
-    /**
-     * 返回状态码:405
-     */
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
     public Result<String> handleHttpRequestMethodNotSupportedException(NativeWebRequest request, HttpRequestMethodNotSupportedException e) {
         printException(request, e);
         return Result.of(e.getMessage(), HttpStatus.METHOD_NOT_ALLOWED.value(), "不支持当前请求方法");
     }
 
-    /**
-     * 返回状态码:415
-     */
     @ExceptionHandler({HttpMediaTypeNotSupportedException.class})
     public Result<String> handleHttpMediaTypeNotSupportedException(NativeWebRequest request, HttpMediaTypeNotSupportedException e) {
         printException(request, e);
         return Result.of(e.getMessage(), HttpStatus.UNSUPPORTED_MEDIA_TYPE.value(), "不支持当前媒体类型");
     }
 
-    /**
-     * SQLException sql异常处理
-     * 返回状态码:500
-     */
     @ExceptionHandler({SQLException.class})
     public Result<String> handleSQLException(NativeWebRequest request, SQLException e) {
         printException(request, e);
         return Result.of(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value(), "SQLException异常");
     }
 
-
+    /**
+     * 打印异常
+     *
+     * @param request request
+     * @param e       e
+     * @author dengtao
+     * @date 2020/6/19 11:35
+     */
     private void printException(NativeWebRequest request, Exception e) {
         HttpServletRequest nativeRequest = request.getNativeRequest(HttpServletRequest.class);
         if (Objects.nonNull(nativeRequest)) {

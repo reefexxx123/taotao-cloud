@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
  * @version v1.0.0
  * @create 2020/5/18 11:28
  */
+@Controller
 public class CustomSwagger2Controller implements InitializingBean {
     @Resource
     private Environment environment;

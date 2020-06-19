@@ -1,6 +1,5 @@
 package com.taotao.cloud.elasticsearch.service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.taotao.cloud.common.model.PageResult;
 import com.taotao.cloud.elasticsearch.model.LogicDelDto;
 import com.taotao.cloud.elasticsearch.model.SearchDto;
@@ -20,7 +19,7 @@ public interface IQueryService {
      * @param indexName 索引名
      * @param searchDto 搜索Dto
      */
-    PageResult<JSONObject> strQuery(String indexName, SearchDto searchDto) throws IOException;
+    PageResult<String> strQuery(String indexName, SearchDto searchDto) throws IOException;
 
     /**
      * 查询文档列表
@@ -28,7 +27,7 @@ public interface IQueryService {
      * @param searchDto 搜索Dto
      * @param logicDelDto 逻辑删除Dto
      */
-    PageResult<JSONObject> strQuery(String indexName, SearchDto searchDto, LogicDelDto logicDelDto) throws IOException;
+    PageResult<String> strQuery(String indexName, SearchDto searchDto, LogicDelDto logicDelDto) throws IOException;
 
     /**
      * 访问统计聚合查询

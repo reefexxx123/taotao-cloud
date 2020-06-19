@@ -1,6 +1,5 @@
 package com.taotao.cloud.elasticsearch.service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.taotao.cloud.common.model.PageResult;
 import com.taotao.cloud.elasticsearch.model.SearchDto;
 
@@ -20,5 +19,5 @@ public interface ISearchService {
      * @param searchDto 搜索Dto
      * @return
      */
-    PageResult<JSONObject> strQuery(String indexName, SearchDto searchDto) throws IOException;
+    PageResult<String> strQuery(String indexName, SearchDto searchDto) throws IOException;
 }

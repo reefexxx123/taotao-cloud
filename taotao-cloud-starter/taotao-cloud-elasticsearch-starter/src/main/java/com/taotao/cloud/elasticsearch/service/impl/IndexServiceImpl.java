@@ -1,11 +1,11 @@
 package com.taotao.cloud.elasticsearch.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSONObject;
 import com.carrotsearch.hppc.cursors.ObjectCursor;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.taotao.cloud.common.model.PageResult;
+import com.taotao.cloud.common.utils.GsonUtil;
 import com.taotao.cloud.elasticsearch.model.IndexDto;
 import com.taotao.cloud.elasticsearch.service.IIndexService;
 import org.apache.http.util.EntityUtils;
@@ -108,7 +108,7 @@ public class IndexServiceImpl implements IIndexService {
         String settingsStr = getIndexResponse.getSettings().get(indexName).toString();
         Object settingsObj = null;
         if (StrUtil.isNotEmpty(settingsStr)) {
-            settingsObj = JSONObject.parse(settingsStr);
+            settingsObj = GsonUtil.toGson(settingsStr);
         }
         Map<String, Object> result = new HashMap<>(1);
         Map<String, Object> indexMap = new HashMap<>(3);

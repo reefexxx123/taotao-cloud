@@ -37,7 +37,7 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
             "   job.job_name as jobName " +
             " FROM " +
             "   sys_user AS user " +
-            " LEFT JOIN sys_dept AS dept ON dept.dept_id = user.dept_id " +
+            " LEFT JOIN sys_dept AS dept ON dept.id = user.dept_id " +
             " LEFT JOIN sys_job AS job ON job.id = user.job_id " +
             "   ${ew.customSqlSegment}")
     IPage<SysUser> getUserVoListPage(Page<SysUser> page, @Param(Constants.WRAPPER) Wrapper<SysUser> wrapper, DataScope dataScope);

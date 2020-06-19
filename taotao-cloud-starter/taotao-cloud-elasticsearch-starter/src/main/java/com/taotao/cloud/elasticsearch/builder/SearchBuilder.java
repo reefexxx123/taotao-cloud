@@ -3,9 +3,9 @@ package com.taotao.cloud.elasticsearch.builder;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import cn.hutool.json.JSON;
 import com.taotao.cloud.common.model.PageResult;
+import com.taotao.cloud.common.utils.GsonUtil;
 import lombok.Data;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
@@ -31,7 +31,7 @@ import java.util.Map;
  *
  * @author dengtao
  * @date 2020/5/3 06:49
-*/
+ */
 @Data
 public class SearchBuilder {
     /**
@@ -55,6 +55,7 @@ public class SearchBuilder {
 
     /**
      * 生成SearchBuilder实例
+     *
      * @param elasticsearchTemplate
      * @param indexName
      */
@@ -68,6 +69,7 @@ public class SearchBuilder {
 
     /**
      * 生成SearchBuilder实例
+     *
      * @param elasticsearchTemplate
      */
     public static SearchBuilder builder(ElasticsearchRestTemplate elasticsearchTemplate) {
@@ -80,6 +82,7 @@ public class SearchBuilder {
 
     /**
      * 设置索引名
+     *
      * @param indices 索引名数组
      */
     public SearchBuilder setIndices(String... indices) {
@@ -91,6 +94,7 @@ public class SearchBuilder {
 
     /**
      * 生成queryStringQuery查询
+     *
      * @param queryStr 查询关键字
      */
     public SearchBuilder setStringQuery(String queryStr) {
@@ -106,7 +110,8 @@ public class SearchBuilder {
 
     /**
      * 设置分页
-     * @param page 当前页数
+     *
+     * @param page  当前页数
      * @param limit 每页显示数
      */
     public SearchBuilder setPage(Integer page, Integer limit) {
@@ -119,6 +124,7 @@ public class SearchBuilder {
 
     /**
      * 增加排序
+     *
      * @param field 排序字段
      * @param order 顺序方向
      */
@@ -131,7 +137,8 @@ public class SearchBuilder {
 
     /**
      * 设置高亮
-     * @param preTags 高亮处理前缀
+     *
+     * @param preTags  高亮处理前缀
      * @param postTags 高亮处理后缀
      */
     public SearchBuilder setHighlight(String field, String preTags, String postTags) {
@@ -147,6 +154,7 @@ public class SearchBuilder {
 
     /**
      * 设置是否需要高亮处理
+     *
      * @param isHighlighter 是否需要高亮处理
      */
     public SearchBuilder setIsHighlight(Boolean isHighlighter) {
@@ -159,6 +167,7 @@ public class SearchBuilder {
 
     /**
      * 设置查询路由
+     *
      * @param routing 路由数组
      */
     public SearchBuilder setRouting(String... routing) {
@@ -178,46 +187,48 @@ public class SearchBuilder {
     /**
      * 返回列表结果 List<JSONObject>
      */
-    public List<JSONObject> getList() throws IOException {
+    public List<String> getList() throws IOException {
         return getList(this.get().getHits());
     }
 
     /**
      * 返回分页结果 PageResult<JSONObject>
      */
-    public PageResult<JSONObject> getPage() throws IOException {
+    public PageResult<String> getPage() throws IOException {
         return this.getPage(null, null);
     }
 
     /**
      * 返回分页结果 PageResult<JSONObject>
-     * @param page 当前页数
+     *
+     * @param page  当前页数
      * @param limit 每页显示
      */
-    public PageResult<JSONObject> getPage(Integer page, Integer limit) throws IOException {
+    public PageResult<String> getPage(Integer page, Integer limit) throws IOException {
         this.setPage(page, limit);
         SearchResponse response = this.get();
         SearchHits searchHits = response.getHits();
         long totalCnt = searchHits.getTotalHits();
-        List<JSONObject> list = getList(searchHits);
-        return PageResult.<JSONObject>builder().data(list).code(0).total(totalCnt).build();
+        List<String> list = getList(searchHits);
+        return PageResult.<String>builder().data(list).code(0).total(totalCnt).build();
     }
 
     /**
      * 返回JSON列表数据
      */
-    private List<JSONObject> getList(SearchHits searchHits) {
-        List<JSONObject> list = new ArrayList<>();
+    private List<String> getList(SearchHits searchHits) {
+        List<String> list = new ArrayList<>();
         if (searchHits != null) {
             searchHits.forEach(item -> {
-                JSONObject jsonObject = JSON.parseObject(item.getSourceAsString());
-                jsonObject.put("id", item.getId());
+                Map map = GsonUtil.gson().fromJson(item.getSourceAsString(), Map.class);
+                map.put("id", item.getId());
 
                 Map<String, HighlightField> highlightFields = item.getHighlightFields();
                 if (highlightFields != null) {
-                    populateHighLightedFields(jsonObject, highlightFields);
+                    populateHighLightedFields(map, highlightFields);
                 }
-                list.add(jsonObject);
+                String str = GsonUtil.gson().toJson(map);
+                list.add(str);
             });
         }
         return list;
@@ -225,7 +236,8 @@ public class SearchBuilder {
 
     /**
      * 组装高亮字符
-     * @param result 目标对象
+     *
+     * @param result          目标对象
      * @param highlightFields 高亮配置
      */
     private <T> void populateHighLightedFields(T result, Map<String, HighlightField> highlightFields) {
@@ -236,6 +248,7 @@ public class SearchBuilder {
             }
         }
     }
+
     /**
      * 拼凑数组为字符串
      */
