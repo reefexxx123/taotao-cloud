@@ -17,11 +17,6 @@
             <artifactId>taotao-cloud-common-starter</artifactId>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>com.taotao.cloud</groupId>-->
-<!--            <artifactId>taotao-cloud-log-starter</artifactId>-->
-<!--        </dependency>-->
-
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
@@ -45,6 +40,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
@@ -61,6 +57,7 @@
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
