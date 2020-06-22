@@ -38,6 +38,16 @@
         </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
+            <artifactId>taotao-cloud-sentinel-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.dataformat</groupId>
+                    <artifactId>jackson-dataformat-xml</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-message-starter</artifactId>
         </dependency>
         <dependency>

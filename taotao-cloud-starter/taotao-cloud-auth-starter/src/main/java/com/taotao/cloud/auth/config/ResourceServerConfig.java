@@ -17,8 +17,10 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 import org.springframework.security.oauth2.provider.expression.OAuth2WebSecurityExpressionHandler;
+import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
 
@@ -45,6 +47,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter implem
     private OAuth2AccessDeniedHandler oAuth2AccessDeniedHandler;
     @Resource
     private SecurityProperties securityProperties;
+    @Resource
+    private RemoteTokenServices remoteTokenServices;
+    @Resource
+    private RestTemplate restTemplate;
 
     @Override
     public void afterPropertiesSet() {
@@ -77,7 +83,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter implem
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+        remoteTokenServices.setRestTemplate(restTemplate);
         resources.tokenStore(tokenStore)
+                .tokenServices(remoteTokenServices)
                 .stateless(true)
                 .authenticationEntryPoint(authenticationEntryPoint)
                 .expressionHandler(expressionHandler)
