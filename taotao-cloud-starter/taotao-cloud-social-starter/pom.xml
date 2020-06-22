@@ -12,11 +12,6 @@
     <artifactId>taotao-cloud-social-starter</artifactId>
 
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>com.taotao.cloud</groupId>-->
-<!--            <artifactId>taotao-cloud-auth-starter</artifactId>-->
-<!--        </dependency>-->
-
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-uc-api</artifactId>
