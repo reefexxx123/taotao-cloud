@@ -17,7 +17,8 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
     @Select("SELECT m.perms " +
             "FROM sys_menu m, sys_user u, sys_user_role ur, sys_role_menu rm " +
-            "WHERE u.user_id = #{user_id} and u.user_id = ur.user_id and ur.role_id = rm.role_id and rm.menu_id = m.menu_id")
+            "WHERE u.user_id = #{userId} and u.user_id = ur.user_id " +
+            "      AND ur.role_id = rm.role_id and rm.menu_id = m.menu_id")
     List<String> findPermsByUserId(@Param(value = "userId") Integer userId);
 
 }

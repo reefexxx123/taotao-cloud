@@ -7,6 +7,10 @@ server:
     direct-buffers: true
     io-threads: 24
     worker-threads: 1500
+csp:
+  sentinel:
+    api:
+      port: 8719
 
 spring:
   cache:
@@ -42,6 +46,16 @@ spring:
     #        server-addr: 127.0.0.1:8848
     #        namespace: f402a0ea-5ce7-43cc-b19b-3fb7ded6e46e
     #        file-extension: yml
+    sentinel:
+      transport:
+        dashboard: 172.16.10.221:8858
+        port: 8718
+      scg:
+        fallback:
+          mode: response
+          response-status: 200
+          response-body: "{'data': null, 'code': 500,'message': '访问频繁,进入系统熔断'}"
+      eager: true
     gateway:
       loadbalancer:
         use404: false
@@ -133,14 +147,14 @@ spring:
                 redis-rate-limiter.replenishRate: 1
                 #令牌桶的容量，允许在一秒钟内完成的最大请求数
                 redis-rate-limiter.burstCapacity: 5
-      default-filters:
-        # 降级配置
-        - name: Hystrix
-          args:
-            name: default
-            fallbackUri: 'forward:/fallback'
+  #      default-filters:
+  #        # 降级配置
+  #        - name: Hystrix
+  #          args:
+  #            name: default
+  #            fallbackUri: 'forward:/fallback'
   kafka:
-#    bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:127.0.0.1}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
+    #    bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:127.0.0.1}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
     bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:172.16.10.221}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
     producer:
       # 发生错误后，消息重发的次数。
@@ -196,28 +210,28 @@ spring:
 #      filter:
 #        enabled: true
 
-hystrix:
-  threadpool:
-    default:
-      coreSize: 1200
-      maximumSize: 15000
-      allowMaximumSizeToDivergeFromCoreSize: true
-      maxQueueSize: 2000
-      queueSizeRejectionThreshold: 1800
-  command:
-    default:
-      circuitBreaker:
-        # 当在配置时间窗口内达到此数量的失败后，进行短路。默认20个
-        requestVolumeThreshold: 30
-        # 触发短路的时间值，当该值设为5000时，则当触发 circuit break 后的5000毫秒内都会拒绝request
-        # 也就是5000毫秒后才会关闭circuit。默认5000
-        sleepWindowInMilliseconds: 45000
-      execution:
-        timeout:
-          enabled: true
-        isolation:
-          thread:
-            timeoutInMilliseconds: 90000
+#hystrix:
+#  threadpool:
+#    default:
+#      coreSize: 1200
+#      maximumSize: 15000
+#      allowMaximumSizeToDivergeFromCoreSize: true
+#      maxQueueSize: 2000
+#      queueSizeRejectionThreshold: 1800
+#  command:
+#    default:
+#      circuitBreaker:
+#        # 当在配置时间窗口内达到此数量的失败后，进行短路。默认20个
+#        requestVolumeThreshold: 30
+#        # 触发短路的时间值，当该值设为5000时，则当触发 circuit break 后的5000毫秒内都会拒绝request
+#        # 也就是5000毫秒后才会关闭circuit。默认5000
+#        sleepWindowInMilliseconds: 45000
+#      execution:
+#        timeout:
+#          enabled: true
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 90000
 
 ribbon:
   eager-load:
@@ -234,7 +248,7 @@ ribbon:
   MaxAutoRetriesNextServer: 1
 
 feign:
-  hystrix:
+  sentinel:
     enabled: true
 
 taotao:
@@ -291,6 +305,9 @@ management:
     web:
       exposure:
         include: '*'
+      cors:
+        allowed-origins: '*'
+        allowed-methods: '*'
   metrics:
     tags:
       application: ${spring.application.name}

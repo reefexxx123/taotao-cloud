@@ -50,7 +50,8 @@ public class SecurityUtil {
         if (principal instanceof SecurityUser) {
             return (SecurityUser) principal;
         }else if(principal instanceof Map){
-            return GsonUtil.gson().fromJson(GsonUtil.toGson(principal), SecurityUser.class);
+            return null;
+//            return GsonUtil.gson().fromJson(GsonUtil.toGson(principal), SecurityUser.class);
         }
         return null;
     }

@@ -23,7 +23,7 @@ import org.springframework.web.client.RestTemplate;
  *
  * @author dengtao
  * @date 2020/6/15 11:31
-*/
+ */
 @Slf4j
 @EnableConfigurationProperties(RibbonIsolationProperties.class)
 public class RibbonAutoConfiguration implements InitializingBean {
@@ -53,9 +53,6 @@ public class RibbonAutoConfiguration implements InitializingBean {
         return new TenantFilter();
     }
 
-    /**
-     * httpclient 实现的ClientHttpRequestFactory
-     */
     @Bean
     public ClientHttpRequestFactory httpRequestFactory(@Autowired HttpClient httpClient) {
         return new HttpComponentsClientHttpRequestFactory(httpClient);

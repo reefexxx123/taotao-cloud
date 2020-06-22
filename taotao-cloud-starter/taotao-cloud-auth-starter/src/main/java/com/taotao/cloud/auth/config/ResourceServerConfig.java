@@ -2,10 +2,17 @@ package com.taotao.cloud.auth.config;
 
 import com.taotao.cloud.auth.properties.SecurityProperties;
 import com.taotao.cloud.common.constant.StarterNameConstant;
+import com.taotao.cloud.common.utils.ContextUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerTokenServicesConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -17,10 +24,13 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 import org.springframework.security.oauth2.provider.expression.OAuth2WebSecurityExpressionHandler;
+import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
+import java.util.Objects;
 
 /**
  * oauth2资源服务器
@@ -29,8 +39,8 @@ import javax.annotation.Resource;
  * @date 2020/4/30 09:04
  */
 @Slf4j
-@EnableResourceServer
 @Order(100)
+@EnableResourceServer
 @ConditionalOnProperty(prefix = "taotao.cloud.oauth2.security", name = "enabled", havingValue = "true")
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter implements InitializingBean {
@@ -45,6 +55,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter implem
     private OAuth2AccessDeniedHandler oAuth2AccessDeniedHandler;
     @Resource
     private SecurityProperties securityProperties;
+    @Resource
+    private RestTemplate restTemplate;
 
     @Override
     public void afterPropertiesSet() {
@@ -78,10 +90,15 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter implem
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         resources.tokenStore(tokenStore)
-                .stateless(true)
                 .authenticationEntryPoint(authenticationEntryPoint)
                 .expressionHandler(expressionHandler)
                 .accessDeniedHandler(oAuth2AccessDeniedHandler);
+
+        RemoteTokenServices remoteTokenServices = ContextUtil.getBean(RemoteTokenServices.class, true);
+        if (Objects.nonNull(remoteTokenServices)) {
+            remoteTokenServices.setRestTemplate(restTemplate);
+            resources.tokenServices(remoteTokenServices);
+        }
     }
 
     /**

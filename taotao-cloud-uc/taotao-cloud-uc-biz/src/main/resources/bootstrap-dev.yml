@@ -23,6 +23,11 @@ spring:
   #        server-addr: 127.0.0.1:8848
   #        namespace: 2c421c7d-7c62-422e-a4f3-996a2d301c67
   #        file-extension: yml
+    sentinel:
+      transport:
+        dashboard: 172.16.10.221:8858
+        port: 8719
+      eager: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:172.16.10.221}:${TAOTAO-CLOUD-NACOS-PORT:3306}/taotao-cloud-uc-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
@@ -137,10 +142,10 @@ security:
       client-secret: server
       scope: server
       grant-type: client_credentials
-      access-token-uri: http://127.0.0.1:9800/oauth/token
+      access-token-uri: http://taotao-cloud-auth-center/oauth/token
     resource:
       # ec-auth 为服务名称 必须使用服务名称
-      token-info-uri: http://127.0.0.1:9800/oauth/check_token
+      token-info-uri: http://taotao-cloud-auth-center/oauth/check_token
 #      user-info-uri: http://127.0.0.1:9800/current/user
 #      prefer-token-info: false
 #    resource:
@@ -159,15 +164,15 @@ taotao:
         ignore:
           # 忽略认证的地址
           http-urls: >
-            /user/info/**,
+            /backend/user/info/**,
             /api-docs,
-            /qq,
-            /gitee,
-            /github,
-            /user/login,
-            /repeat/check,
+            /backend/qq,
+            /backend/gitee,
+            /backend/github,
+            /backend/user/login,
+            /backend/repeat/check,
             /socket/**,
-            /log
+            /backend/log
     # swagger模块
     swagger:
       enabled: true
@@ -264,9 +269,9 @@ taotao:
 
 feign:
   sentinel:
-    enabled: false
-  hystrix:
     enabled: true
+  hystrix:
+    enabled: false
   okhttp:
     enabled: true
   httpclient:
@@ -286,32 +291,32 @@ feign:
     response:
       enabled: true
 
-hystrix:
-  threadpool:
-    default:
-      coreSize: 1200
-      maximumSize: 15000
-      allowMaximumSizeToDivergeFromCoreSize: true
-      maxQueueSize: 2000
-      queueSizeRejectionThreshold: 1800
-  command:
-    default:
-      circuitBreaker:
-        # 当在配置时间窗口内达到此数量的失败后，进行短路。默认20个
-        requestVolumeThreshold: 30
-        # 触发短路的时间值，当该值设为5000时，则当触发 circuit break 后的5000毫秒内都会拒绝request
-        # 也就是5000毫秒后才会关闭circuit。默认5000
-        sleepWindowInMilliseconds: 45000
-      execution:
-        timeout:
-          enabled: false
-        isolation:
-          strategy: SEMAPHORE
-          semaphore:
-            maxConcurrentRequests: 100
-          thread:
-            # 断路器超时时间，默认1000ms
-            timeoutInMilliseconds: 300000
+#hystrix:
+#  threadpool:
+#    default:
+#      coreSize: 1200
+#      maximumSize: 15000
+#      allowMaximumSizeToDivergeFromCoreSize: true
+#      maxQueueSize: 2000
+#      queueSizeRejectionThreshold: 1800
+#  command:
+#    default:
+#      circuitBreaker:
+#        # 当在配置时间窗口内达到此数量的失败后，进行短路。默认20个
+#        requestVolumeThreshold: 30
+#        # 触发短路的时间值，当该值设为5000时，则当触发 circuit break 后的5000毫秒内都会拒绝request
+#        # 也就是5000毫秒后才会关闭circuit。默认5000
+#        sleepWindowInMilliseconds: 45000
+#      execution:
+#        timeout:
+#          enabled: false
+#        isolation:
+#          strategy: SEMAPHORE
+#          semaphore:
+#            maxConcurrentRequests: 100
+#          thread:
+#            # 断路器超时时间，默认1000ms
+#            timeoutInMilliseconds: 300000
 #        isolation:
 #          thread:
 #            timeoutInMilliseconds: 90000

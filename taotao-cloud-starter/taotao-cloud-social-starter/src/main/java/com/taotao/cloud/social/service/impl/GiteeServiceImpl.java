@@ -46,7 +46,8 @@ public class GiteeServiceImpl implements GiteeService {
 
             String url = String.format("https://gitee.com/oauth/token?grant_type=authorization_code&code=%s&client_id=%s&redirect_uri=%s&client_secret=%s", code, clientId, redirectUri, clientSecret);
             String post = HttpUtil.post(url, "", 5000);
-            Map<String, Object> map = GsonUtil.gson().fromJson(post, Map.class);
+//            Map<String, Object> map = GsonUtil.gson().fromJson(post, Map.class);
+            Map<String, Object> map = null;
             String accessToken = (String) map.get("access_token");
             String scope = (String) map.get("scope");
             String refreshToken = (String) map.get("refresh_token");
@@ -55,7 +56,8 @@ public class GiteeServiceImpl implements GiteeService {
 
             if (accessToken != null && !"".equals(accessToken)) {
                 String userInfoUrl = String.format(URL_GET_USRE_INFO + "?access_token=%s", accessToken);
-                Map<String, Object> user = GsonUtil.gson().fromJson(HttpUtil.get(userInfoUrl, 5000), Map.class);
+//                Map<String, Object> user = GsonUtil.gson().fromJson(HttpUtil.get(userInfoUrl, 5000), Map.class);
+                Map<String, Object> user = null;
 //                JSONObject user = JSON.parseObject(HttpUtil.get(userInfoUrl, 5000));
                 if (ObjectUtil.isNotNull(user)) {
                     Integer id = (Integer) user.get("id");

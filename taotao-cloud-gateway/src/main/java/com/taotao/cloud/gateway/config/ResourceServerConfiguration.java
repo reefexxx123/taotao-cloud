@@ -41,13 +41,11 @@ public class ResourceServerConfiguration {
 
     @Bean
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
-//        //认证处理器
+        //认证处理器
         ReactiveAuthenticationManager customAuthenticationManager = new CustomAuthenticationManager(tokenStore);
-
         //token转换器
         ServerBearerTokenAuthenticationConverter tokenAuthenticationConverter = new ServerBearerTokenAuthenticationConverter();
         tokenAuthenticationConverter.setAllowUriQueryParameter(true);
-
         JsonAuthenticationEntryPoint entryPoint = new JsonAuthenticationEntryPoint();
         //oauth2认证过滤器
         AuthenticationWebFilter oauth2Filter = new AuthenticationWebFilter(customAuthenticationManager);

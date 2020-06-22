@@ -220,14 +220,16 @@ public class SearchBuilder {
         List<String> list = new ArrayList<>();
         if (searchHits != null) {
             searchHits.forEach(item -> {
-                Map map = GsonUtil.gson().fromJson(item.getSourceAsString(), Map.class);
+//                Map map = GsonUtil.gson().fromJson(item.getSourceAsString(), Map.class);
+                Map map = null;
                 map.put("id", item.getId());
 
                 Map<String, HighlightField> highlightFields = item.getHighlightFields();
                 if (highlightFields != null) {
                     populateHighLightedFields(map, highlightFields);
                 }
-                String str = GsonUtil.gson().toJson(map);
+//                String str = GsonUtil.gson().toJson(map);
+                String str = null;
                 list.add(str);
             });
         }

@@ -1,5 +1,6 @@
 package com.taotao.cloud.uc.biz;
 
+import com.alibaba.csp.sentinel.transport.config.TransportConfig;
 import com.taotao.cloud.auth.annotation.EnableTaoTaoOauth2Client;
 import com.taotao.cloud.data.annotation.EnableTaoTaoTenantClient;
 import com.taotao.cloud.elasticsearch.annotation.EnableTaoTaoSearchClient;
@@ -27,7 +28,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement(proxyTargetClass = true)
 @MapperScan(value = "com.taotao.cloud.uc.biz.mapper")
 @EnableFeignClients(basePackages = "com.taotao.cloud.*.api.feign")
-@SpringBootApplication()
+@SpringBootApplication
 public class UcBizApplication {
 
     public static void main(String[] args) {

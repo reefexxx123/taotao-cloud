@@ -26,7 +26,7 @@ public interface RemoteUserService {
      * @author dengtao
      * @date 2020/4/29 17:48
      */
-    @GetMapping("/user/info/{username}")
+    @GetMapping("/backend/user/info/{username}")
     Result<SecurityUser> getUserInfoByUsername(@PathVariable("username") String username);
 
     /**
@@ -37,7 +37,7 @@ public interface RemoteUserService {
      * @author dengtao
      * @date 2020/4/29 17:48
      */
-    @GetMapping("/user/info/{mobile}")
+    @GetMapping("/backend/user/info/{mobile}")
     Result<SecurityUser> getUserInfoByMobile(@PathVariable("mobile") String mobile);
 
     /**
@@ -49,7 +49,7 @@ public interface RemoteUserService {
      * @author dengtao
      * @date 2020/4/29 17:47
      */
-    @GetMapping("/user/info/social")
+    @GetMapping("/backend/user/info/social")
     Result<SecurityUser> getUserInfoBySocial(@RequestParam("providerId") String providerId,
                                              @RequestParam("providerUserId") int providerUserId);
 

@@ -34,6 +34,7 @@ public class TraceLogFilter implements GlobalFilter, Ordered {
         if (traceProperties.getEnabled()) {
             //链路追踪id
             String traceId = IdUtil.fastSimpleUUID();
+            MDC.clear();
             MDC.put(CommonConstant.LOG_TRACE_ID, traceId);
             ServerHttpRequest serverHttpRequest = exchange.getRequest().mutate()
                     .headers(h -> h.add(CommonConstant.TRACE_ID_HEADER, traceId))

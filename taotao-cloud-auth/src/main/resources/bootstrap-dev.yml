@@ -25,6 +25,11 @@ spring:
   #        server-addr: 127.0.0.1:8848
   #        namespace: 2c421c7d-7c62-422e-a4f3-996a2d301c67
   #        file-extension: yml
+    sentinel:
+      transport:
+        dashboard: 172.16.10.221:8858
+        port: 8717
+      eager: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:172.16.10.221}:${TAOTAO-CLOUD-NACOS-PORT:3306}/taotao-cloud-auth-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
@@ -105,6 +110,16 @@ spring:
     sender:
       type: kafka
 
+security:
+  oauth2:
+    client:
+      client-id: server
+      client-secret: server
+      scope: server
+      grant-type: client_credentials
+      access-token-uri: http://taotao-cloud-auth-center/oauth/token
+    resource:
+      token-info-uri: http://taotao-cloud-auth-center/oauth/check_token
 
 mybatis-plus:
 #  mapper-locations: classpath:/mapper/*Mapper.xml
@@ -243,28 +258,28 @@ taotao:
       tenant:
         enabled: true
 
-hystrix:
-  threadpool:
-    default:
-      coreSize: 1200
-      maximumSize: 15000
-      allowMaximumSizeToDivergeFromCoreSize: true
-      maxQueueSize: 2000
-      queueSizeRejectionThreshold: 1800
-  command:
-    default:
-      circuitBreaker:
-        # 当在配置时间窗口内达到此数量的失败后，进行短路。默认20个
-        requestVolumeThreshold: 30
-        # 触发短路的时间值，当该值设为5000时，则当触发 circuit break 后的5000毫秒内都会拒绝request
-        # 也就是5000毫秒后才会关闭circuit。默认5000
-        sleepWindowInMilliseconds: 45000
-      execution:
-        timeout:
-          enabled: true
-        isolation:
-          thread:
-            timeoutInMilliseconds: 90000
+#hystrix:
+#  threadpool:
+#    default:
+#      coreSize: 1200
+#      maximumSize: 15000
+#      allowMaximumSizeToDivergeFromCoreSize: true
+#      maxQueueSize: 2000
+#      queueSizeRejectionThreshold: 1800
+#  command:
+#    default:
+#      circuitBreaker:
+#        # 当在配置时间窗口内达到此数量的失败后，进行短路。默认20个
+#        requestVolumeThreshold: 30
+#        # 触发短路的时间值，当该值设为5000时，则当触发 circuit break 后的5000毫秒内都会拒绝request
+#        # 也就是5000毫秒后才会关闭circuit。默认5000
+#        sleepWindowInMilliseconds: 45000
+#      execution:
+#        timeout:
+#          enabled: true
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 90000
 
 ribbon:
   eager-load:
@@ -282,9 +297,9 @@ ribbon:
 
 feign:
   sentinel:
-    enabled: false
-  hystrix:
     enabled: true
+  hystrix:
+    enabled: false
   okhttp:
     enabled: true
   httpclient:

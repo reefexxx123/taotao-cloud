@@ -25,7 +25,6 @@ public class GsonUtil {
         return new GsonBuilder()
                 .disableHtmlEscaping()
                 .setPrettyPrinting()
-                .serializeNulls()
                 .setLongSerializationPolicy(LongSerializationPolicy.STRING)
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateAdapter())
                 .serializeNulls()

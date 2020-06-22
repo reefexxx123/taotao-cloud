@@ -1,8 +1,8 @@
 package com.taotao.cloud.ribbon;
 
-import com.google.gson.Gson;
 import com.taotao.cloud.common.constant.StarterNameConstant;
 import com.taotao.cloud.common.exception.BaseException;
+import com.taotao.cloud.common.utils.GsonUtil;
 import feign.Logger;
 import feign.Response;
 import feign.Retryer;
@@ -34,7 +34,7 @@ public class FeignAutoConfiguration implements InitializingBean {
     }
 
     @Bean
-    Retryer feignRetryer() {
+    Retryer retryer() {
         return new Retryer.Default();
     }
 
@@ -45,14 +45,13 @@ public class FeignAutoConfiguration implements InitializingBean {
 
     @Slf4j
     public static class FeignClientErrorDecoder implements feign.codec.ErrorDecoder {
-        private final Gson gson = new Gson();
-
         @Override
         public Exception decode(String methodKey, Response response) {
             String errorContent;
             try {
                 errorContent = Util.toString(response.body().asReader(Charset.defaultCharset()));
-                return gson.fromJson(errorContent, BaseException.class);
+//                return GsonUtil.gson().fromJson(errorContent, BaseException.class);
+                return null;
             } catch (IOException e) {
                 e.printStackTrace();
                 return new BaseException("500", e);

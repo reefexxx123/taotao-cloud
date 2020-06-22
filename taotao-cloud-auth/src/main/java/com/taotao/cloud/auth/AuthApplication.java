@@ -27,7 +27,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement(proxyTargetClass = true)
 @EnableFeignClients(basePackages = "com.taotao.cloud.*.api.feign")
 @MapperScan(value = "com.taotao.cloud.auth.mapper")
-@SpringBootApplication()
+@SpringBootApplication
 public class AuthApplication {
     public static void main(String[] args) {
         SpringApplication.run(AuthApplication.class, args);

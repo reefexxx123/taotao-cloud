@@ -11,6 +11,7 @@ import org.springframework.web.reactive.function.server.RequestPredicates;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Mono;
 
 /**
  * 特殊路由配置信息
@@ -26,7 +27,7 @@ public class RouterFunctionConfiguration {
     private static final String FALLBACK = "/fallback";
     private static final String CODE = "/code";
 
-    private final HystrixFallbackHandler hystrixFallbackHandler;
+//    private final HystrixFallbackHandler hystrixFallbackHandler;
     private final ImageCodeHandler imageCodeWebHandler;
     private final CustomGatewayProperties customGatewayProperties;
     private final SwaggerResourceHandler swaggerResourceHandler;
@@ -37,7 +38,7 @@ public class RouterFunctionConfiguration {
     public RouterFunction<ServerResponse> routerFunction() {
         return RouterFunctions.route(
                 RequestPredicates.path(FALLBACK)
-                        .and(RequestPredicates.accept(MediaType.TEXT_PLAIN)), hystrixFallbackHandler)
+                        .and(RequestPredicates.accept(MediaType.TEXT_PLAIN)), (request) -> Mono.empty())
                 .andRoute(RequestPredicates.GET(customGatewayProperties.getBaseUri() + CODE)
                         .and(RequestPredicates.accept(MediaType.TEXT_PLAIN)), imageCodeWebHandler)
                 .andRoute(RequestPredicates.GET("/swagger-resources")

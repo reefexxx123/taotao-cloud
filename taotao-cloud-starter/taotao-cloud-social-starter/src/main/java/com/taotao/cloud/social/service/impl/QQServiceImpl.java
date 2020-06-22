@@ -63,7 +63,8 @@ public class QQServiceImpl implements QQService {
 
                 //拼接成最终的获取用户信息的请求地址
                 String object = SocialRestTemplate.getRestTemplate().getForObject(String.format(URL_GET_USERINFO, "", openId), String.class);
-                QQUserInfo userInfo = GsonUtil.gson().fromJson(object,  QQUserInfo.class);
+//                QQUserInfo userInfo = GsonUtil.gson().fromJson(object,  QQUserInfo.class);
+                QQUserInfo userInfo = null;
                 assert userInfo != null;
                 userInfo.setOpenId(openId);
 
