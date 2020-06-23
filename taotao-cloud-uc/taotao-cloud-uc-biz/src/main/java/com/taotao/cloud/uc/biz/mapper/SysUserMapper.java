@@ -28,8 +28,6 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
             "   user.email, " +
             "   user.avatar, " +
             "   user.dept_id, " +
-            "   user.create_time, " +
-            "   user.update_time, " +
             "   user.del_flag, " +
             "   user.lock_flag, " +
             "   dept.name AS deptName, " +

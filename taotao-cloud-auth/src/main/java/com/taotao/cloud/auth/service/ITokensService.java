@@ -40,5 +40,5 @@ public interface ITokensService {
      * @author dengtao
      * @date 2020/4/29 17:07
      */
-    OAuth2AccessTokenDTO getToken(HttpServletRequest request, HttpServletResponse response, AbstractAuthenticationToken token);
+    OAuth2AccessToken getToken(HttpServletRequest request, HttpServletResponse response, AbstractAuthenticationToken token);
 }

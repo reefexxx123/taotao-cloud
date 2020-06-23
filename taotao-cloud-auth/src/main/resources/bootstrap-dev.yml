@@ -18,7 +18,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:172.16.10.221}:${TAOTAO-CLOUD-NACOS-PORT:8848}
+        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:8848}
       config:
         enabled: false
   #      config:
@@ -27,12 +27,12 @@ spring:
   #        file-extension: yml
     sentinel:
       transport:
-        dashboard: 172.16.10.221:8858
+        dashboard: 192.168.99.220:8858
         port: 8718
       eager: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:172.16.10.221}:${TAOTAO-CLOUD-NACOS-PORT:3306}/taotao-cloud-auth-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:3306}/taotao-cloud-auth-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
     username: ${TAOTAO-CLOUD-MYSQL-USERNAME:root}
     password: ${TAOTAO-CLOUD-MYSQL-PASSWORD:123456}
     driver-class-name: com.mysql.jdbc.Driver
@@ -46,7 +46,7 @@ spring:
       auto-commit: true
       pool-name: DatebookHikariCP
   redis:
-    host: ${TAOTAO-CLOUD-REDIS-HOST:172.16.10.221}
+    host: ${TAOTAO-CLOUD-REDIS-HOST:192.168.99.220}
     port: ${TAOTAO-CLOUD-REDIS-PORT:6379}
     password: ${TAOTAO-CLOUD-REDIS-PASSWORD:123456}
     lettuce:
@@ -57,7 +57,7 @@ spring:
         min-idle: 0
   kafka:
 #    bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:127.0.0.1}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
-    bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:172.16.10.221}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
+    bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:192.168.99.220}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
     producer:
       # 发生错误后，消息重发的次数。
       retries: 0
@@ -107,6 +107,7 @@ spring:
     sampler:
       probability: 1.0 # 将采样比例设置为 1.0，也就是全部都需要。默认是 0.1
   zipkin:
+    enabled: false
     sender:
       type: kafka
 

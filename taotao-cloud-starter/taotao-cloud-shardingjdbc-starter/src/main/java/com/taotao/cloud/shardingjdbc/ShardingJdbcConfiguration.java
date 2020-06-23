@@ -23,7 +23,7 @@ import java.beans.ConstructorProperties;
  */
 @Configuration
 @EnableConfigurationProperties({ShardingJdbcProperties.class, SpringBootShardingRuleConfigurationProperties.class, SpringBootMasterSlaveRuleConfigurationProperties.class, SpringBootEncryptRuleConfigurationProperties.class, SpringBootPropertiesConfigurationProperties.class})
-@ConditionalOnProperty(name = "taotao.cloud.sharding.jdbc.enabled", havingValue = "true")
+@ConditionalOnProperty(name = "taotao.cloud.shardingsphere.enabled", havingValue = "true")
 public class ShardingJdbcConfiguration extends SpringBootConfiguration implements ApplicationContextAware {
 
     @Override
