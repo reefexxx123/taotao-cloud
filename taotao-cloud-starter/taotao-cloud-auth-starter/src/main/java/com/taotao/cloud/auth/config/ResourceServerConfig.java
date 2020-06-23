@@ -56,6 +56,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter implem
     @Resource
     private SecurityProperties securityProperties;
     @Resource
+<<<<<<< HEAD
+=======
+    private RemoteTokenServices remoteTokenServices;
+    @Resource
+>>>>>>> dev
     private RestTemplate restTemplate;
 
     @Override
@@ -89,7 +94,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter implem
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+        remoteTokenServices.setRestTemplate(restTemplate);
         resources.tokenStore(tokenStore)
+<<<<<<< HEAD
+=======
+                .tokenServices(remoteTokenServices)
+                .stateless(true)
+>>>>>>> dev
                 .authenticationEntryPoint(authenticationEntryPoint)
                 .expressionHandler(expressionHandler)
                 .accessDeniedHandler(oAuth2AccessDeniedHandler);

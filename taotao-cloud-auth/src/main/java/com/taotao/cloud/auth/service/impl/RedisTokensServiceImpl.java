@@ -98,7 +98,7 @@ public class RedisTokensServiceImpl implements ITokensService {
     }
 
     @Override
-    public OAuth2AccessTokenDTO getToken(HttpServletRequest request, HttpServletResponse response, AbstractAuthenticationToken token) {
+    public OAuth2AccessToken getToken(HttpServletRequest request, HttpServletResponse response, AbstractAuthenticationToken token) {
         try {
             final String[] clientInfos = AuthUtil.extractClient(request);
             String clientId = clientInfos[0];
@@ -115,18 +115,8 @@ public class RedisTokensServiceImpl implements ITokensService {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, authentication);
-            OAuth2AccessToken oAuth2AccessToken = authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
             oAuth2Authentication.setAuthenticated(true);
-
-            OAuth2AccessTokenDTO tokenDTO = new OAuth2AccessTokenDTO();
-            tokenDTO.setToken(oAuth2AccessToken);
-            Object principal = oAuth2Authentication.getUserAuthentication().getPrincipal();
-            if (principal instanceof SecurityUser) {
-                SecurityUser user = (SecurityUser) principal;
-                user.setPassword("");
-                tokenDTO.setUser(user);
-            }
-            return tokenDTO;
+            return authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
         } catch (BadCredentialsException | InternalAuthenticationServiceException e) {
             log.error("获取token失败， {}", e.getMessage());
             return null;

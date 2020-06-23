@@ -4,6 +4,9 @@ import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.core.parser.ISqlParserFilter;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.SqlExplainInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
 import com.taotao.cloud.common.constant.StarterNameConstant;
@@ -59,7 +62,18 @@ public class MybatisPlusAutoConfigure implements InitializingBean {
             paginationInterceptor.setSqlParserList(CollUtil.toList(tenantSqlParser));
             paginationInterceptor.setSqlParserFilter(sqlParserFilter);
         }
+        paginationInterceptor.setCountSqlParser(new JsqlParserCountOptimize());
         return paginationInterceptor;
+    }
+
+    @Bean
+    public SqlExplainInterceptor sqlExplainInterceptor() {
+        return new SqlExplainInterceptor();
+    }
+
+    @Bean
+    public OptimisticLockerInterceptor optimisticLockerInterceptor() {
+        return new OptimisticLockerInterceptor();
     }
 
     @Bean

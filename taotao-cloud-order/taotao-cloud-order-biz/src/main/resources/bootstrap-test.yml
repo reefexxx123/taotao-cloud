@@ -1,5 +1,5 @@
 server:
-  port: 9700
+  port: 9600
   http2:
     enabled: true
   undertow:
@@ -12,42 +12,13 @@ spring:
   main:
     allow-bean-definition-overriding: true
   application:
-    name: taotao-cloud-uc-center
+    name: taotao-cloud-order-center
   cloud:
-    alibaba:
-      seata:
-        tx-service-group: taotao-tx-group
     nacos:
       discovery:
         server-addr: ${TAOTAO-CLOUD-NACOS-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:8848}
         metadata:
           version: 5
-<<<<<<< HEAD
-  #      config:
-  #        server-addr: 127.0.0.1:8848
-  #        namespace: 2c421c7d-7c62-422e-a4f3-996a2d301c67
-  #        file-extension: yml
-    sentinel:
-      transport:
-        dashboard: 172.16.10.221:8858
-        port: 8719
-      eager: true
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:172.16.10.221}:${TAOTAO-CLOUD-NACOS-PORT:3306}/taotao-cloud-uc-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
-    username: ${TAOTAO-CLOUD-MYSQL-USERNAME:root}
-    password: ${TAOTAO-CLOUD-MYSQL-PASSWORD:123456}
-    driver-class-name: com.mysql.jdbc.Driver
-    hikari:
-      connection-test-query: SELECT 1
-      max-lifetime: 120000
-      maximum-pool-size: 15
-      minimum-idle: 3
-      connection-timeout: 30000
-      idle-timeout: 30000
-      auto-commit: true
-      pool-name: DatebookHikariCP
-=======
       config:
         # nacos config 开发阶段关闭
         enabled: false
@@ -61,6 +32,9 @@ spring:
       transport:
         dashboard: ${TAOTAO-CLOUD-SENTINEL-DASHBOARD-HOST:192.168.99.220}:${TAOTAO-CLOUD-SENTINEL-DASHBOARD-PORT:8858}
         port: ${TAOTAO-CLOUD-SENTINEL-PORT:8718}
+    alibaba:
+      seata:
+        tx-service-group: taotao-tx-group
   #    datasource:
   #      type: com.zaxxer.hikari.HikariDataSource
   #      url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:3306}/taotao-cloud-uc-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
@@ -76,7 +50,6 @@ spring:
   #        idle-timeout: 30000
   #        auto-commit: true
   #        pool-name: DatebookHikariCP
->>>>>>> dev
   redis:
     host: ${TAOTAO-CLOUD-REDIS-HOST:192.168.99.220}
     port: ${TAOTAO-CLOUD-REDIS-PORT:6379}
@@ -148,7 +121,7 @@ spring:
       names: mysql-master-1,mysql-slave-1,mysql-master-2,mysql-slave-2
       mysql-master-1:
         type: com.zaxxer.hikari.HikariDataSource
-        jdbc-url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:3306}/taotao-cloud-uc-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+        jdbc-url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:3306}/taotao-cloud-order-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
         username: ${TAOTAO-CLOUD-MYSQL-USERNAME:root}
         password: ${TAOTAO-CLOUD-MYSQL-PASSWORD:123456}
         driver-class-name: com.mysql.jdbc.Driver
@@ -163,7 +136,7 @@ spring:
           pool-name: DatebookHikariCP
       mysql-slave-1:
         type: com.zaxxer.hikari.HikariDataSource
-        jdbc-url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:3307}/taotao-cloud-uc-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+        jdbc-url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:3307}/taotao-cloud-order-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
         username: ${TAOTAO-CLOUD-MYSQL-USERNAME:root}
         password: ${TAOTAO-CLOUD-MYSQL-PASSWORD:123456}
         driver-class-name: com.mysql.jdbc.Driver
@@ -178,7 +151,7 @@ spring:
           pool-name: DatebookHikariCP
       mysql-master-2:
         type: com.zaxxer.hikari.HikariDataSource
-        jdbc-url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:3308}/taotao-cloud-uc-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+        jdbc-url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:3308}/taotao-cloud-order-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
         username: ${TAOTAO-CLOUD-MYSQL-USERNAME:root}
         password: ${TAOTAO-CLOUD-MYSQL-PASSWORD:123456}
         driver-class-name: com.mysql.jdbc.Driver
@@ -193,7 +166,7 @@ spring:
           pool-name: DatebookHikariCP
       mysql-slave-2:
         type: com.zaxxer.hikari.HikariDataSource
-        jdbc-url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:3309}/taotao-cloud-uc-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+        jdbc-url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:3309}/taotao-cloud-order-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
         username: ${TAOTAO-CLOUD-MYSQL-USERNAME:root}
         password: ${TAOTAO-CLOUD-MYSQL-PASSWORD:123456}
         driver-class-name: com.mysql.jdbc.Driver
@@ -213,13 +186,13 @@ spring:
           algorithm-expression: ds_$->{id % 2}
       #      binding-tables: sys_user,sys_dept,sys_job
       tables:
-        sys_user:
+        order_info:
           key-generator-column-name: id
-          actual-data-nodes: ds_$->{0..1}.sys_user_$->{0..3}
+          actual-data-nodes: ds_$->{0..1}.order_info_$->{0..3}
           table-strategy:
             inline:
               sharding-column: id
-              algorithm-expression: sys_user_$->{id % 4}
+              algorithm-expression: order_info_$->{id % 4}
       master-slave-rules:
         ds_0:
           load-balance-algorithm-type: round_robin
@@ -233,9 +206,10 @@ spring:
       sql:
         show: true
 
+
 mybatis-plus:
   #  mapper-locations: classpath:/mapper/*Mapper.xml
-  typeAliasesPackage: com.taotao.cloud.uc.api.entity
+  typeAliasesPackage: com.taotao.cloud.order.api.entity
   global-config:
     db-config:
       id-type: auto
@@ -257,17 +231,7 @@ security:
       grant-type: client_credentials
       access-token-uri: http://taotao-cloud-auth-center/oauth/token
     resource:
-<<<<<<< HEAD
-      # ec-auth 为服务名称 必须使用服务名称
       token-info-uri: http://taotao-cloud-auth-center/oauth/check_token
-#      user-info-uri: http://127.0.0.1:9800/current/user
-#      prefer-token-info: false
-#    resource:
-#      token-info-uri: http://127.0.0.1:9800/oauth/check_token
-#      user-info-uri: http://127.0.0.1:9800/oauth/check_token
-=======
-      token-info-uri: http://taotao-cloud-auth-center/oauth/check_token
->>>>>>> dev
 
 taotao:
   cloud:
@@ -281,20 +245,20 @@ taotao:
         ignore:
           # 忽略认证的地址
           http-urls: >
-            /backend/user/info/**,
+            /user/info/**,
             /api-docs,
-            /backend/qq,
-            /backend/gitee,
-            /backend/github,
-            /backend/user/login,
-            /backend/repeat/check,
+            /qq,
+            /gitee,
+            /github,
+            /user/login,
+            /repeat/check,
             /socket/**,
-            /backend/log
+            /log
     # swagger模块
     swagger:
       enabled: true
-      title: 用户中心
-      description: 用户中心接口文档
+      title: 订单中心
+      description: 订单中心接口文档
       version: 1.0
       license: Apache
       license-url: https://opensource.org/licenses/Apache-2.0Url
@@ -302,7 +266,7 @@ taotao:
         name: dengtao
         url: http://dtbox.top/
         email: 981376577@qq.com
-      base-package: com.taotao.cloud.uc.biz.controller
+      base-package: com.taotao.cloud.order.biz.controller
       host: ${spring.cloud.client.ip-address}:${server.port}
     # ribbon模块
     ribbon:
@@ -320,10 +284,8 @@ taotao:
     redis:
       cache-manager:
         configs:
-          - key: menu
+          - key: order_info
             second: 300
-          - key: user
-            second: 1800
     # 消息模块
     message:
       sms:

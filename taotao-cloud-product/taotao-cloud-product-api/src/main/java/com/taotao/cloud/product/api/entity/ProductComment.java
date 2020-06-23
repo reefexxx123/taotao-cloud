@@ -25,8 +25,8 @@ public class ProductComment extends Model<ProductComment> {
 
     private static final long serialVersionUID = 3522870103927904950L;
 
-    @TableId(value = "product_comment_id", type = IdType.AUTO)
-    private Integer productCommentId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
     private String productSpecName;
 

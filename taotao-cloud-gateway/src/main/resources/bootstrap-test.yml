@@ -7,10 +7,6 @@ server:
     direct-buffers: true
     io-threads: 24
     worker-threads: 1500
-csp:
-  sentinel:
-    api:
-      port: 8719
 
 spring:
   cache:
@@ -42,16 +38,6 @@ spring:
       # 开发时候关闭nacos配置中心
       config:
         enabled: false
-<<<<<<< HEAD
-    #      config:
-    #        server-addr: 127.0.0.1:8848
-    #        namespace: f402a0ea-5ce7-43cc-b19b-3fb7ded6e46e
-    #        file-extension: yml
-    sentinel:
-      transport:
-        dashboard: 172.16.10.221:8858
-        port: 8718
-=======
         server-addr: ${TAOTAO-CLOUD-NACOS-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:8848}
         namespace: f402a0ea-5ce7-43cc-b19b-3fb7ded6e46e
         file-extension: yml
@@ -59,7 +45,6 @@ spring:
       transport:
         dashboard: ${TAOTAO-CLOUD-SENTINEL-DASHBOARD-HOST:192.168.99.220}:${TAOTAO-CLOUD-SENTINEL-DASHBOARD-PORT:8858}
         port: ${TAOTAO-CLOUD-SENTINEL-PORT:8719}
->>>>>>> dev
       scg:
         fallback:
           mode: response
@@ -154,17 +139,6 @@ spring:
                 redis-rate-limiter.replenishRate: 1
                 #令牌桶的容量，允许在一秒钟内完成的最大请求数
                 redis-rate-limiter.burstCapacity: 5
-<<<<<<< HEAD
-  #      default-filters:
-  #        # 降级配置
-  #        - name: Hystrix
-  #          args:
-  #            name: default
-  #            fallbackUri: 'forward:/fallback'
-  kafka:
-    #    bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:127.0.0.1}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
-    bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:172.16.10.221}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
-=======
 #      default-filters:
 #        # 降级配置
 #        - name: Hystrix
@@ -173,7 +147,6 @@ spring:
 #            fallbackUri: 'forward:/fallback'
   kafka:
     bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:192.168.99.220}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
->>>>>>> dev
     producer:
       retries: 0
       batch-size: 16384
@@ -306,9 +279,6 @@ management:
     web:
       exposure:
         include: '*'
-      cors:
-        allowed-origins: '*'
-        allowed-methods: '*'
   metrics:
     tags:
       application: ${spring.application.name}

@@ -7,6 +7,7 @@
 package com.taotao.cloud.auth.dto;
 
 import com.taotao.cloud.common.model.SecurityUser;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -19,17 +20,12 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
  * @create 2020/5/14 17:03
  */
 @Data
+@ApiModel(value = "")
 public class OAuth2AccessTokenDTO {
 
-    /**
-     * token 信息
-     */
     @ApiModelProperty(value = "token 信息")
     private OAuth2AccessToken token;
 
-    /**
-     * 登录用户信息
-     */
     @ApiModelProperty(value = "登录用户")
     private SecurityUser user;
 }

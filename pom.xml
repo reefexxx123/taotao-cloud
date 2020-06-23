@@ -36,19 +36,19 @@
         <swagger.mg.ui.version>1.0.6</swagger.mg.ui.version>
         <swagger.butler.version>2.0.1</swagger.butler.version>
         <swagger.models.version>1.5.21</swagger.models.version>
+        <swagger.bootstrap.ui.version>1.9.6</swagger.bootstrap.ui.version>
         <knife4j.version>2.0.2</knife4j.version>
 
-        <lombok.version>1.18.12</lombok.version>
         <mysql.version>5.1.47</mysql.version>
-
-        <servlet-api.version>4.0.1</servlet-api.version>
         <mybatis-plus-boot-starter.version>3.3.1</mybatis-plus-boot-starter.version>
-        <easyCaptcha.version>1.6.2</easyCaptcha.version>
+
+        <lombok.version>1.18.12</lombok.version>
         <hutool.version>5.1.4</hutool.version>
-
+        <servlet-api.version>4.0.1</servlet-api.version>
+        <easyCaptcha.version>1.6.2</easyCaptcha.version>
         <transmittable.version>2.11.4</transmittable.version>
-        <commons-io.version>2.6</commons-io.version>
 
+        <commons-io.version>2.6</commons-io.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <commons-collections4.version>4.4</commons-collections4.version>
 
@@ -60,7 +60,6 @@
         <javassist.version>3.24.1-GA</javassist.version>
         <qcloudsms.version>1.0.6</qcloudsms.version>
         <okhttp.version>3.14.8</okhttp.version>
-        <swagger.bootstrap.ui.version>1.9.6</swagger.bootstrap.ui.version>
         <UserAgentUtils.version>1.21</UserAgentUtils.version>
         <xxl-job.version>2.2.0</xxl-job.version>
 
@@ -96,6 +95,7 @@
                 <scope>import</scope>
             </dependency>
 
+            <!-- commons -->
             <dependency>
                 <groupId>commons-collections</groupId>
                 <artifactId>commons-collections</artifactId>
@@ -106,6 +106,16 @@
                 <artifactId>commons-collections4</artifactId>
                 <version>${commons-collections4.version}</version>
             </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
 
             <!-- lombok -->
             <dependency>
@@ -114,6 +124,7 @@
                 <version>${lombok.version}</version>
             </dependency>
 
+            <!-- mysql -->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
@@ -126,6 +137,7 @@
                 <artifactId>easy-captcha</artifactId>
                 <version>${easyCaptcha.version}</version>
             </dependency>
+
             <!-- hutool java工具类库  -->
             <dependency>
                 <groupId>cn.hutool</groupId>
@@ -182,6 +194,7 @@
                 <version>${mybatis-plus-boot-starter.version}</version>
             </dependency>
 
+
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
@@ -204,18 +217,6 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>29.0-jre</version>
-            </dependency>
-
-            <dependency>
-                <groupId>commons-io</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>${commons-io.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>commons-lang</groupId>
-                <artifactId>commons-lang</artifactId>
-                <version>${commons-io.version}</version>
             </dependency>
 
             <!-- 七牛依赖 -->
@@ -362,6 +363,11 @@
             <dependency>
                 <groupId>com.taotao.cloud</groupId>
                 <artifactId>taotao-cloud-swagger-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taotao.cloud</groupId>
+                <artifactId>taotao-cloud-seata-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

@@ -16,51 +16,72 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:8848}
+        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:8848}
         metadata:
           version: 5
-  #      config:
-  #        server-addr: 127.0.0.1:8848
-  #        namespace: 2c421c7d-7c62-422e-a4f3-996a2d301c67
-  #        file-extension: yml
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:3306}/taotao-cloud-order-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
-    username: ${TAOTAO-CLOUD-MYSQL-USERNAME:root}
-    password: ${TAOTAO-CLOUD-MYSQL-PASSWORD:123456}
-    driver-class-name: com.mysql.jdbc.Driver
-    hikari:
-      connection-test-query: SELECT 1
-      max-lifetime: 120000
-      maximum-pool-size: 15
-      minimum-idle: 3
-      connection-timeout: 30000
-      idle-timeout: 30000
-      auto-commit: true
-      pool-name: DatebookHikariCP
+      config:
+        # nacos config 开发阶段关闭
+        enabled: false
+        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:8848}
+        namespace: 2c421c7d-7c62-422e-a4f3-996a2d301c67
+        file-extension: yml
+    sentinel:
+      # sentinel 开发阶段关闭
+      enabled: true
+      eager: true
+      transport:
+        dashboard: ${TAOTAO-CLOUD-SENTINEL-DASHBOARD-HOST:192.168.99.220}:${TAOTAO-CLOUD-SENTINEL-DASHBOARD-PORT:8858}
+        port: ${TAOTAO-CLOUD-SENTINEL-PORT:8718}
+    alibaba:
+      seata:
+        tx-service-group: taotao-tx-group
+    alibaba:
+      seata:
+        tx-service-group: taotao-tx-group
+  #    datasource:
+  #      type: com.zaxxer.hikari.HikariDataSource
+  #      url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:3306}/taotao-cloud-uc-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+  #      username: ${TAOTAO-CLOUD-MYSQL-USERNAME:root}
+  #      password: ${TAOTAO-CLOUD-MYSQL-PASSWORD:123456}
+  #      driver-class-name: com.mysql.jdbc.Driver
+  #      hikari:
+  #        connection-test-query: SELECT 1
+  #        max-lifetime: 120000
+  #        maximum-pool-size: 15
+  #        minimum-idle: 3
+  #        connection-timeout: 30000
+  #        idle-timeout: 30000
+  #        auto-commit: true
+  #        pool-name: DatebookHikariCP
   redis:
-    host: 127.0.0.1
-    port: 6379
-    password: 123456
+    host: ${TAOTAO-CLOUD-REDIS-HOST:192.168.99.220}
+    port: ${TAOTAO-CLOUD-REDIS-PORT:6379}
+    password: ${TAOTAO-CLOUD-REDIS-PASSWORD:123456}
     lettuce:
       pool:
         max-active: 8
         max-wait: -1
         max-idle: 8
         min-idle: 0
+  data:
+    elasticsearch:
+      repositories:
+        # elasticsearch 开发阶段关闭
+        enabled: true
+      client:
+        reactive:
+          endpoints:
+            - ${TAOTAO-CLOUD-ELASTICSEARCH-HOST:192.168.99.220}:${TAOTAO-CLOUD-ELASTICSEARCH-PORT:9200}
+          connection-timeout: 5
+          username: ${TAOTAO-CLOUD-ELASTICSEARCH-USERNAME:elastic}
+          password: ${TAOTAO-CLOUD-ELASTICSEARCH-PASSWORD:elastic}
   kafka:
-#    bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:127.0.0.1}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
-    bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:172.16.10.221}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
+    bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:192.168.99.220}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
     producer:
-      # 发生错误后，消息重发的次数。
       retries: 0
-      #当有多个消息需要被发送到同一个分区时，生产者会把它们放在同一个批次里。该参数指定了一个批次可以使用的内存大小，按照字节数计算。
       batch-size: 16384
-      # 设置生产者内存缓冲区的大小。
       buffer-memory: 33554432
-      # 键的序列化方式
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      # 值的序列化方式
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
       # acks=0 ： 生产者在成功写入消息之前不会等待任何来自服务器的响应。
       # acks=1 ： 只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。
@@ -69,38 +90,127 @@ spring:
       properties:
         linger.ms: 500
     consumer:
-      # 自动提交的时间间隔 在spring boot 2.X 版本中这里采用的是值的类型为Duration 需要符合特定的格式，如1S,1M,2H,5D
       auto-commit-interval: 1S
-      # 该属性指定了消费者在读取一个没有偏移量的分区或者偏移量无效的情况下该作何处理：
-      # latest（默认值）在偏移量无效的情况下，消费者将从最新的记录开始读取数据（在消费者启动之后生成的记录）
-      # earliest ：在偏移量无效的情况下，消费者将从起始位置读取分区的记录
       auto-offset-reset: earliest
-      # 是否自动提交偏移量，默认值是true,为了避免出现重复数据和数据丢失，可以把它设置为false,然后手动提交偏移量
       enable-auto-commit: false
-      # 键的反序列化方式
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      # 值的反序列化方式
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     listener:
-      # 在侦听器容器中运行的线程数。
       concurrency: 5
-      #listner负责ack，每调用一次，就立即commit
       ack-mode: manual_immediate
       missing-topics-fatal: false
+  gson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    disable-html-escaping: true
+    pretty-printing: true
+    serialize-nulls: true
+    long-serialization-policy: string
   sleuth:
     web:
       client:
+        # sleuth 开发阶段关闭
         enabled: true
     sampler:
-      probability: 1.0 # 将采样比例设置为 1.0，也就是全部都需要。默认是 0.1
+      probability: 1.0
   zipkin:
+    # zipkin 开发阶段关闭
+    enabled: true
     sender:
       type: kafka
-    enabled: false
+  shardingsphere:
+    # zipkin 开发阶段关闭
+    enabled: true
+    datasource:
+      names: mysql-master-1,mysql-slave-1,mysql-master-2,mysql-slave-2
+      mysql-master-1:
+        type: com.zaxxer.hikari.HikariDataSource
+        jdbc-url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:3306}/taotao-cloud-order-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+        username: ${TAOTAO-CLOUD-MYSQL-USERNAME:root}
+        password: ${TAOTAO-CLOUD-MYSQL-PASSWORD:123456}
+        driver-class-name: com.mysql.jdbc.Driver
+        hikari:
+          connection-test-query: SELECT 1
+          max-lifetime: 120000
+          maximum-pool-size: 15
+          minimum-idle: 3
+          connection-timeout: 30000
+          idle-timeout: 30000
+          auto-commit: true
+          pool-name: DatebookHikariCP
+      mysql-slave-1:
+        type: com.zaxxer.hikari.HikariDataSource
+        jdbc-url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:3307}/taotao-cloud-order-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+        username: ${TAOTAO-CLOUD-MYSQL-USERNAME:root}
+        password: ${TAOTAO-CLOUD-MYSQL-PASSWORD:123456}
+        driver-class-name: com.mysql.jdbc.Driver
+        hikari:
+          connection-test-query: SELECT 1
+          max-lifetime: 120000
+          maximum-pool-size: 15
+          minimum-idle: 3
+          connection-timeout: 30000
+          idle-timeout: 30000
+          auto-commit: true
+          pool-name: DatebookHikariCP
+      mysql-master-2:
+        type: com.zaxxer.hikari.HikariDataSource
+        jdbc-url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:3308}/taotao-cloud-order-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+        username: ${TAOTAO-CLOUD-MYSQL-USERNAME:root}
+        password: ${TAOTAO-CLOUD-MYSQL-PASSWORD:123456}
+        driver-class-name: com.mysql.jdbc.Driver
+        hikari:
+          connection-test-query: SELECT 1
+          max-lifetime: 120000
+          maximum-pool-size: 15
+          minimum-idle: 3
+          connection-timeout: 30000
+          idle-timeout: 30000
+          auto-commit: true
+          pool-name: DatebookHikariCP
+      mysql-slave-2:
+        type: com.zaxxer.hikari.HikariDataSource
+        jdbc-url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:3309}/taotao-cloud-order-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+        username: ${TAOTAO-CLOUD-MYSQL-USERNAME:root}
+        password: ${TAOTAO-CLOUD-MYSQL-PASSWORD:123456}
+        driver-class-name: com.mysql.jdbc.Driver
+        hikari:
+          connection-test-query: SELECT 1
+          max-lifetime: 120000
+          maximum-pool-size: 15
+          minimum-idle: 3
+          connection-timeout: 30000
+          idle-timeout: 30000
+          auto-commit: true
+          pool-name: DatebookHikariCP
+    sharding:
+      default-database-strategy:
+        inline:
+          sharding-column: id
+          algorithm-expression: ds_$->{id % 2}
+      #      binding-tables: sys_user,sys_dept,sys_job
+      tables:
+        order_info:
+          key-generator-column-name: id
+          actual-data-nodes: ds_$->{0..1}.order_info_$->{0..3}
+          table-strategy:
+            inline:
+              sharding-column: id
+              algorithm-expression: order_info_$->{id % 4}
+      master-slave-rules:
+        ds_0:
+          load-balance-algorithm-type: round_robin
+          master-data-source-name: mysql-master-1
+          slave-data-source-names: mysql-slave-1
+        ds_1:
+          load-balance-algorithm-type: round_robin
+          master-data-source-name: mysql-master-2
+          slave-data-source-names: mysql-slave-2
+    props:
+      sql:
+        show: true
 
 mybatis-plus:
-  mapper-locations: classpath:/mapper/*Mapper.xml
-  #实体扫描，多个package用逗号或者分号分隔
+  #  mapper-locations: classpath:/mapper/*Mapper.xml
   typeAliasesPackage: com.taotao.cloud.order.api.entity
   global-config:
     db-config:
@@ -121,9 +231,9 @@ security:
       client-secret: server
       scope: server
       grant-type: client_credentials
-      access-token-uri: http://127.0.0.1:9800/oauth/token
+      access-token-uri: http://taotao-cloud-auth-center/oauth/token
     resource:
-      token-info-uri: http://127.0.0.1:9800/oauth/check_token
+      token-info-uri: http://taotao-cloud-auth-center/oauth/check_token
 
 taotao:
   cloud:
@@ -139,6 +249,9 @@ taotao:
           http-urls: >
             /user/info/**,
             /api-docs,
+            /qq,
+            /gitee,
+            /github,
             /user/login,
             /repeat/check,
             /socket/**,
@@ -166,30 +279,81 @@ taotao:
         max-per-route: 50
         read-timeout: 35000
         connect-timeout: 10000
+    # shardingsphere模块
+    shardingsphere:
+      enabled: true
     # redis缓存模块
     redis:
       cache-manager:
         configs:
-          - key: menu
+          - key: order_info
             second: 300
-          - key: user
-            second: 1800
+    # 消息模块
+    message:
+      sms:
+        enabled: true
+        aliyun:
+          enabled: true
+          configs:
+            - type: login
+              code: lasdfjasjd234234
+            - type: register
+              code: sldj234osfu
     # 日志模块
     log:
-      type: redis
       enabled: true
+      type: kafka
       trace:
         enabled: true
+    # elk模块
+    elk:
+      enabled: false
+      app-name: ${spring.application.name}
+      spring-app-name: ${spring.application.name}
+      destinations: >
+        127.0.0.1:4560
+      log:
+        statistic:
+          enabled: false
+      web:
+        aspect:
+          enabled: false
+    # elasticsearch模块
+    elasticsearch:
+      enabled: true
+      rest-pool:
+        connect-time-out: 1000
+        socket-time-out: 30000
+        connection-request-time-out: 500
+        max-connect-num: 30
+        max-connect-per-route: 10
+      web:
+        controller:
+          aspect:
+            enabled: true
     #持久层配置
     data:
       mybatis-plus:
         auto-fill:
-          enabled: false
+          enabled: true
+      tenant:
+        enabled: true
+        ignore-tables:
+          - sys_user
+        ignore-sqls:
+          - com.central.user.mapper.SysRoleMapper.findAll
+    xxl:
+      job:
+        enabled: true
+        adminAddresses: ${TAOTAO-CLOUD-XXL-JOB-ADMIN-ADDRESS:http://192.168.99.220:8080/xxl-job-admin}
+        appName: ${spring.application.name}
+        logPath: ../logs/application/${spring.application.name}
+
 feign:
   sentinel:
-    enabled: false
-  hystrix:
     enabled: true
+  hystrix:
+    enabled: false
   okhttp:
     enabled: true
   httpclient:
@@ -209,38 +373,35 @@ feign:
     response:
       enabled: true
 
-hystrix:
-  threadpool:
-    default:
-      coreSize: 1200
-      maximumSize: 15000
-      allowMaximumSizeToDivergeFromCoreSize: true
-      maxQueueSize: 2000
-      queueSizeRejectionThreshold: 1800
-  command:
-    default:
-      circuitBreaker:
-        # 当在配置时间窗口内达到此数量的失败后，进行短路。默认20个
-        requestVolumeThreshold: 30
-        # 触发短路的时间值，当该值设为5000时，则当触发 circuit break 后的5000毫秒内都会拒绝request
-        # 也就是5000毫秒后才会关闭circuit。默认5000
-        sleepWindowInMilliseconds: 45000
-      #      execution:
-      #        timeout:
-      #          enabled: true
-      #        isolation:
-      #          thread:
-      #            timeoutInMilliseconds: 90000
-      execution:
-        timeout:
-          enabled: true
-        isolation:
-          strategy: SEMAPHORE
-          semaphore:
-            maxConcurrentRequests: 100
-          thread:
-            # 断路器超时时间，默认1000ms
-            timeoutInMilliseconds: 8000
+#hystrix:
+#  threadpool:
+#    default:
+#      coreSize: 1200
+#      maximumSize: 15000
+#      allowMaximumSizeToDivergeFromCoreSize: true
+#      maxQueueSize: 2000
+#      queueSizeRejectionThreshold: 1800
+#  command:
+#    default:
+#      circuitBreaker:
+#        # 当在配置时间窗口内达到此数量的失败后，进行短路。默认20个
+#        requestVolumeThreshold: 30
+#        # 触发短路的时间值，当该值设为5000时，则当触发 circuit break 后的5000毫秒内都会拒绝request
+#        # 也就是5000毫秒后才会关闭circuit。默认5000
+#        sleepWindowInMilliseconds: 45000
+#      execution:
+#        timeout:
+#          enabled: false
+#        isolation:
+#          strategy: SEMAPHORE
+#          semaphore:
+#            maxConcurrentRequests: 100
+#          thread:
+#            # 断路器超时时间，默认1000ms
+#            timeoutInMilliseconds: 300000
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 90000
 
 ribbon:
   eager-load:
@@ -250,8 +411,8 @@ ribbon:
     enabled: false
   okhttp:
     enabled: true
-  ReadTimeout: 90000
-  ConnectTimeout: 90000
+  ReadTimeout: 300000
+  ConnectTimeout: 300000
   OkToRetryOnAllOperations: true
   MaxAutoRetries: 1
   MaxAutoRetriesNextServer: 1

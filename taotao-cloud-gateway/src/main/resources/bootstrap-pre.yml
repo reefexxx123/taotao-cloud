@@ -16,13 +16,10 @@ spring:
   application:
     name: taotao-cloud-gateway-center
   redis:
-    host: ${TAOTAO-CLOUD-REDIS-HOST:127.0.0.1}
+    client-name: taotao-cloud-gateway-redis-client
+    host: ${TAOTAO-CLOUD-REDIS-HOST:192.168.99.220}
     port: ${TAOTAO-CLOUD-REDIS-PORT:6379}
     password: ${TAOTAO-CLOUD-REDIS-PASSWORD:123456}
-    client-name: taotao-cloud-gateway-redis-client
-    cluster:
-      nodes: 172.16.10.13:7000,172.16.10.13:7001,172.16.10.13:7002,172.16.10.13:7003,172.16.10.13:7004,172.16.10.13:7005,172.16.10.13:7006
-      max-redirects: 4
     lettuce:
       pool:
         max-active: 8
@@ -35,16 +32,25 @@ spring:
         enabled: false
     nacos:
       discovery:
-        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:127.0.0.1}:${TAOTAO-CLOUD-NACOS-PORT:8848}
+        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:8848}
         metadata:
           version: 4
       # 开发时候关闭nacos配置中心
       config:
         enabled: false
-    #      config:
-    #        server-addr: 127.0.0.1:8848
-    #        namespace: f402a0ea-5ce7-43cc-b19b-3fb7ded6e46e
-    #        file-extension: yml
+        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:8848}
+        namespace: f402a0ea-5ce7-43cc-b19b-3fb7ded6e46e
+        file-extension: yml
+    sentinel:
+      transport:
+        dashboard: ${TAOTAO-CLOUD-SENTINEL-DASHBOARD-HOST:192.168.99.220}:${TAOTAO-CLOUD-SENTINEL-DASHBOARD-PORT:8858}
+        port: ${TAOTAO-CLOUD-SENTINEL-PORT:8719}
+      scg:
+        fallback:
+          mode: response
+          response-status: 200
+          response-body: "{'data': null, 'code': 500,'message': '访问频繁,进入系统熔断'}"
+      eager: true
     gateway:
       loadbalancer:
         use404: false
@@ -116,11 +122,8 @@ spring:
             - StripPrefix=3
             - name: RequestRateLimiter
               args:
-                #使用SpEL按名称引用bean
                 key-resolver: "#{@remoteAddrKeyResolver}"
-                #允许用户每秒处理多少个请求
                 redis-rate-limiter.replenishRate: 1
-                #令牌桶的容量，允许在一秒钟内完成的最大请求数
                 redis-rate-limiter.burstCapacity: 5
         - id: taotao-cloud-product-center
           uri: lb://taotao-cloud-product-center
@@ -136,44 +139,71 @@ spring:
                 redis-rate-limiter.replenishRate: 1
                 #令牌桶的容量，允许在一秒钟内完成的最大请求数
                 redis-rate-limiter.burstCapacity: 5
-      default-filters:
-        # 降级配置
-        - name: Hystrix
-          args:
-            name: default
-            fallbackUri: 'forward:/fallback'
+  #      default-filters:
+  #        # 降级配置
+  #        - name: Hystrix
+  #          args:
+  #            name: default
+  #            fallbackUri: 'forward:/fallback'
+  kafka:
+    bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:192.168.99.220}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
+    producer:
+      retries: 0
+      batch-size: 16384
+      buffer-memory: 33554432
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # acks=0 ： 生产者在成功写入消息之前不会等待任何来自服务器的响应。
+      # acks=1 ： 只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。
+      # acks=all ：只有当所有参与复制的节点全部收到消息时，生产者才会收到一个来自服务器的成功响应。
+      acks: 1
+      properties:
+        linger.ms: 500
+    consumer:
+      auto-commit-interval: 1S
+      # latest（默认值）在偏移量无效的情况下，消费者将从最新的记录开始读取数据（在消费者启动之后生成的记录）
+      # earliest ：在偏移量无效的情况下，消费者将从起始位置读取分区的记录
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    listener:
+      concurrency: 5
+      ack-mode: manual_immediate
+      missing-topics-fatal: false
+  sleuth:
+    web:
+      client:
+        enabled: true
+    sampler:
+      probability: 1.0 # 将采样比例设置为 1.0，也就是全部都需要。默认是 0.1
+  zipkin:
+    enabled: false
+    sender:
+      type: kafka
 
-#    sentinel:
-#      datasource.ds1.nacos:
-#        server-addr: ${spring.cloud.nacos.server-addr}
-#        data-id: ${spring.application.name}-sentinel-gw-flow
-#        group-id: DEFAULT_GROUP
-#        ruleType: gw-flow
-#      filter:
-#        enabled: true
-
-hystrix:
-  threadpool:
-    default:
-      coreSize: 1200
-      maximumSize: 15000
-      allowMaximumSizeToDivergeFromCoreSize: true
-      maxQueueSize: 2000
-      queueSizeRejectionThreshold: 1800
-  command:
-    default:
-      circuitBreaker:
-        # 当在配置时间窗口内达到此数量的失败后，进行短路。默认20个
-        requestVolumeThreshold: 30
-        # 触发短路的时间值，当该值设为5000时，则当触发 circuit break 后的5000毫秒内都会拒绝request
-        # 也就是5000毫秒后才会关闭circuit。默认5000
-        sleepWindowInMilliseconds: 45000
-      execution:
-        timeout:
-          enabled: true
-        isolation:
-          thread:
-            timeoutInMilliseconds: 90000
+#hystrix:
+#  threadpool:
+#    default:
+#      coreSize: 1200
+#      maximumSize: 15000
+#      allowMaximumSizeToDivergeFromCoreSize: true
+#      maxQueueSize: 2000
+#      queueSizeRejectionThreshold: 1800
+#  command:
+#    default:
+#      circuitBreaker:
+#        # 当在配置时间窗口内达到此数量的失败后，进行短路。默认20个
+#        requestVolumeThreshold: 30
+#        # 触发短路的时间值，当该值设为5000时，则当触发 circuit break 后的5000毫秒内都会拒绝request
+#        # 也就是5000毫秒后才会关闭circuit。默认5000
+#        sleepWindowInMilliseconds: 45000
+#      execution:
+#        timeout:
+#          enabled: true
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 90000
 
 ribbon:
   eager-load:
@@ -190,8 +220,10 @@ ribbon:
   MaxAutoRetriesNextServer: 1
 
 feign:
-  hystrix:
+  sentinel:
     enabled: true
+  hystrix:
+    enabled: false
 
 taotao:
   cloud:
@@ -200,7 +232,7 @@ taotao:
       version: v1.0
       base-uri: ${taotao.cloud.gateway.prefix}${taotao.cloud.gateway.version}
       #网关动态路由
-      dynamicRoute:
+      dynamic-route:
         enabled: false
         data-type: nacos
     swagger-agg:
@@ -219,7 +251,7 @@ taotao:
             /*/api-docs,
             /code,
             /uc/repeat/check,
-            /auth/oauth/*,
+            /auth/oauth/**,
             /auth/mobile/login,
             /auth/sms/code,
             /auth/social/**,
@@ -240,12 +272,13 @@ taotao:
     log:
       trace:
         enabled: true
+      type: kafka
 
 management:
   endpoints:
     web:
       exposure:
         include: '*'
-  endpoint:
-    health:
-      show-details: always
+  metrics:
+    tags:
+      application: ${spring.application.name}

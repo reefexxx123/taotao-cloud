@@ -1,77 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <artifactId>taotao-cloud</artifactId>
-        <groupId>com.taotao.cloud</groupId>
-        <version>1.0</version>
-    </parent>
-
-    <artifactId>taotao-cloud-auth</artifactId>
-    <version>1.0</version>
-
-    <properties>
-        <spring-social.version>1.1.6.RELEASE</spring-social.version>
-    </properties>
-
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>com.taotao.cloud</groupId>-->
-<!--            <artifactId>taotao-cloud-uc-api</artifactId>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-common-starter</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-log-starter</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-redis-starter</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-data-starter</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.taotao.cloud</groupId>
+            <artifactId>taotao-cloud-sentinel-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.dataformat</groupId>
+                    <artifactId>jackson-dataformat-xml</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-message-starter</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-elk-starter</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-swagger-starter</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-auth-starter</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-zipkin</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.taotao.cloud</groupId>-->
-<!--            <artifactId>taotao-cloud-social-starter</artifactId>-->
-<!--        </dependency>-->
+
+        <!--        <dependency>-->
+        <!--            <groupId>com.taotao.cloud</groupId>-->
+        <!--            <artifactId>taotao-cloud-social-starter</artifactId>-->
+        <!--        </dependency>-->
+
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-ribbon-starter</artifactId>
         </dependency>
+
+        <!-- nacos -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
@@ -85,61 +92,85 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
-        <!--nacos配置中心客户端-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.alibaba.cloud</groupId>-->
-        <!--            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>-->
-        <!--        </dependency>-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
         <!--undertow容器-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.social</groupId>
             <artifactId>spring-social-security</artifactId>
             <version>${spring-social.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.social</groupId>
             <artifactId>spring-social-core</artifactId>
             <version>${spring-social.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.social</groupId>
             <artifactId>spring-social-config</artifactId>
             <version>${spring-social.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.social</groupId>
             <artifactId>spring-social-web</artifactId>
             <version>${spring-social.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
         </dependency>
+
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
         </dependency>
     </dependencies>
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>taotao-cloud</artifactId>
+        <groupId>com.taotao.cloud</groupId>
+        <version>1.0</version>
+    </parent>
+    <artifactId>taotao-cloud-auth</artifactId>
+
+    <version>1.0</version>
+
+    <properties>
+        <spring-social.version>1.1.6.RELEASE</spring-social.version>
+    </properties>
 
     <build>
         <plugins>

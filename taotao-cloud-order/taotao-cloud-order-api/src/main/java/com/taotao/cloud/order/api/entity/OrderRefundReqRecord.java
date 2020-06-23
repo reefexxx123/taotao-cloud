@@ -26,8 +26,8 @@ public class OrderRefundReqRecord extends Model<OrderRefundReqRecord> {
     private static final Long serialVersionUID = 1L;
 
 
-    @TableId(value = "order_refund_req_record_id", type = IdType.AUTO)
-    private Integer orderRefundReqRecordId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
     private String orderCode;
 

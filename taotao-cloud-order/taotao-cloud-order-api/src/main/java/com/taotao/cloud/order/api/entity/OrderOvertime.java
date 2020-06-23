@@ -24,8 +24,8 @@ import java.time.LocalDateTime;
 public class OrderOvertime extends Model<OrderOvertime> {
 
 
-    @TableId(value = "order_overtime_id", type = IdType.AUTO)
-    private Integer orderOvertimeId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
     /**
      * 收货人姓名

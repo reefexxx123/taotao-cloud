@@ -26,8 +26,8 @@ public class OrderRefundPaySeq extends Model<OrderRefundPaySeq> {
 
     private static final Long serialVersionUID = 1L;
 
-    @TableId(value = "order_refund_pay_seq_id", type = IdType.AUTO)
-    private Integer orderRefundPaySeqId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
     /**
      * 售后申请ID

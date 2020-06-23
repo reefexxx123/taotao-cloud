@@ -26,8 +26,8 @@ public class ProductExt extends Model<ProductExt> {
 
     private static final long serialVersionUID = 3522870103927904950L;
 
-    @TableId(value = "product_ext_id", type = IdType.AUTO)
-    private Integer productExtId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
     private int inventory;
 

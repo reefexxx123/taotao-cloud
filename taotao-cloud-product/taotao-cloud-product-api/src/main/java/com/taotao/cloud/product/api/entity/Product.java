@@ -26,8 +26,8 @@ public class Product extends Model<Product> {
 
     private static final long serialVersionUID = -6173512967678746591L;
 
-    @TableId(value = "product_id", type = IdType.AUTO)
-    private Integer productId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
     private String name;
 

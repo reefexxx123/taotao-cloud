@@ -27,8 +27,8 @@ public class OrderItems extends Model<OrderItems> {
 
     private static final Long serialVersionUID = 1L;
 
-    @TableId(value = "order_items_id", type = IdType.AUTO)
-    private Integer orderItemsId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
     private String itemCode;
 
