@@ -365,6 +365,11 @@
                 <artifactId>taotao-cloud-swagger-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.taotao.cloud</groupId>
+                <artifactId>taotao-cloud-seata-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

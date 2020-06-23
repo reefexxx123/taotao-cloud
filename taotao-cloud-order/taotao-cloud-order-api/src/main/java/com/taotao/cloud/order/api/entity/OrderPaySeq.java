@@ -26,8 +26,8 @@ public class OrderPaySeq extends Model<OrderPaySeq> {
 
     private static final Long serialVersionUID = 1L;
 
-    @TableId(value = "order_pay_seq_id", type = IdType.AUTO)
-    private Integer orderPaySeqId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
 
     /**

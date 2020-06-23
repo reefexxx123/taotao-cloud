@@ -22,9 +22,8 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @TableName("order_wait_event")
 public class OrderWaitEvent extends Model<OrderWaitEvent> {
-    @TableId(value = "order_wait_event_id", type = IdType.AUTO)
-    private Integer orderWaitEventId;
-
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
     /**
      * 事件类型

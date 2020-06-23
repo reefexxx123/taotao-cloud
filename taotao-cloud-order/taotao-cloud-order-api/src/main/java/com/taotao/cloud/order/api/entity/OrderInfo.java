@@ -27,8 +27,8 @@ public class OrderInfo extends Model<OrderInfo> {
 
     private static final Long serialVersionUID = 1L;
 
-    @TableId(value = "order_info_id", type = IdType.AUTO)
-    private Integer orderInfoId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
     /**
      * 买家ID

@@ -29,6 +29,7 @@
         <module>taotao-cloud-shardingjdbc-starter</module>
         <module>taotao-cloud-rabbitmq-starter</module>
         <module>taotao-cloud-job-starter</module>
+        <module>taotao-cloud-seata-starter</module>
     </modules>
 
     <dependencies>

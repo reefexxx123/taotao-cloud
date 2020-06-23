@@ -23,8 +23,8 @@ public class ProductArea extends Model<ProductArea> {
 
     private static final long serialVersionUID = -3401835090916645698L;
 
-    @TableId(value = "product_area_id", type = IdType.AUTO)
-    private Integer productAreaId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
 
     private String regionJson;

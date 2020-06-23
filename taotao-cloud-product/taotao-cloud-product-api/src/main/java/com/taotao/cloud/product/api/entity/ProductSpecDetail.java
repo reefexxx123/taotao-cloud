@@ -22,8 +22,8 @@ public class ProductSpecDetail extends Model<ProductSpecDetail> {
 
     private static final long serialVersionUID = 3522870103927904950L;
 
-    @TableId(value = "product_spec_detail_id", type = IdType.AUTO)
-    private Integer productSpecDetailId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
     private Product product;
 

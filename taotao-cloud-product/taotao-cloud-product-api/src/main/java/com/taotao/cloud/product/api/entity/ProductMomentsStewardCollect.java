@@ -22,8 +22,8 @@ public class ProductMomentsStewardCollect extends Model<ProductMomentsStewardCol
 
     private static final long serialVersionUID = 3522870103927904950L;
 
-    @TableId(value = "product_moments_steward_collect_id", type = IdType.AUTO)
-    private Integer productMomentsStewardCollectId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
     private Long stewardId;
 

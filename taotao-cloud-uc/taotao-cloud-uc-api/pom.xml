@@ -28,10 +28,10 @@
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-common-starter</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-swagger-starter</artifactId>
-            <optional>true</optional>
         </dependency>
 
     </dependencies>

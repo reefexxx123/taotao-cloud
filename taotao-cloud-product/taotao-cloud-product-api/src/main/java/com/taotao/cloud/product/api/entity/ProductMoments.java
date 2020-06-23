@@ -19,8 +19,8 @@ public class ProductMoments extends Model<ProductMoments> {
 
     private static final long serialVersionUID = 3522870103927904950L;
 
-    @TableId(value = "product_moments_id", type = IdType.AUTO)
-    private Integer productMomentsId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
     private Long productId;
 

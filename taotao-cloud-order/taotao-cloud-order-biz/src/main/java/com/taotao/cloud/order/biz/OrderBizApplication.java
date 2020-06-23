@@ -2,6 +2,8 @@ package com.taotao.cloud.order.biz;
 
 import com.taotao.cloud.auth.annotation.EnableTaoTaoOauth2Client;
 import com.taotao.cloud.data.annotation.EnableTaoTaoTenantClient;
+import com.taotao.cloud.elasticsearch.annotation.EnableTaoTaoSearchClient;
+import com.taotao.cloud.elk.annotation.EnableTaoTaoELKClient;
 import com.taotao.cloud.ribbon.annotation.EnableTaoTaoFeignInterceptor;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.mybatis.spring.annotation.MapperScan;
@@ -14,15 +16,16 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-
-@SpringBootApplication
-@EnableDiscoveryClient
 @EnableTaoTaoFeignInterceptor
+@EnableTaoTaoSearchClient
 @EnableTaoTaoOauth2Client
 @EnableTaoTaoTenantClient
-@EnableTransactionManagement
-@EnableFeignClients(basePackages = "com.taotao.cloud.*.api.feign")
+@EnableTaoTaoELKClient
+@EnableDiscoveryClient
+@EnableTransactionManagement(proxyTargetClass = true)
 @MapperScan(value = "com.taotao.cloud.order.biz.mapper")
+@EnableFeignClients(basePackages = "com.taotao.cloud.*.api.feign")
+@SpringBootApplication
 public class OrderBizApplication {
 
     public static void main(String[] args) {

@@ -25,6 +25,12 @@
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-uc-api</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.taotao.cloud</groupId>
+                    <artifactId>taotao-cloud-swagger-starter</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>

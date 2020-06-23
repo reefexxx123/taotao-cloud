@@ -27,8 +27,8 @@ public class OrderRefundRequest extends Model<OrderRefundRequest> {
 
     private static final Long serialVersionUID = 1L;
 
-    @TableId(value = "order_refund_request_id", type = IdType.AUTO)
-    private Integer orderRefundRequestId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
     /**
      * 退款编号

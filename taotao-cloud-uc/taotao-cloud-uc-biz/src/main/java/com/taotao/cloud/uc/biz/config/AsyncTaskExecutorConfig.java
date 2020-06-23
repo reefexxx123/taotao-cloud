@@ -10,6 +10,6 @@ import org.springframework.context.annotation.Configuration;
  * @date 2020/5/3 08:26
 */
 @Configuration
-public class AsycTaskExecutorConfig extends DefaultAsyncTaskConfig {
+public class AsyncTaskExecutorConfig extends DefaultAsyncTaskConfig {
 
 }

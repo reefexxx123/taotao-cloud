@@ -48,11 +48,10 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
-        <!--nacos配置中心客户端-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.alibaba.cloud</groupId>-->
-        <!--            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>-->
-        <!--        </dependency>-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
 
         <!-- io.micrometer -->
         <dependency>
@@ -61,6 +60,10 @@
         </dependency>
 
         <!-- taotao cloud-->
+        <dependency>
+            <groupId>com.taotao.cloud</groupId>
+            <artifactId>taotao-cloud-product-api</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-uc-api</artifactId>
@@ -118,6 +121,10 @@
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-elk-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.taotao.cloud</groupId>
+            <artifactId>taotao-cloud-seata-starter</artifactId>
         </dependency>
     </dependencies>
 

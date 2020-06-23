@@ -22,8 +22,8 @@ public class ProductClassify extends Model<ProductClassify> {
 
     private static final long serialVersionUID = 4623225062695180820L;
 
-    @TableId(value = "product_classify_id", type = IdType.AUTO)
-    private Integer productClassifyId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
     private String name;
 

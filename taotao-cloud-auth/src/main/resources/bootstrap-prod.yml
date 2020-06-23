@@ -1,5 +1,12 @@
 server:
   port: 9800
+  http2:
+    enabled: true
+  undertow:
+    buffer-size: 2048
+    direct-buffers: true
+    io-threads: 24
+    worker-threads: 1500
 
 spring:
   cache:
@@ -11,16 +18,20 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:172.16.10.220}:${TAOTAO-CLOUD-NACOS-PORT:8848}
+        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:8848}
       config:
         enabled: false
-  #      config:
-  #        server-addr: 127.0.0.1:8848
-  #        namespace: 2c421c7d-7c62-422e-a4f3-996a2d301c67
-  #        file-extension: yml
+        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:8848}
+        namespace: 2c421c7d-7c62-422e-a4f3-996a2d301c67
+        file-extension: yml
+    sentinel:
+      transport:
+        dashboard: ${TAOTAO-CLOUD-SENTINEL-DASHBOARD-HOST:192.168.99.220}:${TAOTAO-CLOUD-SENTINEL-DASHBOARD-PORT:8858}
+        port: ${TAOTAO-CLOUD-SENTINEL-PORT:8718}
+      eager: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:172.16.10.220}:${TAOTAO-CLOUD-NACOS-PORT:3306}/taotao-cloud-auth-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    url: jdbc:mysql://${TAOTAO-CLOUD-MYSQL-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:3306}/taotao-cloud-auth-center?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
     username: ${TAOTAO-CLOUD-MYSQL-USERNAME:root}
     password: ${TAOTAO-CLOUD-MYSQL-PASSWORD:123456}
     driver-class-name: com.mysql.jdbc.Driver
@@ -34,7 +45,7 @@ spring:
       auto-commit: true
       pool-name: DatebookHikariCP
   redis:
-    host: ${TAOTAO-CLOUD-REDIS-HOST:172.16.10.220}
+    host: ${TAOTAO-CLOUD-REDIS-HOST:192.168.99.220}
     port: ${TAOTAO-CLOUD-REDIS-PORT:6379}
     password: ${TAOTAO-CLOUD-REDIS-PASSWORD:123456}
     lettuce:
@@ -43,10 +54,49 @@ spring:
         max-wait: -1
         max-idle: 8
         min-idle: 0
+  kafka:
+    bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:192.168.99.220}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
+    producer:
+      retries: 0
+      batch-size: 16384
+      buffer-memory: 33554432
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # acks=0 ： 生产者在成功写入消息之前不会等待任何来自服务器的响应。
+      # acks=1 ： 只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。
+      # acks=all ：只有当所有参与复制的节点全部收到消息时，生产者才会收到一个来自服务器的成功响应。
+      acks: 1
+      properties:
+        linger.ms: 500
+    consumer:
+      auto-commit-interval: 1S
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    listener:
+      concurrency: 5
+      ack-mode: manual_immediate
+      missing-topics-fatal: false
+  gson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    disable-html-escaping: true
+    pretty-printing: true
+    serialize-nulls: true
+    long-serialization-policy: string
+  sleuth:
+    web:
+      client:
+        enabled: true
+    sampler:
+      probability: 1.0
+  zipkin:
+    enabled: true
+    sender:
+      type: kafka
+
 
 mybatis-plus:
-  mapper-locations: classpath:/mapper/*Mapper.xml
-  #实体扫描，多个package用逗号或者分号分隔
   typeAliasesPackage: com.taotao.cloud.auth.model
   global-config:
     db-config:
@@ -67,7 +117,7 @@ taotao:
         store:
           type: redis
       security:
-        enabled: true
+        enabled: false
         code:
           # 忽略验证码的应用编号
           ignore-client-code: web
@@ -76,6 +126,7 @@ taotao:
           http-urls: >
             /sms/code,
             /mobile/login,
+            /current/user,
             /token/oauth/user/token,
             /social/**,
             /auth/**,
@@ -83,7 +134,8 @@ taotao:
             /api/socket/**,
             /sendCode/**,
             /mobile/login/**,
-            /oauth/**
+            /oauth/**,
+            /api-docs
     # 第三方认证模块
     social:
       security:
@@ -120,10 +172,11 @@ taotao:
         name: dengtao
         url: http://dtbox.top/
         email: 981376577@qq.com
+      host: ${spring.cloud.client.ip-address}:${server.port}
     # ribbon模块
     ribbon:
       isolation:
-        enabled: false
+        enabled: true
       rest-template:
         max-total: 200
         max-per-route: 50
@@ -154,9 +207,9 @@ taotao:
           access-key-id: 2be56dd4aa6e4564b9690abb2d0a3f89
           # 平台里的AUTH_TOKEN
           access-key-secret: cc8f4a3bf3664665ade85818fa3b2516
-
     # 日志模块
     log:
+      type: kafka
       enabled: true
       trace:
         enabled: true
@@ -167,45 +220,53 @@ taotao:
       spring-app-name: taotao-cloud-uc-center
       destinations: >
         127.0.0.1:4560
-      health:
-        log:
-          statistic:
-            enabled: true
+      log:
+        statistic:
+          enabled: true
     data:
       mybatis-plus:
         auto-fill:
-          enabled: true
+          enabled: false
       tenant:
-        enabled: false
-
-hystrix:
-  command:
-    default:
-      circuitBreaker:
-        # 当在配置时间窗口内达到此数量的失败后，进行短路。默认20个
-        requestVolumeThreshold: 10
-        # 触发短路的时间值，当该值设为5000时，则当触发 circuit break 后的5000毫秒内都会拒绝request
-        # 也就是5000毫秒后才会关闭circuit。默认5000
-        sleepWindowInMilliseconds: 15000
-        # 强制打开熔断器，如果打开这个开关，那么拒绝所有request，默认false
-        forceOpen: false
-        # 强制关闭熔断器 如果这个开关打开，circuit将一直关闭且忽略，默认false
-        forceClosed: false
-      fallback:
         enabled: true
-      execution:
-        timeout:
-          enabled: true
-        isolation:
-          strategy: THREAD
-          semaphore:
-            maxConcurrentRequests: 100
-        thread:
-          # 断路器超时时间，默认1000ms
-          timeoutInMilliseconds: 8000
+
+#hystrix:
+#  threadpool:
+#    default:
+#      coreSize: 1200
+#      maximumSize: 15000
+#      allowMaximumSizeToDivergeFromCoreSize: true
+#      maxQueueSize: 2000
+#      queueSizeRejectionThreshold: 1800
+#  command:
+#    default:
+#      circuitBreaker:
+#        # 当在配置时间窗口内达到此数量的失败后，进行短路。默认20个
+#        requestVolumeThreshold: 30
+#        # 触发短路的时间值，当该值设为5000时，则当触发 circuit break 后的5000毫秒内都会拒绝request
+#        # 也就是5000毫秒后才会关闭circuit。默认5000
+#        sleepWindowInMilliseconds: 45000
+#      execution:
+#        timeout:
+#          enabled: true
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 90000
+
 ribbon:
+  eager-load:
+    enabled: true
+  ServerListRefreshInterval: 10  #刷新服务列表源的间隔时间
+  httpclient:
+    enabled: false
   okhttp:
     enabled: true
+  ReadTimeout: 90000
+  ConnectTimeout: 90000
+  OkToRetryOnAllOperations: true
+  MaxAutoRetries: 1
+  MaxAutoRetriesNextServer: 1
+
 feign:
   sentinel:
     enabled: false
@@ -235,6 +296,6 @@ management:
     web:
       exposure:
         include: '*'
-  endpoint:
-    health:
-      show-details: always
+  metrics:
+    tags:
+      application: ${spring.application.name}
