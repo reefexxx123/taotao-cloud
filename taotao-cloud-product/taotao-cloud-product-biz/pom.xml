@@ -91,10 +91,10 @@
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-log-starter</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.taotao.cloud</groupId>
-            <artifactId>taotao-cloud-shardingjdbc-starter</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.taotao.cloud</groupId>-->
+<!--            <artifactId>taotao-cloud-shardingjdbc-starter</artifactId>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-data-starter</artifactId>
@@ -121,10 +121,10 @@
             <groupId>com.taotao.cloud</groupId>
             <artifactId>taotao-cloud-elk-starter</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.taotao.cloud</groupId>
-            <artifactId>taotao-cloud-seata-starter</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.taotao.cloud</groupId>-->
+<!--            <artifactId>taotao-cloud-seata-starter</artifactId>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>

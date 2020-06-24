@@ -17,7 +17,7 @@ spring:
     name: taotao-cloud-gateway-center
   redis:
     client-name: taotao-cloud-gateway-redis-client
-    host: ${TAOTAO-CLOUD-REDIS-HOST:192.168.99.220}
+    host: ${TAOTAO-CLOUD-REDIS-HOST:192.168.99.230}
     port: ${TAOTAO-CLOUD-REDIS-PORT:6379}
     password: ${TAOTAO-CLOUD-REDIS-PASSWORD:123456}
     lettuce:
@@ -32,18 +32,18 @@ spring:
         enabled: false
     nacos:
       discovery:
-        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:8848}
+        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:192.168.99.230}:${TAOTAO-CLOUD-NACOS-PORT:8848}
         metadata:
           version: 4
       # 开发时候关闭nacos配置中心
       config:
         enabled: false
-        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:192.168.99.220}:${TAOTAO-CLOUD-NACOS-PORT:8848}
+        server-addr: ${TAOTAO-CLOUD-NACOS-HOST:192.168.99.230}:${TAOTAO-CLOUD-NACOS-PORT:8848}
         namespace: f402a0ea-5ce7-43cc-b19b-3fb7ded6e46e
         file-extension: yml
     sentinel:
       transport:
-        dashboard: ${TAOTAO-CLOUD-SENTINEL-DASHBOARD-HOST:192.168.99.220}:${TAOTAO-CLOUD-SENTINEL-DASHBOARD-PORT:8858}
+        dashboard: ${TAOTAO-CLOUD-SENTINEL-DASHBOARD-HOST:192.168.99.230}:${TAOTAO-CLOUD-SENTINEL-DASHBOARD-PORT:8858}
         port: ${TAOTAO-CLOUD-SENTINEL-PORT:8719}
       scg:
         fallback:
@@ -146,7 +146,7 @@ spring:
   #            name: default
   #            fallbackUri: 'forward:/fallback'
   kafka:
-    bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:192.168.99.220}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
+    bootstrap-servers: ${TAOTAO-CLOUD-KAFKA-HOST:192.168.99.230}:${TAOTAO-CLOUD-KAFKA-PORT:9092}
     producer:
       retries: 0
       batch-size: 16384

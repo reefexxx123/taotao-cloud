@@ -38,7 +38,7 @@ EasyCaptcha | 1.6.2
   * 任务管理账号密码：admin/admin
   * Sentinel：sentinel/sentinel
 * **演示环境有全方位的监控示例：日志监控系统 + APM系统 + GPE系统**
-* Github地址：https://github.com/zlt2000/microservices-platform
+* Github地址： https://github.com/shuigedeng/taotao-cloud 
 * 前后端分离的企业级微服务架构
 * 基于 Spring Cloud Hoxton 、Spring Boot 2.3、 OAuth2 的RBAC权限管理系统  
 * 基于数据驱动视图的理念封装 react , antd  

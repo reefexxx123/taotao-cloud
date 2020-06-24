@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: baseapi
-          image: 172.16.10.220:88/taotao-cloud/taotao-cloud-auth:${CICD_EXECUTION_SEQUENCE}
+          image: 172.16.10.230:88/taotao-cloud/taotao-cloud-auth:${CICD_EXECUTION_SEQUENCE}
           imagePullPolicy: Always
           livenessProbe:
             httpGet:

@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: taotao-cloud-uc-biz
-          image: 172.16.10.220:88/taotao-cloud/taotao-cloud-uc-biz:${CICD_EXECUTION_SEQUENCE}
+          image: 172.16.10.230:88/taotao-cloud/taotao-cloud-uc-biz:${CICD_EXECUTION_SEQUENCE}
           imagePullPolicy: Always
           livenessProbe:
             httpGet:

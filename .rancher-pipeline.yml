@@ -5,7 +5,7 @@ stages:
       event: [ push, pull_request, tag ]
     steps:
       - runScriptConfig:
-          image: 172.16.10.220:88/taotao-cloud/taotao-cloud-maven:latest
+          image: 172.16.10.230:88/taotao-cloud/taotao-cloud-maven:latest
           shellScript: echo `mvn -version` && mvn package deploy -Dmaven.test.skip=true
         when:
           branch: [master]
@@ -33,26 +33,26 @@ stages:
           buildContext: ./taotao-cloud-gateway
           tag: taotao-cloud/taotao-cloud-gateway:${CICD_EXECUTION_SEQUENCE}
           pushRemote: true
-          registry: 172.16.10.220:88
+          registry: 172.16.10.230:88
         env:
           PLUGIN_DEBUG: "true"
           PLUGIN_INSECURE: "true"
-          PLUGIN_MIRROR: "http://172.16.10.220:88/taotao-cloud"
+          PLUGIN_MIRROR: "http://172.16.10.230:88/taotao-cloud"
       - publishImageConfig:
           dockerfilePath: ./taotao-cloud-auth/Dockerfile
           buildContext: ./taotao-cloud-auth
-          tag: 172.16.10.220:88/taotao-cloud/taotao-cloud-auth:${CICD_EXECUTION_SEQUENCE}
+          tag: 172.16.10.230:88/taotao-cloud/taotao-cloud-auth:${CICD_EXECUTION_SEQUENCE}
           pushRemote: true
-          registry: 172.16.10.220:88
+          registry: 172.16.10.230:88
           env:
             PLUGIN_DEBUG: "true"
             PLUGIN_INSECURE: "true"
       - publishImageConfig:
           dockerfilePath: ./taotao-cloud-uc/Dockerfile
           buildContext: ./taotao-cloud-uc
-          tag: 172.16.10.220:88/taotao-cloud/taotao-cloud-uc:${CICD_EXECUTION_SEQUENCE}
+          tag: 172.16.10.230:88/taotao-cloud/taotao-cloud-uc:${CICD_EXECUTION_SEQUENCE}
           pushRemote: true
-          registry: 172.16.10.220:88
+          registry: 172.16.10.230:88
           env:
             PLUGIN_DEBUG: "true"
             PLUGIN_INSECURE: "true"
