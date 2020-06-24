@@ -244,13 +244,13 @@ taotao:
         ignore:
           # 忽略认证的地址
           http-urls: >
-            /user/info/**,
+            /backend/user/info/**,
             /api-docs,
-            /qq,
-            /gitee,
-            /github,
+            /backend/qq,
+            /backend/gitee,
+            /backend/github,
             /user/login,
-            /repeat/check,
+            /backend/repeat/check,
             /socket/**,
             /log
     # swagger模块
@@ -334,9 +334,9 @@ taotao:
     data:
       mybatis-plus:
         auto-fill:
-          enabled: true
+          enabled: false
       tenant:
-        enabled: true
+        enabled: false
         ignore-tables:
           - sys_user
         ignore-sqls:

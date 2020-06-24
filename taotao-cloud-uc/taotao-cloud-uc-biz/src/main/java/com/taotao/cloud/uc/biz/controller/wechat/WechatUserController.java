@@ -103,7 +103,7 @@ public class WechatUserController {
     public Result<SecurityUser> getUserInfoBySocial(@RequestParam(value = "providerId") String providerId,
                                                     @RequestParam(value = "providerUserId") int providerUserId) {
         SysUser sysUser = userService.getUserBySocial(providerId, providerUserId);
-        SecurityUser securityUser = new SecurityUser(sysUser.getUserId(), sysUser.getUsername(),
+        SecurityUser securityUser = new SecurityUser(sysUser.getId(), sysUser.getUsername(),
                 sysUser.getPassword(), CollectionUtil.newHashSet(), CollectionUtil.newHashSet());
 
         BeanUtil.copyProperties(sysUser, securityUser);
@@ -122,7 +122,7 @@ public class WechatUserController {
         }
         // 修改密码
         SysUser userForPass = new SysUser();
-        userForPass.setUserId(user.getUserId());
+        userForPass.setId(user.getId());
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         userForPass.setPassword(passwordEncoder.encode(sysUser.getPassword()));
         return Result.succeed(userService.updateUserInfo(userForPass));

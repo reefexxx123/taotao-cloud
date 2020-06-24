@@ -31,8 +31,8 @@ public class SysUser extends Model<SysUser> {
     /**
      * 主键ID
      */
-    @TableId(value = "user_id", type = IdType.AUTO)
-    private Integer userId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
     /**
      * 昵称

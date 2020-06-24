@@ -27,7 +27,7 @@ public interface RemoteSocialService {
      * @author dengtao
      * @date 2020/5/14 15:31
      */
-    @PostMapping("/github")
+    @PostMapping("/backend/github")
     Result<Boolean> saveGithubUser(@RequestBody SysGithubUser sysGithubUser);
 
 
@@ -39,7 +39,7 @@ public interface RemoteSocialService {
      * @author dengtao
      * @date 2020/5/14 15:31
      */
-    @PostMapping("/gitee")
+    @PostMapping("/backend/gitee")
     Result<Boolean> saveGiteeUser(@RequestBody SysGiteeUser sysGiteeUser);
 
     /**
@@ -50,7 +50,7 @@ public interface RemoteSocialService {
      * @author dengtao
      * @date 2020/5/14 15:31
      */
-    @PostMapping("/qq")
+    @PostMapping("/backend/qq")
     Result<Boolean> saveQqUser(@RequestBody SysQqUser sysQqUser);
 
 }

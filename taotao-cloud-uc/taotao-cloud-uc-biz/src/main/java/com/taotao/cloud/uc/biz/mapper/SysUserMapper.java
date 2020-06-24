@@ -22,7 +22,7 @@ import org.springframework.stereotype.Repository;
 public interface SysUserMapper extends BaseMapper<SysUser> {
 
     @Select("SELECT " +
-            "   user.user_id, " +
+            "   user.id, " +
             "   user.username, " +
             "   user.mobile, " +
             "   user.email, " +

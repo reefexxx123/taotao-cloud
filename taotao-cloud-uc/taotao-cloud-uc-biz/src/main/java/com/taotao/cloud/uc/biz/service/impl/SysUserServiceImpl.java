@@ -71,7 +71,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         Page<SysUser> page = new Page<>(userListQuery.getCurrent(), userListQuery.getSize());
         QueryWrapper<SysUser> query = Wrappers.query();
         Optional.ofNullable(userListQuery.getUserId())
-                .ifPresent(userId -> query.eq("user.user_id", userId));
+                .ifPresent(userId -> query.eq("user.id", userId));
         Optional.ofNullable(userListQuery.getNickname())
                 .ifPresent(nickname -> query.like("user.nickname", nickname));
         Optional.ofNullable(userListQuery.getUsername())
@@ -86,7 +86,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                 .ifPresent(mobile -> query.eq("user.mobile", mobile));
 
         IPage<SysUser> userList = baseMapper.getUserVoListPage(page, query, new DataScope());
-//        userList.getRecords().forEach(user -> user.setRoleList(roleService.findRolesByUserId(user.getUserId())));
+//        userList.getRecords().forEach(user -> user.setRoleList(roleService.findRolesByUserId(user.getId())));
         return page;
     }
 
@@ -114,8 +114,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean removeUser(Integer userId) {
-        baseMapper.updateById(new SysUser().setUserId(userId).setDelFlag(DelFlagEnum.DELETE.getValue()));
-        return userRoleService.remove(Wrappers.<SysUserRole>lambdaQuery().eq(SysUserRole::getUserId, userId));
+        baseMapper.updateById(new SysUser().setId(userId).setDelFlag(DelFlagEnum.DELETE.getValue()));
+        return userRoleService.remove(Wrappers.<SysUserRole>lambdaQuery().eq(SysUserRole::getId, userId));
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -124,11 +124,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         SysUser sysUser = new SysUser();
         BeanUtils.copyProperties(userUpdateDTO, sysUser);
         baseMapper.updateById(sysUser);
-        userRoleService.remove(Wrappers.<SysUserRole>lambdaQuery().eq(SysUserRole::getUserId, sysUser.getUserId()));
+        userRoleService.remove(Wrappers.<SysUserRole>lambdaQuery().eq(SysUserRole::getId, sysUser.getId()));
 //        List<SysUserRole> userRoles = userAddDto.getRoleList().stream().map(item -> {
 //            SysUserRole sysUserRole = new SysUserRole();
 //            sysUserRole.setRoleId(item);
-//            sysUserRole.setUserId(sysUser.getUserId());
+//            sysUserRole.setUserId(sysUser.getId());
 //            return sysUserRole;
 //        }).collect(Collectors.toList());
 
@@ -138,16 +138,16 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public boolean restPass(Integer userId, String password) {
-        return this.updateById(new SysUser().setPassword(password).setUserId(userId));
+        return this.updateById(new SysUser().setPassword(password).setId(userId));
     }
 
     @Override
     public SecurityUser findUserInfo(SysUser sysUser) {
         // 权限集合
-        Set<String> permissions = findPermsByUserId(sysUser.getUserId());
+        Set<String> permissions = findPermsByUserId(sysUser.getId());
         // 角色集合
-        Set<String> roles = findRoleIdByUserId(sysUser.getUserId());
-        SecurityUser securityUser = new SecurityUser(sysUser.getUserId(), sysUser.getUsername(),
+        Set<String> roles = findRoleIdByUserId(sysUser.getId());
+        SecurityUser securityUser = new SecurityUser(sysUser.getId(), sysUser.getUsername(),
                 sysUser.getPassword(), permissions, roles);
 
         BeanUtil.copyProperties(sysUser, securityUser);
@@ -157,7 +157,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public SysUser findUserInByName(String username) {
         return baseMapper.selectOne(Wrappers.<SysUser>lambdaQuery()
-                .select(SysUser::getUserId, SysUser::getUsername, SysUser::getMobile, SysUser::getEmail, SysUser::getPassword, SysUser::getDeptId, SysUser::getJobId, SysUser::getAvatar)
+                .select(SysUser::getId, SysUser::getUsername, SysUser::getMobile, SysUser::getEmail, SysUser::getPassword, SysUser::getDeptId, SysUser::getJobId, SysUser::getAvatar)
                 .eq(SysUser::getUsername, username));
     }
 
@@ -199,7 +199,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 //        baseMapper.insertUser(sysUser);
         SysUserRole sysUserRole = new SysUserRole();
         sysUserRole.setRoleId(14);
-        sysUserRole.setUserId(sysUser.getUserId());
+        sysUserRole.setUserId(sysUser.getId());
         return userRoleService.save(sysUserRole);
     }
 
@@ -215,7 +215,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                 .or()
                 .eq(SysUser::getMobile, userIdOrUserNameOrMobileOrEmail)
                 .or()
-                .eq(SysUser::getUserId, userIdOrUserNameOrMobileOrEmail)
+                .eq(SysUser::getId, userIdOrUserNameOrMobileOrEmail)
                 .or()
                 .eq(SysUser::getEmail, userIdOrUserNameOrMobileOrEmail)
                 .in(SysUser::getType, CollectionUtil.newArrayList(UserTypeEnum.COMPANY.getValue(), UserTypeEnum.BACKEND.getValue()));
@@ -234,7 +234,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                 .eq(SysUser::getEmail, fieldVal);
         // 不为空说明是编辑情况
         if (ObjectUtil.isNotNull(dataId)) {
-            lambdaQueryWrapper.eq(SysUser::getUserId, dataId);
+            lambdaQueryWrapper.eq(SysUser::getId, dataId);
             return baseMapper.selectCount(lambdaQueryWrapper) < 0;
         }
         return baseMapper.selectCount(lambdaQueryWrapper) > 0;
@@ -248,13 +248,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 //    @Override
 //    public SysUser findSecurityUserByUser(SysUser sysUser) {
 //        LambdaQueryWrapper<SysUser> select = Wrappers.<SysUser>lambdaQuery()
-//                .select(SysUser::getUserId, SysUser::getUsername, SysUser::getPassword);
+//                .select(SysUser::getId, SysUser::getUsername, SysUser::getPassword);
 //        if (StrUtil.isNotEmpty(sysUser.getUsername())) {
 //            select.eq(SysUser::getUsername, sysUser.getUsername());
 //        } else if (StrUtil.isNotEmpty(sysUser.getPhone())) {
 //            select.eq(SysUser::getPhone, sysUser.getPhone());
-//        } else if (ObjectUtil.isNotNull(sysUser.getUserId()) && sysUser.getUserId() != 0) {
-//            select.eq(SysUser::getUserId, sysUser.getUserId());
+//        } else if (ObjectUtil.isNotNull(sysUser.getId()) && sysUser.getId() != 0) {
+//            select.eq(SysUser::getId, sysUser.getId());
 //        }
 //
 //
@@ -268,7 +268,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 //        if (ObjectUtil.isNull(sysUser)) {
 //            throw new BaseException("账号不存在");
 //        }
-//        Integer userId = sysUser.getUserId();
+//        Integer userId = sysUser.getId();
 //        try {
 //            // 该方法会去调用UserDetailsServiceImpl.loadUserByUsername()去验证用户名和密码，
 //            // 如果正确，则存储该用户名密码到security 的 context中
